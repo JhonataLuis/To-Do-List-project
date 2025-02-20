@@ -11,4 +11,5 @@ import br.com.toDoList.model.Usuario;
 @Transactional
 public interface UserRepository extends JpaRepository<Usuario, Long>{
 
+	
 }
