@@ -1,6 +1,7 @@
 package br.com.toDoList.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -10,17 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1, initialValue = 1 )
+@SequenceGenerator(name = "seq_usuario", sequenceName = "seq_name", allocationSize = 1, initialValue = 1)
 public class Usuario implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
 	private Long id;
 	private String nome;
+	private LocalDate dataNascimento;
 	private String genero;
 	private String email;
 	private String senha;
@@ -29,6 +29,7 @@ public class Usuario implements Serializable{
 	private String endereco;
 	private boolean ativo;
 	private LocalDateTime dataCadastro;
+	
 	
 	public Long getId() {
 		return id;
@@ -41,6 +42,12 @@ public class Usuario implements Serializable{
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	public String getGenero() {
 		return genero;
@@ -90,7 +97,5 @@ public class Usuario implements Serializable{
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	
 	
 }

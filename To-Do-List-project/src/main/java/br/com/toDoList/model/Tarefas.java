@@ -15,13 +15,13 @@ public class Tarefas {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tarefa")
 	private Long id;
-	
 	private String titulo;
 	private String descricao;
-	private boolean concluida;
-	private String prioridade;//ALTA, MÉDIA, BAIXA
+	private boolean concluido;
+	private String prioridade;
 	private LocalDateTime dataCriacao;
 	private LocalDateTime dataConclusao;
+	private String categoria;
 	
 	
 	public Long getId() {
@@ -42,11 +42,11 @@ public class Tarefas {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public boolean isConcluida() {
-		return concluida;
+	public boolean isConcluido() {
+		return concluido;
 	}
-	public void setConcluida(boolean concluida) {
-		this.concluida = concluida;
+	public void setConcluido(boolean concluido) {
+		this.concluido = concluido;
 	}
 	public String getPrioridade() {
 		return prioridade;
@@ -66,11 +66,13 @@ public class Tarefas {
 	public void setDataConclusao(LocalDateTime dataConclusao) {
 		this.dataConclusao = dataConclusao;
 	}
-	
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 	
 	
 	
 }
-
-
-
