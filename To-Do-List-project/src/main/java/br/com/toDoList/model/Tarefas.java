@@ -22,11 +22,11 @@ public class Tarefas implements Serializable{
 	
 	private String titulo;
 	private String descricao;
-	private boolean concluido;
-	private String prioridade;
+	private boolean concluido;//SIM OU NÃO
+	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	private LocalDateTime dataCriacao;
 	private LocalDateTime dataConclusao;
-	private String categoria;
+	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 	
 	
 	public Long getId() {
