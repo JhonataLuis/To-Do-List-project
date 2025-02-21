@@ -41,7 +41,8 @@
 		      <th scope="col">Descrição</th>
 		      <th scope="col">Prioridade</th>
 		      <th scope="col">Categoria</th>
-		      <th scope="col">Ação</th>
+		      <th scope="col">Editar</th>
+		      <th scope="col">Deletar</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -93,7 +94,7 @@
 
 <script type="text/javascript">
 
-
+/*AÇÃO PARA LISTAR TODAS AS TAREFAS CONECTANDO COM O CONTROLER E TRAZENDO DO BANCO DE DADOS*/
 $(document).ready(function(){
 	$.ajax({
 		type:"GET",
@@ -101,14 +102,14 @@ $(document).ready(function(){
 		dataType:"json",
 		success:function(data){
 			$.each(data, function(i, item){
-				var row="<tr>"+
+				var row="<tr id="+item.id+">"+
 					"<td>"+item.id+"</td>"+
 					"<td>"+item.titulo+"</td>"+
 					"<td>"+item.descricao+"</td>"+
 					"<td>"+item.prioridade+"</td>"+
 					"<td>"+item.categoria+"</td>"+
 					'<td><button type="button" class="btn btn-warning">Editar</button></td>'+
-					'<td><button type="button" class="btn btn-danger">Deleter</button></td>'+
+					'<td><button type="button" class="btn btn-danger" onclick="deleteTarefas('+item.id+')">Delete</button></td>'+
 					"</tr>";
 					$("#tabelaResultados > tbody").append(row);
 			});
@@ -116,34 +117,28 @@ $(document).ready(function(){
 	});
 });
 
-function listarTarefas(){
+function deleteTarefas(id){
 	
 	
+	if(confirm('Deseja realmente Deletar a tarefa?')){
 	
-	//var titulo = $("#nameBusca").val();
 	
-	
-	/*$.ajax({
-		  method: "GET",
-		  url: "listatodos",
-		  //data:JSON.stringify({titulo : titulo}),
-		  data: "titulo=" + titulo,
-		  contentType: "application/json; charset-utf-8",
+	$.ajax({
+		  method: "DELETE",
+		  url: "delete",
+		  data: "idTarefa=" + id,
 		  success: function (response){
-			  alert("Listando tarefas com sucesso!");
-			  $('#tabelaResultados > tbody > tr').remove();
 			  
-			  for(var i = 0; i < response.length; i++){
-				  $('#tabelaResultados > tbody').append('<tr><td>'+response[i].id+'</td><td>'+response[i].titulo+'</td><td>'+response[i].descricao+'</td><td>'+response[i].concluido+'</td><td>'+response[i].prioridade+'</td><td>'+response[i].categoria+'</td></tr>');
-				  //$("#tabelaResultados").html(titulo);
-				  //document.getElementById("tabelaResultados").insertRow(-1).innerHTML = '<td>'+response[i].id+'</td><td>2</td>';
-				  alert(response[i].id);
-			  }
+			  $('#' + id).remove();
+			  
+			  alert("Excluindo tarefa com sucesso!");
 		  }
 		}).fail(function(xhr, status, errorThrown){
-			alert("Erro ao listar as tarefas : " + xhr.responseText);
+			alert("Erro ao deletar a tarefa : " + xhr.responseText);
 		
-		});*/
+		});
+	
+	}
 	
 }
 
