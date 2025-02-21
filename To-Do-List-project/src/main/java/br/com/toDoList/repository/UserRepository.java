@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.toDoList.model.Usuario;
 
 @Repository
-@Transactional
 public interface UserRepository extends JpaRepository<Usuario, Long>{
 
 	

@@ -1,7 +1,6 @@
 package br.com.toDoList.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,10 +21,10 @@ public class Tarefas implements Serializable{
 	
 	private String titulo;
 	private String descricao;
-	private boolean concluido;//SIM OU NÃO
+	//private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
-	private LocalDateTime dataCriacao;
-	private LocalDateTime dataConclusao;
+	//private LocalDateTime dataCriacao;
+	//private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 	
 	
@@ -47,30 +46,15 @@ public class Tarefas implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public boolean isConcluido() {
-		return concluido;
-	}
-	public void setConcluido(boolean concluido) {
-		this.concluido = concluido;
-	}
+	
 	public String getPrioridade() {
 		return prioridade;
 	}
 	public void setPrioridade(String prioridade) {
 		this.prioridade = prioridade;
 	}
-	public LocalDateTime getDataCriacao() {
-		return dataCriacao;
-	}
-	public void setDataCriacao(LocalDateTime dataCriacao) {
-		this.dataCriacao = dataCriacao;
-	}
-	public LocalDateTime getDataConclusao() {
-		return dataConclusao;
-	}
-	public void setDataConclusao(LocalDateTime dataConclusao) {
-		this.dataConclusao = dataConclusao;
-	}
+	
+
 	public String getCategoria() {
 		return categoria;
 	}
