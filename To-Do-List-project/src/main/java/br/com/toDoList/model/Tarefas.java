@@ -1,4 +1,9 @@
 package br.com.toDoList.model;
+/**
+ * @author Jhonata
+ * @version 1.0
+ * @since 18/02/2025
+ */
 
 import java.io.Serializable;
 
@@ -11,6 +16,13 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "seq_tarefa", sequenceName = "seq_tarefa", allocationSize = 1, initialValue = 1)
 public class Tarefas implements Serializable{
+	/**
+	 * Esta classe é utilizada para criar as tabelas no banco de dados juntamente disponibilizar os atributos
+	 * para trazer cada item atraves na conexão dos atributos
+	 * @param titulo
+	 * @param descricao
+	 * @param prioridade
+	 */
 
 	
 	private static final long serialVersionUID = 1L;

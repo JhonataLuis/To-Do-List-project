@@ -96,4 +96,15 @@ public class GreetingsController {
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
     }
     
+    /*MÉTODO PARA CONSULTAR UMA TAREFA DO BANCO DE DADOS PELO ID DA TAREFA*/
+    @GetMapping(value = "buscartarefaid")
+    @ResponseBody
+    public ResponseEntity<Tarefas> consultar(@RequestParam(name = "idTarefa") Long idTarefa){
+    	
+    	Tarefas taref = tarefaRepository.findById(idTarefa).get();
+    	
+    	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
+    	
+    }
+    
 }
