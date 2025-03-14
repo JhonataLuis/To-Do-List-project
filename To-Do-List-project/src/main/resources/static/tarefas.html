@@ -55,6 +55,10 @@
 			</select>
 			</div>
 			<div class="mb-3">
+				<label for="dataCriacao" class="form-label">Data Criação</label>
+				<input type="date" class="form-control" id="dataCriacao" placeholder="" required="required">
+			</div>
+			<div class="mb-3">
 				<label for="categoria" class="form-label">Categoria</label>
 				<input type="text" class="form-control" id="categoria" placeholder="" required="required">
 			</div>
@@ -181,15 +185,16 @@ function salvarTarefas(){
 	var descricao = $('#descricao').val();
 	var concluido = $('#concluido').val();
 	var prioridade = $('#prioridade').val();
+	var dataCriacao = $('#dataCriacao').val();
 	var categoria = $('#categoria').val();
 	
-	alert(titulo, descricao, concluido, prioridade, categoria);
+	alert(titulo, descricao, concluido, prioridade, dataCriacao, categoria);
 	
 		
 	$.ajax({
 		  method: "POST",
 		  url: "salvar",
-		  data:JSON.stringify({titulo : titulo, descricao : descricao, concluido : concluido, prioridade : prioridade, categoria : categoria}),
+		  data:JSON.stringify({titulo : titulo, descricao : descricao, concluido : concluido, prioridade : prioridade, dataCriacao : dataCriacao, categoria : categoria}),
 		  contentType: "application/json; charset-utf-8",
 		  success: function (response){
 			  $("#id").val(response.id);

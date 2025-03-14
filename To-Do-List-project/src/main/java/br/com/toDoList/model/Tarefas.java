@@ -6,12 +6,15 @@ package br.com.toDoList.model;
  */
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @SequenceGenerator(name = "seq_tarefa", sequenceName = "seq_tarefa", allocationSize = 1, initialValue = 1)
@@ -35,7 +38,16 @@ public class Tarefas implements Serializable{
 	private String descricao;
 	//private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
-	//private LocalDateTime dataCriacao;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.S")
+	private LocalDateTime dataCriacao;
+	
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
 	//private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 	
