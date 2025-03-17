@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
+import br.com.toDoList.service.ToDoService;
 
 
 
@@ -30,10 +31,13 @@ import br.com.toDoList.repository.TarefaRepository;
  */
 
 @RestController
-public class GreetingsController {
+public class ToDoControllers {
 	
 	@Autowired/*INJEÇÃO DE DEPENDENCIA IC/CI e CDI*/
 	private TarefaRepository tarefaRepository;
+
+    @Autowired
+    private ToDoService service;
 	
     
     @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
@@ -48,7 +52,8 @@ public class GreetingsController {
     @ResponseBody/*RETORNA OS DADOS PARA O CORPO DA RESPONSTA JSON*/
     public ResponseEntity<List<Tarefas>> listarTarefas(){
     	
-    	List<Tarefas> tarefas = tarefaRepository.findAll();
+    	//List<Tarefas> tarefas = tarefaRepository.findAll();
+        List<Tarefas>  tarefas = service.list();
     	
     	return new ResponseEntity<List<Tarefas>>(tarefas, HttpStatus.OK);/*RETORNAR A LISTA EM JSON*/
     }
@@ -58,7 +63,8 @@ public class GreetingsController {
     @ResponseBody
     public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas tarefas){
     	
-    	Tarefas taref = tarefaRepository.save(tarefas);
+    	//Tarefas taref = tarefaRepository.save(tarefas);
+        Tarefas taref = service.create(tarefas);
     	
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
     }
@@ -68,7 +74,8 @@ public class GreetingsController {
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam Long idTarefa){
     	
-    	tarefaRepository.deleteById(idTarefa);
+    	//tarefaRepository.deleteById(idTarefa);
+        service.delete(idTarefa);
     	
     	return new ResponseEntity<String>("Tarefa deletada com sucesso", HttpStatus.OK);
     }
@@ -77,9 +84,10 @@ public class GreetingsController {
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
     @PutMapping(value = "update")
     @ResponseBody
-    public ResponseEntity<Tarefas> atualizar(@RequestBody Tarefas tarefa){
+    public ResponseEntity<Tarefas> update(@RequestBody Tarefas tarefas){
     	
-    	Tarefas taref = tarefaRepository.saveAndFlush(tarefa);
+    	//Tarefas taref = tarefaRepository.saveAndFlush(tarefa);
+        Tarefas taref = service.update(tarefas);
     	
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
     }

@@ -2,8 +2,18 @@ package br.com.toDoList.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Pessoa {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa")
+	private Long id;
+	
 	private String nome;
 	private String username;
 	private LocalDate dataNasc;
@@ -48,6 +58,8 @@ public class Pessoa {
 		this.genero = genero;
 	}
 
-	
+	public Long getId() {
+		return id;
+	}
 	
 }
