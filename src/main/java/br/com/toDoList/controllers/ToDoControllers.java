@@ -69,18 +69,7 @@ public class ToDoControllers {
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
     }
     
-    /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
-    @DeleteMapping(value = "delete")
-    @ResponseBody
-    public ResponseEntity<String> delete(@RequestParam Long idTarefa){
-    	
-    	//tarefaRepository.deleteById(idTarefa);
-        service.delete(idTarefa);
-    	
-    	return new ResponseEntity<String>("Tarefa deletada com sucesso", HttpStatus.OK);
-    }
    
-    
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
     @PutMapping(value = "update")
     @ResponseBody
@@ -101,6 +90,17 @@ public class ToDoControllers {
     	
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
     	
+    }
+
+     /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
+    @DeleteMapping(value = "delete")
+    @ResponseBody
+    public ResponseEntity<String> delete(@RequestParam Long idTarefa){
+    	
+    	//tarefaRepository.deleteById(idTarefa);
+        service.delete(idTarefa);
+    	
+    	return new ResponseEntity<String>("Tarefa deletada com sucesso", HttpStatus.OK);
     }
     
 }
