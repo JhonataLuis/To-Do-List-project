@@ -52,7 +52,6 @@ public class ToDoControllers {
     @ResponseBody/*RETORNA OS DADOS PARA O CORPO DA RESPONSTA JSON*/
     public ResponseEntity<List<Tarefas>> listarTarefas(){
     	
-    	//List<Tarefas> tarefas = tarefaRepository.findAll();
         List<Tarefas>  tarefas = service.list();
     	
     	return new ResponseEntity<List<Tarefas>>(tarefas, HttpStatus.OK);/*RETORNAR A LISTA EM JSON*/
@@ -63,7 +62,6 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas tarefas){
     	
-    	//Tarefas taref = tarefaRepository.save(tarefas);
         Tarefas taref = service.create(tarefas);
     	
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
@@ -75,7 +73,6 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<Tarefas> update(@RequestBody Tarefas tarefas){
     	
-    	//Tarefas taref = tarefaRepository.saveAndFlush(tarefa);
         Tarefas taref = service.update(tarefas);
     	
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
@@ -97,7 +94,6 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam Long idTarefa){
     	
-    	//tarefaRepository.deleteById(idTarefa);
         service.delete(idTarefa);
     	
     	return new ResponseEntity<String>("Tarefa deletada com sucesso", HttpStatus.OK);
