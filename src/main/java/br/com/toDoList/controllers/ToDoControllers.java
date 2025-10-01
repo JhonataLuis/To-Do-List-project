@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
-import br.com.toDoList.service.ToDoService;
+import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 
 
 
@@ -37,7 +37,7 @@ public class ToDoControllers {
 	private TarefaRepository tarefaRepository;
 
     @Autowired
-    private ToDoService service;
+    private ToDoServiceImpl service;
 	
     
     @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
