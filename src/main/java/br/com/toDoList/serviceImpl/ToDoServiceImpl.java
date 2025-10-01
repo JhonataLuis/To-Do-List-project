@@ -38,6 +38,7 @@ public class ToDoServiceImpl implements ToDoService {
 
     public Tarefas update(Tarefas tarefas){
         repository.save(tarefas);
+
         return tarefas;
     }
 
