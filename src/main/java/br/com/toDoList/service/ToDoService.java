@@ -2,41 +2,16 @@ package br.com.toDoList.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import br.com.toDoList.model.Tarefas;
-import br.com.toDoList.repository.TarefaRepository;
 
-@Service
-public class ToDoService {
+public interface ToDoService {
 
-    @Autowired
-    private TarefaRepository repository;
+    Tarefas create(Tarefas tarefas);
 
-    public Tarefas create(Tarefas tarefas){
-        repository.save(tarefas);
-        //return list();//RETORNA A LISTA DESENVOLVIDA ABAIXO //MODELO DRY PARA NÃO REPETIR CÓDIGO
-        return tarefas;
-    }
+    List<Tarefas> list();
 
-    public List<Tarefas> list(){
-        //ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
-        Sort sort = Sort.by("prioridade").descending().and(
-            Sort.by("titulo").ascending());
-        repository.findAll();
-        return repository.findAll(sort);
-    }
+    Tarefas update(Tarefas tarefas);
 
-    public Tarefas update(Tarefas tarefas){
-        repository.save(tarefas);
-        //return list();
-        return tarefas;
-    }
+    List<Tarefas> delete(Long id);
 
-    public List<Tarefas> delete(Long id){
-        repository.deleteById(id);
-        return list();
-    }
 }
