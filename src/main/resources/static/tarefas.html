@@ -1,214 +1,408 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>To-Do-List | Cadastro de Tarefas</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .navbar {
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    }
+    
+    .main-container {
+        padding: 20px;
+    }
+    
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        padding: 0;
+        margin-bottom: 20px;
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        color: white;
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .table-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .table-title {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-bottom: 1px solid #dee2e6;
+        font-weight: 600;
+    }
+    
+    .btn-action {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+    
+    .priority-badge {
+        padding: 0.25em 0.6em;
+        border-radius: 10px;
+        font-size: 0.75em;
+        font-weight: 600;
+    }
+    
+    .priority-high {
+        background-color: #ffebee;
+        color: #d32f2f;
+    }
+    
+    .priority-medium {
+        background-color: #fff8e1;
+        color: #ff8f00;
+    }
+    
+    .priority-low {
+        background-color: #e8f5e9;
+        color: #388e3c;
+    }
+    
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+    
+    .form-control, .form-select {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 8px 12px;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        border-color: #4361ee;
+        box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+    }
+    
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        border-radius: 6px;
+        padding: 8px 20px;
+    }
+    
+    .btn-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
+        border-radius: 6px;
+        padding: 8px 20px;
+    }
+    
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        border-radius: 4px;
+    }
+    
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        border-radius: 4px;
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        border-top: none;
+        font-weight: 600;
+        padding: 12px 15px;
+    }
+    
+    .table td {
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.05);
+    }
+    
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 10px;
+        }
+        
+        .table-responsive {
+            font-size: 0.875rem;
+        }
+        
+        .btn-action {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+        }
+    }
+</style>
 </head>
 <body>
-<div class="row">
-<nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.html">To-Do-List</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-        </li>
-      </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-tasks me-2"></i>To-Do-List
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid main-container">
+        <div class="row">
+            <!-- Form Column -->
+            <div class="col-lg-5 col-xl-4">
+                <div class="form-container">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h4 class="card-title mb-0">
+                                <i class="fas fa-plus-circle me-2"></i>Cadastro de Tarefas
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="" id="formCadastroTarefas">
+                                <div class="mb-3">
+                                    <label for="id" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="id" readonly="readonly">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="titulo" class="form-label">Título da Tarefa</label>
+                                    <input type="text" class="form-control" id="titulo" placeholder="Digite o título da tarefa" required="required">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="descricao" class="form-label">Descrição da Tarefa</label>
+                                    <textarea class="form-control" id="descricao" rows="3" placeholder="Descreva a tarefa" required="required"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="concluido">
+                                        <label class="form-check-label" for="concluido">
+                                            Tarefa Concluída
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="prioridade" class="form-label">Prioridade</label>
+                                    <select class="form-select" id="prioridade" required="required">
+                                        <option value="" selected disabled>Selecione a prioridade</option>
+                                        <option value="Alta">Alta</option>
+                                        <option value="Media">Média</option>
+                                        <option value="Baixa">Baixa</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="dataCriacao" class="form-label">Data Criação</label>
+                                    <input type="date" class="form-control" id="dataCriacao" required="required">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoria" class="form-label">Categoria</label>
+                                    <input type="text" class="form-control" id="categoria" placeholder="Ex: Trabalho, Pessoal, Estudos" required="required">
+                                </div>
+                                <div class="card-footer bg-transparent border-0 pt-3">
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-success me-md-2" onclick="salvarTarefas()">
+                                            <i class="fas fa-save me-1"></i>Salvar Tarefa
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastroTarefas').reset()">
+                                            <i class="fas fa-plus me-1"></i>Novo
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Table Column -->
+            <div class="col-lg-7 col-xl-8">
+                <div class="table-container">
+                    <div class="table-title">
+                        <h5 class="mb-0">
+                            <i class="fas fa-list me-2"></i>Lista de Tarefas
+                        </h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="tabelaResultados">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Prioridade</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Data Criação</th>
+                                    <th scope="col" class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Os dados serão inseridos aqui via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
 
-<div class="card mb-3" style="width: 35rem;">
-<div class="card-header text-center">
-		<h4 class="card-title">Cadastro de Tarefas</h4>
-	</div>
-	<div class="card-body">
-	<div class="col">
-	<form action=""  id="formCadastroTarefas">
-	<div class="mb-3">
-			<label for="id" class="form-label">Id</label>
-			<input type="text" class="form-control" id="id" readonly="readonly">
-			</div>
-		<div class="mb-3">
-			<label for="titulo" class="form-label">Titulo da Tarefa</label>
-			<input type="text" class="form-control" id="titulo" placeholder="" required="required">
-			</div>
-			<div class="mb-3">
-			 <label for="descricao" class="form-label">Descri��o da Tarefa</label>
-			 <textarea class="form-control" id="descricao" rows="3" required="required"></textarea>
-		</div>
-		<div class="mb-3">
-				<label for="concluido" class="form-label">Concluido</label>
-				<input type="text" class="form-control" id="concluido" placeholder="" required="required">
-			</div>
-			<div class="mb-3">
-			<select class="form-select" aria-label="Default select example" required="required">
-			  <option selected>Prioridade</option>
-			  <option id="prioridade">Alta</option>
-			  <option id="prioridade">Media</option>
-			  <option id="prioridade">Baixa</option>
-			</select>
-			</div>
-			<div class="mb-3">
-				<label for="dataCriacao" class="form-label">Data Cria��o</label>
-				<input type="date" class="form-control" id="dataCriacao" placeholder="" required="required">
-			</div>
-			<div class="mb-3">
-				<label for="categoria" class="form-label">Categoria</label>
-				<input type="text" class="form-control" id="categoria" placeholder="" required="required">
-			</div>
-			<div class="card-footer">
-				<button type="button" class="btn btn-success" onclick="salvarTarefas()">Salvar Tarefa</button>
-				<button type="button" class="btn btn-primary" onclick="document.getElementById('formCadastroTarefas').reset()">Novo</button>
-		</div>
-	</form>
-	</div>
-	</div>
-</div>
-		<div class="row">
-			<div class="card card-title">
-				  <div class="card-body">
-				    Lista de Tarefas
-				  </div>
-				</div>
-		</div>
-		<div class="card">
-		<table class="table table-hover" id="tabelaResultados">
-		  <thead>
-		    <tr>
-		      <th scope="col">ID</th>
-		      <th scope="col">Checked</th>
-		      <th scope="col">Titulo</th>
-		      <th scope="col">Descri��o</th>
-		      <th scope="col">Prioridade</th>
-		      <th scope="col">Categoria</th>
-		      <th scope="col">Editar</th>
-		      <th scope="col">Deletar</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  	
-		  </tbody>
-		</table>
-		</div>
-	</div>
-	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+    <script type="text/javascript">
+        /* AÇÃO PARA LISTAR TODAS AS TAREFAS CONECTANDO COM O CONTROLER E TRAZENDO DO BANCO DE DADOS */
+        $(document).ready(function(){
+            $.ajax({
+                type: "GET",
+                url: "listatodos",
+                dataType: "json",
+                success: function(data){
+                    $.each(data, function(i, item){
+                        // Determinar classe de prioridade para badge
+                        var priorityClass = '';
+                        if (item.prioridade === 'Alta') priorityClass = 'priority-high';
+                        else if (item.prioridade === 'Media') priorityClass = 'priority-medium';
+                        else if (item.prioridade === 'Baixa') priorityClass = 'priority-low';
+                        
+                        // Formatar data
+                        var dataCriacao = item.dataCriacao ? new Date(item.dataCriacao).toLocaleDateString('pt-BR') : '';
+                        
+                        // Criar linha da tabela
+                        var row = "<tr id='" + item.id + "'>" +
+                            "<td>" + item.id + "</td>" +
+                            "<td class='text-center'>" + 
+                                (item.concluido ? 
+                                    '<span class="badge bg-success"><i class="fas fa-check"></i></span>' : 
+                                    '<span class="badge bg-secondary"><i class="fas fa-clock"></i></span>') + 
+                            "</td>" +
+                            "<td>" + item.titulo + "</td>" +
+                            "<td>" + (item.descricao ? item.descricao.substring(0, 50) + (item.descricao.length > 50 ? '...' : '') : '') + "</td>" +
+                            "<td><span class='priority-badge " + priorityClass + "'>" + item.prioridade + "</span></td>" +
+                            "<td>" + item.categoria + "</td>" +
+                            "<td>" + dataCriacao + "</td>" +
+                            "<td class='text-center'>" +
+                                '<button type="button" class="btn btn-warning btn-sm btn-action me-1" onclick="colocarEmEdicao(' + item.id + ')" title="Editar">' +
+                                    '<i class="fas fa-edit"></i>' +
+                                '</button>' +
+                                '<button type="button" class="btn btn-danger btn-sm btn-action" onclick="deleteTarefas(' + item.id + ')" title="Excluir">' +
+                                    '<i class="fas fa-trash"></i>' +
+                                '</button>' +
+                            "</td>" +
+                            "</tr>";
+                        $("#tabelaResultados > tbody").append(row);
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erro ao carregar tarefas: ", error);
+                    alert("Erro ao carregar a lista de tarefas.");
+                }
+            });
+        });
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        function colocarEmEdicao(id){
+            $.ajax({
+                method: "GET",
+                url: "buscartarefaid",
+                data: "idTarefa=" + id,
+                success: function (response){
+                    $('#id').val(response.id);
+                    $('#titulo').val(response.titulo);
+                    $('#descricao').val(response.descricao);
+                    $('#concluido').prop('checked', response.concluido);
+                    $('#prioridade').val(response.prioridade);
+                    $('#dataCriacao').val(response.dataCriacao);
+                    $('#categoria').val(response.categoria);
+                    
+                    // Rolar para o formulário
+                    document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth' });
+                }
+            }).fail(function(xhr, status, errorThrown){
+                alert("Erro ao buscar tarefa por id: " + xhr.responseText);
+            });
+        }
 
-<script type="text/javascript">
+        /* AÇÃO PARA EXCLUIR UMA TAREFA DO BANCO DE DADOS */
+        function deleteTarefas(id){
+            if(confirm('Deseja realmente excluir esta tarefa?')){
+                $.ajax({
+                    method: "DELETE",
+                    url: "delete",
+                    data: "idTarefa=" + id,
+                    success: function (response){
+                        $('#' + id).remove();
+                        alert("Tarefa excluída com sucesso!");
+                    }
+                }).fail(function(xhr, status, errorThrown){
+                    alert("Erro ao excluir a tarefa: " + xhr.responseText);
+                });
+            }
+        }
 
-/*A��O PARA LISTAR TODAS AS TAREFAS CONECTANDO COM O CONTROLER E TRAZENDO DO BANCO DE DADOS*/
-$(document).ready(function(){
-	$.ajax({
-		type:"GET",
-		url:"listatodos",
-		dataType:"json",
-		success:function(data){
-			$.each(data, function(i, item){
-				var row="<tr id="+item.id+">"+
-					"<td>"+item.id+"</td>"+
-					"<td>"+item.titulo+"</td>"+
-					"<td>"+item.descricao+"</td>"+
-					"<td>"+item.prioridade+"</td>"+
-					"<td>"+item.categoria+"</td>"+
-					'<td><button type="button" class="btn btn-warning" onclick="colocarEmEdicao('+item.id+')">Editar</button></td>'+
-					'<td><button type="button" class="btn btn-danger" onclick="deleteTarefas('+item.id+')">Delete</button></td>'+
-					"</tr>";
-					$("#tabelaResultados > tbody").append(row);
-			});
-			
-		},
-	});
-});
+        /* AÇÃO PARA CADASTRAR UMA TAREFA NO BANCO DE DADOS */
+        function salvarTarefas(){
+            var id = $('#id').val();
+            var titulo = $('#titulo').val();
+            var descricao = $('#descricao').val();
+            var concluido = $('#concluido').is(':checked');
+            var prioridade = $('#prioridade').val();
+            var dataCriacao = $('#dataCriacao').val();
+            var categoria = $('#categoria').val();
 
-function colocarEmEdicao(id){
-	
-	$.ajax({
-		  method: "GET",
-		  url: "buscartarefaid",
-		  data: "idTarefa=" + id,
-		  success: function (response){
+            // Validação básica
+            if (!titulo || !descricao || !prioridade || !dataCriacao || !categoria) {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
 
-			  
-			  $('#id').val(response.id);
-			  	$('#titulo').val(response.titulo);
-				$('#descricao').val(response.descricao);
-				$('#concluido').val(response.concluido);
-				$('#prioridade').val(response.prioridade);
-				$('#categoria').val(response.categoria);
-		  }
-		}).fail(function(xhr, status, errorThrown){
-			alert("Erro ao buscar tarefa por id : " + xhr.responseText);
-		
-		});
-}
-
-/*A��O PARA EXCLUIR UMA TAREFA DO BANCO DE DADOS*/
-function deleteTarefas(id){
-	
-	
-	if(confirm('Deseja realmente Deletar a tarefa?')){
-	
-	
-	$.ajax({
-		  method: "DELETE",
-		  url: "delete",
-		  data: "idTarefa=" + id,
-		  success: function (response){
-			  
-			  $('#' + id).remove();
-			  
-			  alert("Excluindo tarefa com sucesso!");
-		  }
-		}).fail(function(xhr, status, errorThrown){
-			alert("Erro ao deletar a tarefa : " + xhr.responseText);
-		
-		});
-	
-	}
-	
-}
-
-/*A��O PARA CADASTRAR UMA TAREFA NO BANCO DE DADOS*/
-function salvarTarefas(){
-	
-
-	var titulo = $('#titulo').val();
-	var descricao = $('#descricao').val();
-	var concluido = $('#concluido').val();
-	var prioridade = $('#prioridade').val();
-	var dataCriacao = $('#dataCriacao').val();
-	var categoria = $('#categoria').val();
-	
-	alert(titulo, descricao, concluido, prioridade, dataCriacao, categoria);
-	
-		
-	$.ajax({
-		  method: "POST",
-		  url: "salvar",
-		  data:JSON.stringify({titulo : titulo, descricao : descricao, concluido : concluido, prioridade : prioridade, dataCriacao : dataCriacao, categoria : categoria}),
-		  contentType: "application/json; charset-utf-8",
-		  success: function (response){
-			  $("#id").val(response.id);
-			  alert("Tarefa gravada com sucesso!");
-		  }
-		}).fail(function(xhr, status, errorThrown){
-			alert("Erro ao salvar a tarefa : " + xhr.responseText);
-		
-		});
-	
-		
-}
-	
-	
-</script>
+            var method = id ? "PUT" : "POST";
+            var url = id ? "atualizar" : "salvar";
+            
+            $.ajax({
+                method: method,
+                url: url,
+                data: JSON.stringify({
+                    id: id,
+                    titulo: titulo,
+                    descricao: descricao,
+                    concluido: concluido,
+                    prioridade: prioridade,
+                    dataCriacao: dataCriacao,
+                    categoria: categoria
+                }),
+                contentType: "application/json; charset=utf-8",
+                success: function (response){
+                    $("#id").val(response.id);
+                    alert("Tarefa " + (id ? "atualizada" : "salva") + " com sucesso!");
+                    
+                    // Recarregar a página para atualizar a lista
+                    location.reload();
+                }
+            }).fail(function(xhr, status, errorThrown){
+                alert("Erro ao salvar a tarefa: " + xhr.responseText);
+            });
+        }
+    </script>
 </body>
 </html>
