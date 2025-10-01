@@ -6,11 +6,15 @@ package br.com.toDoList.model;
  */
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -35,12 +39,10 @@ public class Tarefas{
 	//private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
+	private boolean concluido = false; // Define o valor padrão como false
 	
-	/*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
-	@DateTimeFormat(pattern = "dd/mm/yyyy")
-	@NotNull(message = "Campos de data são obrigatórios")
-	@Past(message = "Campos de data são obrigatórios")
-	private LocalDateTime dataCriacao;*/
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime dataCriacao;
 	
 	//private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
@@ -72,13 +74,20 @@ public class Tarefas{
 		this.prioridade = prioridade;
 	}
 
-	/*@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	public boolean isConcluido() {
+		return concluido;
+	}
+
+	public void setConcluido(boolean concluido) {
+		this.concluido = concluido;
+	}
+
 	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
 	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
-	}*/
+	}
 	
 	public String getCategoria() {
 		return categoria;
