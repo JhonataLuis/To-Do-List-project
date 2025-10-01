@@ -1,5 +1,5 @@
 📝 To-Do List Application
-<div align="center">
+
 https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk
 https://img.shields.io/badge/Spring%2520Boot-2.7+-green?style=for-the-badge&logo=springboot
 https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql
@@ -12,7 +12,7 @@ https://img.shields.io/github/forks/JhonataLuis/To-Do-List-project
 https://img.shields.io/github/stars/JhonataLuis/To-Do-List-project
 https://img.shields.io/github/license/JhonataLuis/To-Do-List-project
 
-</div>
+
 ✨ Funcionalidades
 Funcionalidade	Descrição
 ✅ Cadastro de Tarefas	Adicione novas tarefas com título, descrição, prioridade e categoria
@@ -111,7 +111,9 @@ GET	/buscartarefaid	Busca tarefa por ID	idTarefa
 POST	/salvar	Cria uma nova tarefa	JSON da tarefa
 PUT	/atualizar	Atualiza uma tarefa existente	JSON da tarefa
 DELETE	/delete	Remove uma tarefa	idTarefa
+
 📝 Modelo de Dados da Tarefa
+
 json
 {
   "id": 1,
@@ -122,6 +124,7 @@ json
   "categoria": "Trabalho",
   "dataCriacao": "2024-10-01T10:00:00"
 }
+
 🔧 Configuração de Desenvolvimento
 🔥 Executando em Ambiente de Desenvolvimento
 Habilite o hot reload:
@@ -202,9 +205,9 @@ Comunidade Bootstrap pelos componentes UI
 
 Todos os contribuidores e testadores
 
-<div align="center">
+
 ⭐️ Se este projeto foi útil para você, deixe uma estrela no repositório!
 https://api.star-history.com/svg?repos=JhonataLuis/To-Do-List-project&type=Date
 
-</div>
+
 
