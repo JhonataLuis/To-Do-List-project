@@ -157,23 +157,16 @@ MIT License © 2024 Jhonata Luis
 
 Jhonata Luis
 
-GitHub: @JhonataLuis
+GitHub:[https://github.com/JhonataLuis]
 
-LinkedIn: Jhonata Luis
+LinkedIn: linkedin
 
-Email: jhonata.luis@example.com
+Email: email@example.com
 
 🔄 Status do Projeto
 
 
-Versão: 1.0.0 | Última atualização: Outubro 2024
+Versão: 1.0.0 | Última atualização: Outubro 2025
 
-🎉 Agradecimentos
-
-Equipe do Spring Boot
-
-Comunidade Bootstrap
-
-Todos os contribuidores e testadores
 
 ⭐️ Se este projeto foi útil, deixe uma estrela no repositório!
