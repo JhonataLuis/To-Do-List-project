@@ -1,120 +1,110 @@
-📝 To-Do List Application
+# 📝 To-Do List Application
 
-https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk
-https://img.shields.io/badge/Spring%2520Boot-2.7+-green?style=for-the-badge&logo=springboot
-https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql
-https://img.shields.io/badge/Bootstrap-5.3-purple?style=for-the-badge&logo=bootstrap
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%2520Boot-2.7+-green?style=for-the-badge&logo=springboot)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?style=for-the-badge&logo=bootstrap)
 
-Uma aplicação web moderna e responsiva para gerenciamento de tarefas
+> Uma aplicação web moderna e responsiva para **gerenciamento de tarefas**, perfeita para organização pessoal ou em equipe.
 
-https://img.shields.io/github/issues/JhonataLuis/To-Do-List-project
-https://img.shields.io/github/forks/JhonataLuis/To-Do-List-project
-https://img.shields.io/github/stars/JhonataLuis/To-Do-List-project
-https://img.shields.io/github/license/JhonataLuis/To-Do-List-project
+---
 
+## 🖼️ Demonstração
 
-✨ Funcionalidades
-Funcionalidade	Descrição
-✅ Cadastro de Tarefas	Adicione novas tarefas com título, descrição, prioridade e categoria
-📋 Listagem de Tarefas	Visualize todas as tarefas em uma tabela organizada
-✏️ Edição de Tarefas	Atualize informações das tarefas existentes
-🗑️ Exclusão de Tarefas	Remova tarefas completadas ou desnecessárias
-🏷️ Categorização	Organize tarefas por categorias (Trabalho, Pessoal, Estudos)
-⚡ Sistema de Prioridades	Classifique tarefas como Alta, Média ou Baixa prioridade
-📱 Design Responsivo	Interface adaptável para desktop e dispositivos móveis
-🎨 Interface Moderna	Design clean e profissional com Bootstrap 5
-🛠️ Tecnologias Utilizadas
-Backend
-Java 17 - Linguagem de programação
+> Substitua os links abaixo pelos screenshots ou GIFs do seu app:
 
-Spring Boot 2.7+ - Framework para aplicação web
+![Dashboard](https://via.placeholder.com/800x400.png?text=Dashboard+do+Sistema)  
+![Criar Tarefa](https://via.placeholder.com/800x400.png?text=Criar+Tarefa)  
+![Lista de Tarefas](https://via.placeholder.com/800x400.png?text=Lista+de+Tarefas)
 
-Spring Data JPA - Persistência de dados
+---
 
-PostgreSQL - Banco de dados relacional
+## ✨ Funcionalidades Principais
 
-Maven - Gerenciamento de dependências
+| Funcionalidade       | Descrição                                           |
+|---------------------|---------------------------------------------------|
+| ✅ **Cadastro de Tarefas** | Adicione tarefas com título, descrição, prioridade e categoria |
+| 📋 **Listagem de Tarefas** | Visualize todas as tarefas em uma tabela organizada |
+| ✏️ **Edição de Tarefas** | Atualize informações das tarefas existentes       |
+| 🗑️ **Exclusão de Tarefas** | Remova tarefas completadas ou desnecessárias      |
+| 🏷️ **Categorização**      | Organize tarefas por categorias (Trabalho, Pessoal, Estudos) |
+| ⚡ **Sistema de Prioridades** | Classifique tarefas como Alta, Média ou Baixa prioridade |
+| 📱 **Design Responsivo**  | Interface adaptável para desktop e mobile |
+| 🎨 **Interface Moderna**  | Design clean e profissional com Bootstrap 5 |
 
-Frontend
-HTML5 - Estrutura da aplicação
+---
 
-CSS3 - Estilização e design responsivo
+## 🛠️ Tecnologias Utilizadas
 
-JavaScript - Interatividade e chamadas AJAX
+**Backend**
+- ☕ Java 17  
+- 🌱 Spring Boot 2.7+  
+- 🗄️ PostgreSQL  
+- 🔗 Spring Data JPA  
+- 📦 Maven  
 
-Bootstrap 5.3 - Framework CSS
+**Frontend**
+- 🌐 HTML5  
+- 🎨 CSS3  
+- ⚡ JavaScript  
+- 💎 Bootstrap 5.3  
+- 🔧 jQuery 3.7  
+- 🎭 Font Awesome  
 
-jQuery 3.7 - Manipulação DOM e AJAX
+---
 
-Font Awesome - Ícones
+## 🚀 Como Executar o Projeto
 
-🚀 Como Executar o Projeto
-Pré-requisitos
-Java 17 ou superior
+### Pré-requisitos
+- Java 17+  
+- Maven 3.6+  
+- PostgreSQL 12+  
+- Git  
 
-Maven 3.6+
-
-PostgreSQL 12+
-
-Git
-
-📋 Configuração do Banco de Dados
-Crie um banco de dados no PostgreSQL:
-
-sql
+### Configuração do Banco de Dados
+```sql
 CREATE DATABASE todolist;
-Configure as credenciais no application.properties:
 
-properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/todolist
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 spring.jpa.hibernate.ddl-auto=update
-🏃‍♂️ Executando a Aplicação
-Clone o repositório:
 
-bash
+Executando a Aplicação
+# Clonar o repositório
 git clone https://github.com/JhonataLuis/To-Do-List-project.git
 cd To-Do-List-project
-Compile e execute:
 
-bash
+# Compilar e executar
 mvn clean install
 mvn spring-boot:run
-Acesse a aplicação:
 
-text
-http://localhost:8080
+
+Acesse: http://localhost:8080
+
 📁 Estrutura do Projeto
-text
 To-Do-List-project/
 ├── src/
 │   └── main/
-│       ├── java/
-│       │   └── br/com/toDoList/
-│       │       ├── model/
-│       │       │   └── Tarefas.java          # Entidade JPA
-│       │       ├── repository/
-│       │       │   └── TarefasRepository.java # Interface de repositório
-│       │       ├── controller/
-│       │       │   └── TarefasController.java # Controlador REST
-│       │       └── ToDoListApplication.java  # Classe principal
+│       ├── java/br/com/toDoList/
+│       │   ├── model/Tarefas.java
+│       │   ├── repository/TarefasRepository.java
+│       │   ├── controller/TarefasController.java
+│       │   └── ToDoListApplication.java
 │       └── resources/
-│           ├── static/                       # Arquivos estáticos (HTML, CSS, JS)
-│           └── application.properties        # Configurações
-├── pom.xml                                   # Dependências Maven
+│           ├── static/ 
+│           └── application.properties
+├── pom.xml
 └── README.md
+
 🎯 Endpoints da API
 Método	Endpoint	Descrição	Parâmetros
 GET	/listatodos	Lista todas as tarefas	-
 GET	/buscartarefaid	Busca tarefa por ID	idTarefa
 POST	/salvar	Cria uma nova tarefa	JSON da tarefa
-PUT	/atualizar	Atualiza uma tarefa existente	JSON da tarefa
+PUT	/atualizar	Atualiza uma tarefa	JSON da tarefa
 DELETE	/delete	Remove uma tarefa	idTarefa
-
-📝 Modelo de Dados da Tarefa
-
-json
+Modelo de Dados da Tarefa
 {
   "id": 1,
   "titulo": "Reunião com a equipe",
@@ -126,88 +116,64 @@ json
 }
 
 🔧 Configuração de Desenvolvimento
-🔥 Executando em Ambiente de Desenvolvimento
-Habilite o hot reload:
-
-properties
+# Hot reload
 spring.devtools.restart.enabled=true
-Configure o log:
 
-properties
+# Log detalhado
 logging.level.br.com.toDoList=DEBUG
-🌍 Variáveis de Ambiente
-bash
+
+Variáveis de Ambiente
 export DB_URL=jdbc:postgresql://localhost:5432/todolist
 export DB_USERNAME=usuario
 export DB_PASSWORD=senha
+
 🤝 Contribuindo
-Contribuições são sempre bem-vindas! Para contribuir:
 
 Faça um fork do projeto
 
-Crie uma branch para sua feature (git checkout -b feature/AmazingFeature)
+Crie uma branch: git checkout -b feature/AmazingFeature
 
-Commit suas mudanças (git commit -m 'Add some AmazingFeature')
+Commit suas alterações: git commit -m 'Add some AmazingFeature'
 
-Push para a branch (git push origin feature/AmazingFeature)
+Push: git push origin feature/AmazingFeature
 
-Abra um Pull Request
+Abra um Pull Request 🚀
 
-📋 Guidelines para Contribuição
+Guidelines
+
 Siga o padrão de código existente
 
 Adicione testes para novas funcionalidades
 
 Atualize a documentação quando necessário
 
-Use mensagens de commit claras e descritivas
+Use mensagens de commit claras
 
 📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-text
-MIT License
+MIT License © 2024 Jhonata Luis
 
-Copyright (c) 2024 Jhonata Luis
-
-Permissão é concedida, gratuitamente, a qualquer pessoa que obtenha uma cópia
-deste software e arquivos de documentação associados (o "Software"), para lidar
-no Software sem restrição, incluindo, sem limitação, os direitos de usar, copiar,
-modificar, fundir, publicar, distribuir, sublicenciar e/ou vender cópias do Software,
-e para permitir que as pessoas a quem o Software é fornecido o façam, sujeito às
-seguintes condições:
 👨‍💻 Autor
+
 Jhonata Luis
 
 GitHub: @JhonataLuis
 
 LinkedIn: Jhonata Luis
 
-📞 Suporte
-Se você encontrar algum problema ou tiver alguma dúvida:
-
-Verifique a documentação e issues existentes
-
-Abra uma issue descrevendo o problema
-
-Entre em contato: jhonata.luis@example.com
+Email: jhonata.luis@example.com
 
 🔄 Status do Projeto
-https://img.shields.io/badge/Status-Em%2520Desenvolvimento-yellow?style=for-the-badge
 
-Versão: 1.0.0
-Última atualização: Outubro 2024
+
+Versão: 1.0.0 | Última atualização: Outubro 2024
 
 🎉 Agradecimentos
-Equipe do Spring Boot pelo excelente framework
 
-Comunidade Bootstrap pelos componentes UI
+Equipe do Spring Boot
+
+Comunidade Bootstrap
 
 Todos os contribuidores e testadores
 
-
-⭐️ Se este projeto foi útil para você, deixe uma estrela no repositório!
-https://api.star-history.com/svg?repos=JhonataLuis/To-Do-List-project&type=Date
-
-
-
+⭐️ Se este projeto foi útil, deixe uma estrela no repositório!
