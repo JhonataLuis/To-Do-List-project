@@ -1,4 +1,4 @@
-# 📝 To-Do List Application
+# 📝 To-Do List API REST
 
 ![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%2520Boot-2.7+-green?style=for-the-badge&logo=springboot)
