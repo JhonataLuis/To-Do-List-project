@@ -16,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
-
 
 
 @Entity
@@ -45,7 +43,7 @@ public class Tarefas{
 	
 	@Column(name = "data_criacao")
 	@CreationTimestamp
-	private LocalDateTime dataCriacao; // Armazena da data e hora da criação automaticamente
+	private LocalDateTime dataCriacao; // Armazena a data e hora da criação automaticamente
 	
 	//private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
