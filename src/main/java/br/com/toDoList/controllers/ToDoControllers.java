@@ -48,7 +48,7 @@ public class ToDoControllers {
     
     
     /*MÉTODO DA API PARA CONSULTAR TODOS AS TAREFAS CADASTRADAS*/
-    @GetMapping(value = "listatodos")/*ESSE É UM METODO DE API*/
+    @GetMapping(value = "listartodos")/*ESSE É UM METODO DE API*/
     @ResponseBody/*RETORNA OS DADOS PARA O CORPO DA RESPONSTA JSON*/
     public ResponseEntity<List<Tarefas>> listarTarefas(){
     	
