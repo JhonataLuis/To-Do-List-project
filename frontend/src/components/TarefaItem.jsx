@@ -57,7 +57,31 @@ function TarefaItem({ tarefa, onAtualizar, onRemover }) {
                     onChange={(e) => setTituloEditando(e.target.value)}
                     placeholder="Título"
                     />
+                    <button onClick={handleUpdate}>Salvar</button>
+                    <button onClick={() => setEditando(false)}>Cancelar</button>
             </div>
-        )
+        );
     }
+
+    return (
+        <div className={"tarefa-item ${tarefa.concluido ? 'concluido' : ''}"}>
+            <div className="tarefa-content">
+                <input
+                    type="checkbox"
+                    checked={tarefa.concluido}
+                    onChange={toggleConcluido}
+                    />
+                    <div className="tarefa-info">
+                        <h3>${tarefa.titulo}</h3>
+                        <p>${tarefa.descricao}</p>
+                    </div>
+            </div>
+            <div className="tarefa-actions">
+                <button onClick={() => setEditando(true)}>Editar</button>
+                <button onClick={handleDelete}>Excluir</button>
+            </div>
+        </div>
+    );
 }
+
+export default TarefItem;
