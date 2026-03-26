@@ -4,3 +4,51 @@ body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.main-container {
+    padding: 20px;
+}
+
+.form-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.table-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    overflow: hidden;
+}
+
+.table-title {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+}
+
+.btn-action {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.priority-badge {
+    padding: 0.25em 0.6em;
+    border-radius: 10px;
+    font-size: 0.75em;
+    font-weight: 600;
+}

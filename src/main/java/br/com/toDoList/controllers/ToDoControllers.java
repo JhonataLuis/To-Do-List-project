@@ -58,7 +58,7 @@ public class ToDoControllers {
     }
     
     /*MÉTODO DA API PARA SALVAR UMA TAREFA NO BANCO DE DADOS*/
-    @PostMapping(value = "tarefas")
+    @PostMapping(value = "/tarefas")
     @ResponseBody
     public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas tarefas){
     	
@@ -92,7 +92,7 @@ public class ToDoControllers {
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
     @DeleteMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<String> delete(@RequestParam Long idTarefa){
+    public ResponseEntity<String> delete(@PathVariable Long idTarefa){
     	
         service.delete(idTarefa);
     	

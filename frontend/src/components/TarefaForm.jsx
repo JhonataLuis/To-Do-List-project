@@ -30,8 +30,9 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
         });
     };
 
-    const handleSubimit = async (e) => {
-        e.prventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("Clicou");
 
         // Validação
         if (!formData.titulo || !formData.descricao || !formData.prioridade ||
@@ -40,11 +41,12 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 return;
             }
 
+            console.log(formData);
             try {
                 let response;
                 if (formData.id) {
                     // Atualizar tarefa existente
-                    response = await api.put('/tarefas/${formData.id}', formData);
+                    response = await api.put(`/tarefas/${formData.id}`, formData);
                 } else {
                     // Criar nova tarefa
                     response = await api.post('/tarefas', formData);
@@ -85,9 +87,9 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                     </h4>
                 </div>
                 <div className="card-body">
-                    <form onSubimit={handleSubimit}>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label htmlFo="id" className="form-label">ID</label>
+                            <label htmlFor="id" className="form-label">ID</label>
                             <input 
                 type="text" 
                 className="form-control" 
