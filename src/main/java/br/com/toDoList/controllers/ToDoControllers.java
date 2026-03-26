@@ -48,7 +48,7 @@ public class ToDoControllers {
     
     
     /*MÉTODO DA API PARA CONSULTAR TODOS AS TAREFAS CADASTRADAS*/
-    @GetMapping(value = "listartodos")/*ESSE É UM METODO DE API*/
+    @GetMapping(value = "/listartodos")/*ESSE É UM METODO DE API*/
     @ResponseBody/*RETORNA OS DADOS PARA O CORPO DA RESPONSTA JSON*/
     public ResponseEntity<List<Tarefas>> listarTarefas(){
     	
@@ -58,7 +58,7 @@ public class ToDoControllers {
     }
     
     /*MÉTODO DA API PARA SALVAR UMA TAREFA NO BANCO DE DADOS*/
-    @PostMapping(value = "salvar")
+    @PostMapping(value = "tarefas")
     @ResponseBody
     public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas tarefas){
     	
@@ -69,7 +69,7 @@ public class ToDoControllers {
     
    
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
-    @PutMapping(value = "update")
+    @PutMapping(value = "/tarefas/{id}")
     @ResponseBody
     public ResponseEntity<Tarefas> update(@RequestBody Tarefas tarefas){
     	
@@ -90,7 +90,7 @@ public class ToDoControllers {
     }
 
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
-    @DeleteMapping(value = "delete")
+    @DeleteMapping(value = "/tarefas/{id}")
     @ResponseBody
     public ResponseEntity<String> delete(@RequestParam Long idTarefa){
     	

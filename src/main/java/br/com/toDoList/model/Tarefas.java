@@ -36,10 +36,10 @@ public class Tarefas{
 	
 	private String titulo;
 	private String descricao;
-	//private boolean concluido;//SIM OU NÃO
+	private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
-	private boolean concluido = false; // Define o valor padrão como false
+	//private boolean concluido = false; // Define o valor padrão como false
 	
 	@Column(name = "data_criacao")
 	@CreationTimestamp

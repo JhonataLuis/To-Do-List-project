@@ -84,4 +84,4 @@ function TarefaItem({ tarefa, onAtualizar, onRemover }) {
     );
 }
 
-export default TarefItem;
+export default TarefaItem;
