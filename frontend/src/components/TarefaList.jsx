@@ -35,4 +35,33 @@ function TarefaList() {
             tarefa.id === tarefaAtualizada.id ? tarefaAtualizada : tarefa
         ));
     };
+
+    const removerTarefa = (id) => {
+        setTarefas(tarefas.filter(tarefa => tarefa.id !== id));
+    };
+
+    if (loading) return <div className="loading">Carregando...</div>
+    if (error) return <div className="error">{error}</div>;
+
+    return (
+        <div className="tarefa-container">
+            <h2>Lista de Tarefas</h2>
+            <tarefaForm onTarefaAdicionada={adicionarTarefa} />
+
+            <div className="tarefas-list">
+                {tarefas.lenght === 0 ? (
+                    <p>Nenhuma tarefa cadastrada</p>
+                ) : (
+                    tarefas.map(tarefa => (
+                        <TarefaItem key={tarefa.id} tarefa={tarefa}
+                        onAtualizar={atualizarTarefa}
+                        onRemover={removerTarefa}
+                        />
+                    ))
+                )}
+            </div>
+        </div>
+    );
 }
+
+export default TarefaList;
