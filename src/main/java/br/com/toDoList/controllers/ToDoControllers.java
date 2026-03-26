@@ -71,11 +71,11 @@ public class ToDoControllers {
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
     @PutMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<Tarefas> update(@RequestBody Tarefas tarefas){
-    	
+    public ResponseEntity<Tarefas> update(@PathVariable Long id, @RequestBody Tarefas tarefas){
+    	tarefas.setId(id);
         Tarefas taref = service.update(tarefas);
     	
-    	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
+    	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
     }
     
     /*MÉTODO PARA CONSULTAR UMA TAREFA DO BANCO DE DADOS PELO ID DA TAREFA*/

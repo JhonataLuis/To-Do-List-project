@@ -36,7 +36,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
 
         // Validação
         if (!formData.titulo || !formData.descricao || !formData.prioridade ||
-            !formData.dataCriacao || !formData.categoria) {
+            !formData.categoria) {
                 alert('Por favor, preencha todos os campos obrigatórios');
                 return;
             }
@@ -44,12 +44,16 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
             console.log(formData);
             try {
                 let response;
+
+                // Remove datacriação antes de enviar
+                const { dataCriacao, ...dadosSemData } = formData;
+
                 if (formData.id) {
                     // Atualizar tarefa existente
-                    response = await api.put(`/tarefas/${formData.id}`, formData);
+                    response = await api.put(`/tarefas/${formData.id}`, dadosSemData);
                 } else {
                     // Criar nova tarefa
-                    response = await api.post('/tarefas', formData);
+                    response = await api.post('/tarefas', dadosSemData);
                 }
 
                 onTarefaSalva(response.data);
@@ -150,17 +154,6 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 <option value="Media">Média</option>
                 <option value="Baixa">Baixa</option>
               </select>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="dataCriacao" className="form-label">Data Criação</label>
-              <input 
-                type="date" 
-                className="form-control" 
-                id="dataCriacao"
-                value={formData.dataCriacao}
-                onChange={handleChange}
-                required
-              />
             </div>
             <div className="mb-3">
               <label htmlFor="categoria" className="form-label">Categoria</label>
