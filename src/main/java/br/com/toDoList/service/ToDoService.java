@@ -10,6 +10,8 @@ public interface ToDoService {
 
     List<Tarefas> list();
 
+    Tarefas findById(Long id);
+
     Tarefas update(Tarefas tarefas);
 
     List<Tarefas> delete(Long id);

@@ -79,11 +79,15 @@ public class ToDoControllers {
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
     @DeleteMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<String> delete(@PathVariable Long idTarefa){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
     	
-        service.delete(idTarefa);
+        Tarefas tasks = service.findById(id);
+        if (tasks == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        service.delete(id);
     	
-    	return new ResponseEntity<String>("Tarefa deletada com sucesso", HttpStatus.OK);
+    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
 }

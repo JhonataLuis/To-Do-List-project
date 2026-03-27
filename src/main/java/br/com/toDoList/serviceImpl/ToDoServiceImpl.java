@@ -30,6 +30,10 @@ public class ToDoServiceImpl implements ToDoService {
         return repository.findAll(sort);
     }
 
+    public Tarefas findById(Long id){
+        return repository.findById(id).orElse(null);
+    }
+
     /**
      * Atualiza uma tarefa existente.
      * @param tarefas A tarefa com os dados atualizados.
