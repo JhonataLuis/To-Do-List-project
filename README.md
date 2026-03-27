@@ -24,7 +24,7 @@
 | Funcionalidade       | Descrição                                           |
 |---------------------|---------------------------------------------------|
 | ✅ **Cadastro de Tarefas** | Adicione tarefas com título, descrição, prioridade e categoria |
-| 📋 **Listagem de Tarefas** | Visualize todas as tarefas em uma tabela organizada |
+| 📋 **Listagem de Tarefas com Paginação** | Visualize todas as tarefas em uma tabela organizada |
 | ✏️ **Edição de Tarefas** | Atualize informações das tarefas existentes       |
 | 🗑️ **Exclusão de Tarefas** | Remova tarefas completadas ou desnecessárias      |
 | 🏷️ **Categorização**      | Organize tarefas por categorias (Trabalho, Pessoal, Estudos) |
@@ -38,7 +38,7 @@
 
 **Backend**
 - ☕ Java 17  
-- 🌱 Spring Boot 2.7+  
+- 🌱 Spring Boot 2.7+ 
 - 🗄️ PostgreSQL  
 - 🔗 Spring Data JPA  
 - 📦 Maven  
@@ -46,10 +46,10 @@
 **Frontend**
 - 🌐 HTML5  
 - 🎨 CSS3  
-- ⚡ JavaScript  
+- ⚡ JavaScript
+- ⚛️ React  
 - 💎 Bootstrap 5.3  
-- 🔧 jQuery 3.7  
-- 🎭 Font Awesome  
+- 🎭 Bootstrap Icons  
 
 ---
 
@@ -65,7 +65,7 @@
 ```sql
 CREATE DATABASE todolist;
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/todolist
+spring.datasource.url=jdbc:postgresql://localhost:5432/seu_banco
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
 spring.jpa.hibernate.ddl-auto=update

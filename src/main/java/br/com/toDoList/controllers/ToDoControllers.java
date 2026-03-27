@@ -4,6 +4,9 @@ package br.com.toDoList.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.model.Tarefas;
-import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 
 
@@ -52,6 +54,28 @@ public class ToDoControllers {
         List<Tarefas>  tarefas = service.list();
     	
     	return new ResponseEntity<List<Tarefas>>(tarefas, HttpStatus.OK);/*RETORNAR A LISTA EM JSON*/
+    }
+
+    /*ENDPOINT COM PAGINAÇÃO*/
+    @GetMapping(value = "/tarefas/paginadas")
+    @ResponseBody
+    public ResponseEntity<Page<Tarefas>> listarTaskPaginated(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size ){
+        
+            try{
+                // Cria objeto Pageable com página e tamanho
+                Pageable pageable = PageRequest.of(page, size);
+
+                /*BUSCA TAREFAS COM PAGINAÇÃO (JÁ APLICA ORDENAÇÃO) */
+                Page<Tarefas> taskPage = service.findAllPagelist(pageable);
+
+                return new ResponseEntity<>(taskPage, HttpStatus.OK);
+                
+            } catch (Exception e){
+                e.printStackTrace();
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
     }
     
     /*MÉTODO DA API PARA SALVAR UMA TAREFA NO BANCO DE DADOS*/

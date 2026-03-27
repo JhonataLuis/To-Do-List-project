@@ -9,17 +9,21 @@ function App() {
   const [tarefaEditando, setTarefaEditando] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(0);
+  const [size] = useState(5);
+  const [pageCount, setPageCount] = useState(0);
 
   // Carregar tarefas ao iniciar
   useEffect(() => {
-    carregarTarefas();
-  }, []);
+    carregarTarefas(page);
+  }, [page]);
 
-  const carregarTarefas = async () => {
+  const carregarTarefas = async (pageAtual = 0) => {
     try {
       setLoading(true);
-      const response = await api.get('/listartodos');
-      setTarefas(response.data);
+      const response = await api.get(`/tarefas/paginadas?page=${pageAtual}&size=${size}`);
+      setTarefas(response.data.content); // Lista
+      setPageCount(response.data.totalPages); // Total de páginas
       setError(null);
     } catch (err) {
       console.error('Erro ao carregar tarefas:', err);
@@ -27,6 +31,10 @@ function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePageChange = (data) => {
+    setPage(data.selected);
   };
 
   const handleTarefaSalva = (tarefaSalva) => {
@@ -124,6 +132,8 @@ function App() {
               tarefas={tarefas}
               onEditar={handleEditar}
               onTarefaExcluida={handleTarefaExcluida}
+              pageCount={pageCount}
+              onPageChange={handlePageChange}
             />
           </div>
         </div>

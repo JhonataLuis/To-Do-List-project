@@ -3,6 +3,9 @@ package br.com.toDoList.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +20,32 @@ public class ToDoServiceImpl implements ToDoService {
     private TarefaRepository repository;
 
     public Tarefas create(Tarefas tarefas){
-        repository.save(tarefas);
-        //return list();//RETORNA A LISTA DESENVOLVIDA ABAIXO //MODELO DRY PARA NÃO REPETIR CÓDIGO
-        return tarefas;
+        Tarefas taskSaved = repository.save(tarefas);
+
+        if(taskSaved == null){
+            throw new RuntimeException("Erro ao salvar tarefa");
+        }
+       
+        return taskSaved;
     }
 
-    public List<Tarefas> list(){
+    public List<Tarefas> list() {
+        // ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
+        Sort sort = Sort.by("prioridade").descending().and(
+            Sort.by("titulo").ascending());
+        return repository.findAll(sort);
+    }
+
+    public Page<Tarefas> findAllPagelist(Pageable pageable){
         //ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
         Sort sort = Sort.by("prioridade").descending().and(
             Sort.by("titulo").ascending());
-        repository.findAll();
-        return repository.findAll(sort);
+        //repository.findAll();
+
+        // Aplica a ordenação na paginação
+        Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        return repository.findAll(page);
     }
 
     public Tarefas findById(Long id){
@@ -46,8 +64,9 @@ public class ToDoServiceImpl implements ToDoService {
         return tarefas;
     }
 
-    public List<Tarefas> delete(Long id){
+    public void delete(Long id){
         repository.deleteById(id);
-        return list();
     }
+
+
 }

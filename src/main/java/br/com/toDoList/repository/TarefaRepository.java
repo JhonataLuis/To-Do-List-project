@@ -8,5 +8,5 @@ import br.com.toDoList.model.Tarefas;
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
 
-    
+   
 }

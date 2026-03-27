@@ -1,8 +1,9 @@
 import React from 'react';
+import ReactPaginate from 'react-paginate'; // react-paginate
 import api from '../services/api';
 
 
-function TarefaTable({ tarefas, onEditar, onTarefaExcluida }) {
+function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageChange }) {
   
   const getPriorityClass = (prioridade) => {
     switch(prioridade) {
@@ -127,7 +128,25 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida }) {
           </tbody>
         </table>
       </div>
+
+      <div className="d-flex justify-content-center mt-4">
+        <ReactPaginate
+            previousLabel={<span><i className="bi bi-arrow-left-circle"> Anterior</i></span>}
+            nextLabel={<span>Próximo <i className='bi bi-arrow-right-circle'></i></span>}
+            pageCount={pageCount}
+            onPageChange={onPageChange}
+            containerClassName={'pagination justify-content-center mt-3'}
+            pageClassName={'page-item'}
+            pageLinkClassName={'page-link'}
+            previousClassName={'page-item'}
+            previousLinkClassName={'page-link'}
+            nextClassName={'page-link'}
+            activeClassName={'active'}
+        />
+        </div>
     </div>
+
+   
   );
 }
 
