@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
     const [formData, setFormData] = useState({
@@ -86,7 +87,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
             <div className="card">
                 <div className="card-header text-center">
                     <h4 className="card-title mb-0"> 
-                        <i className="fas fa-plus-circle me-2"></i>
+                        <i className="bi bi-plus-circle me-2"></i>
                         {formData.id ? 'Editar Tarefa' : 'Cadastro de Tarefas'}
                     </h4>
                 </div>
@@ -170,11 +171,11 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
             <div className="card-footer bg-transparent border-0 pt-3">
               <div className="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button type="submit" className="btn btn-success me-md-2">
-                  <i className="fas fa-save me-1"></i>
+                  <i className="bi bi-save me-1"></i>
                   {formData.id ? 'Atualizar Tarefa' : 'Salvar Tarefa'}
                 </button>
                 <button type="button" className="btn btn-primary" onClick={handleNovo}>
-                  <i className="fas fa-plus me-1"></i>Novo
+                  <i className="bi bi-plus me-1"></i>Novo
                 </button>
               </div>
                         </div>

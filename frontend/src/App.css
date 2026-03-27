@@ -41,11 +41,6 @@ body {
     font-weight: 600;
 }
 
-.btn-action {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-}
-
 .priority-badge {
     padding: 0.25em 0.6em;
     border-radius: 10px;

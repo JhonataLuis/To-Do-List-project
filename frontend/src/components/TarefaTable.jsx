@@ -51,7 +51,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida }) {
     <div className="table-container">
       <div className="table-title">
         <h5 className="mb-0">
-          <i className="fas fa-list me-2"></i>Lista de Tarefas
+          <i className="bi bi-list me-2"></i>Lista de Tarefas
         </h5>
       </div>
       <div className="table-responsive">
@@ -105,18 +105,18 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida }) {
                   <td>{formatarData(tarefa.dataCriacao)}</td>
                   <td className="text-center">
                     <button 
-                      className="btn btn-warning btn-action me-2"
+                      className="btn btn-warning me-2"
                       onClick={() => onEditar(tarefa)}
                       title="Editar"
                     >
-                      <i className="fas fa-edit"></i>
+                      <i className="bi bi-pencil"></i>
                     </button>
                     <button 
                       className="btn btn-danger btn-action"
                       onClick={() => handleExcluir(tarefa.id)}
                       title="Excluir"
                     >
-                      <i className="fas fa-trash"></i>
+                      <i className="bi bi-trash"></i>
                     </button>
                   </td>
                 </tr>
