@@ -47,3 +47,99 @@ body {
     font-size: 0.75em;
     font-weight: 600;
 }
+
+.priority-hight {
+    background-color: #ffebee;
+    color: #d32f2f;
+}
+
+.priority-medium {
+    background-color: #fff8e1;
+    color: #ff8f00;
+}
+
+.priority-low {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 0.2rem rgba(67,97,238,0.25);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    border-radius: 6px;
+    padding: 8px 20px;
+}
+
+.btn-primary {
+    background-color: #4361ee;
+    border-color: #4361ee;
+    border-radius: 6px;
+    padding: 8px 20px;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    border-radius: 4px;
+    color: #000;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    border-radius: 4px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    border-top: none;
+    font-weight: 600;
+    padding: 12px 15px;
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(67,97,238,0.05);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+}
+
+.table-responsive {
+    font-size: 0.875rem;
+}
+
+/* Loading spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Alert styles */
+.alert {
+    border-radius: 10px;
+    margin-bottom: 20px;
+}

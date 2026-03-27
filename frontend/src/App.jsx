@@ -93,8 +93,8 @@ function App() {
                     </li>
                 </ul>
                 <div className="d-flex">
-                    <button className="btn btn-outline-light me-2" type="button">Login</button>
-                    <button className="btn btn-primary" type="button">Registrar</button>
+                    <button className="btn btn-outline-light btn-sm me-2" type="button" title="Login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                    <button className="btn btn-primary btn-sm" type="button" title="Registrar"><i class="bi bi-person-check"></i> Registrar</button>
                 </div>
             </div>
         </div>

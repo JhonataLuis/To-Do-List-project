@@ -33,9 +33,6 @@ import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 @RestController
 public class ToDoControllers {
 	
-	@Autowired/*INJEÇÃO DE DEPENDENCIA IC/CI e CDI*/
-	private TarefaRepository tarefaRepository;
-
     @Autowired
     private ToDoServiceImpl service;
 	
@@ -78,16 +75,6 @@ public class ToDoControllers {
     	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
     }
     
-    /*MÉTODO PARA CONSULTAR UMA TAREFA DO BANCO DE DADOS PELO ID DA TAREFA*/
-    @GetMapping(value = "buscartarefaid")
-    @ResponseBody
-    public ResponseEntity<Tarefas> consultar(@RequestParam(name = "idTarefa") Long idTarefa){
-    	
-    	Tarefas taref = tarefaRepository.findById(idTarefa).get();
-    	
-    	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
-    	
-    }
 
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
     @DeleteMapping(value = "/tarefas/{id}")

@@ -104,20 +104,22 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida }) {
                   <td>{tarefa.categoria}</td>
                   <td>{formatarData(tarefa.dataCriacao)}</td>
                   <td className="text-center">
-                    <button 
-                      className="btn btn-warning me-2"
-                      onClick={() => onEditar(tarefa)}
-                      title="Editar"
-                    >
-                      <i className="bi bi-pencil"></i>
-                    </button>
-                    <button 
-                      className="btn btn-danger btn-action"
-                      onClick={() => handleExcluir(tarefa.id)}
-                      title="Excluir"
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
+                  <div className="d-flex justify-content-center gap-2">
+                        <button 
+                        className="btn btn-warning btn-sm"
+                        onClick={() => onEditar(tarefa)}
+                        title="Editar"
+                        >
+                        <i className="bi bi-pencil"></i>
+                        </button>
+                        <button 
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleExcluir(tarefa.id)}
+                        title="Excluir"
+                        >
+                        <i className="bi bi-trash"></i>
+                        </button>
+                    </div>
                   </td>
                 </tr>
               ))
