@@ -1,6 +1,5 @@
 package br.com.toDoList.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,13 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "seq_usuario", sequenceName = "seq_name", allocationSize = 1, initialValue = 1)
-public class Usuario extends Pessoa implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@SequenceGenerator(name = "seq_user", sequenceName = "seq_name", allocationSize = 1, initialValue = 1)
+public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user")
 	private Long id;
 	
 	private String email;

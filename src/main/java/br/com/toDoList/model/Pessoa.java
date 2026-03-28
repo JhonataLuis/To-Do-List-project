@@ -1,6 +1,7 @@
 package br.com.toDoList.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,11 @@ public class Pessoa {
 	private String telefone;
 	private String endereco;
 	private String genero;
+	private LocalDateTime createdDate;
+
+	public Long getId() {
+		return id;
+	}
 	
 	public String getNome() {
 		return nome;
@@ -58,8 +64,12 @@ public class Pessoa {
 		this.genero = genero;
 	}
 
-	public Long getId() {
-		return id;
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public LocalDateTime getCreatedDate() {
+		return createdDate;
 	}
 	
 }
