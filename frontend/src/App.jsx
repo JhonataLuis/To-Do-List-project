@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import TarefaForm from './components/TarefaForm';
 import TarefaTable from './components/TarefaTable';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import api from './services/api';
 
 function App() {
@@ -69,6 +71,8 @@ function App() {
 
   if (loading) {
     return (
+      <>
+      <Header/>
       <div className="container-fluid main-container">
         <div className="text-center py-5">
           <div className="spinner-border text-primary" role="status">
@@ -77,36 +81,15 @@ function App() {
           <p className="mt-3">Carregando tarefas...</p>
         </div>
       </div>
+      <Footer/>
+      </>
     );
   }
 
   return (
-    <div className="App">
+    <div className="App d-flex flex-column min-vh-100">
       {/* Navigation */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container">
-            <a className="navbar-brand fw-bold" href="index.html">
-                <i className="bi bi-list-task me-2"></i>ToDo List
-            </a>
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="tarefas.html">Minhas Tarefas</a>
-                    </li>
-                </ul>
-                <div className="d-flex">
-                    <button className="btn btn-outline-light btn-sm me-2" type="button" title="Login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
-                    <button className="btn btn-primary btn-sm" type="button" title="Registrar"><i class="bi bi-person-check"></i> Registrar</button>
-                </div>
-            </div>
-        </div>
-    </nav>
+      <Header />
 
       <div className="container-fluid main-container">
         {error && (
@@ -138,6 +121,7 @@ function App() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -1,0 +1,131 @@
+/* Footer Principal */
+footer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #ffffff;
+    padding: 3rem 0 1.5rem;
+    margin-top: auto;
+    position: relative;
+    font-family: 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efeito de borda superior sutil */
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #4361ee, #4cc9f0, #4361ee);
+}
+
+/* Titulos do footer */
+footer h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Linha decorativa nos títulos */
+footer h5::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #4cc9f0, #4361ee);
+    border-radius: 2px;
+}
+
+/* Texto do footer */
+footer p {
+    color: #b8c1ec;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* Links do footer */
+footer a {
+    color: #b8c1ec;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+}
+
+footer a:hover {
+    color: #4cc9f0;
+    transform: translateX(5px);
+}
+
+/* Efeito de underline animado nos links */
+footer a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4cc9f0, #4361ee);
+    transition: width 0.3s ease;
+}
+
+footer a:hover::before {
+    width: 100%;
+}
+
+/* Lista do footer */
+footer ul {
+    margin: 0;
+    padding: 0;
+}
+
+footer ul li {
+    margin-bottom: 0.75rem;
+    color: #b8c1ec;
+    font-size: 0.95rem;
+}
+
+/* Icones no footer */
+footer .bi {
+    margin-right: 8px;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+footer ul li:hover .bi {
+    transform: scale(1.1);
+    color: #4cc9f0;
+}
+
+/* Separador */
+footer hr {
+    background: linear-gradient(90deg, transparent, #4cc9f0, transparent);
+    height: 1px;
+    border: none;
+    margin: 2rem 0 1.5rem;
+}
+
+/* Copyright */
+footer .text-center p {
+    font-size: 0.85rem;
+    color: #8f9bb3;
+    margin-bottom: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    footer {
+        padding: 2rem 0 1rem;
+        text-align: center;
+    }
+}
+
+footer h5::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
