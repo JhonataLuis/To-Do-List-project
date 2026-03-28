@@ -8,17 +8,30 @@ package br.com.toDoList.model;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 
 @Entity
+@Table(name = "tasks")
 @SequenceGenerator(name = "seq_tarefa", sequenceName = "seq_tarefa", allocationSize = 1, initialValue = 1)
 public class Tarefas{
 	/**
@@ -34,19 +47,48 @@ public class Tarefas{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tarefa")
 	private Long id;
 	
+	@Column(nullable = false)
 	private String titulo;
+
+	@Column(columnDefinition = "TEXT")
 	private String descricao;
+
+	@Enumerated(EnumType.STRING)
+	private TaskStatus status;
+
+	//private TaskPriority priority;
+
 	private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
-	//private boolean concluido = false; // Define o valor padrão como false
+	@Column(name = "due_date")
+	private LocalDateTime dueDate;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnore
+	private User user;
 	
 	@Column(name = "data_criacao")
 	@CreationTimestamp
 	private LocalDateTime dataCriacao; // Armazena a data e hora da criação automaticamente
+
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 	
 	//private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
+
+	@PrePersist
+	protected void onCreate(){
+		dataCriacao = LocalDateTime.now();
+		updatedAt = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	protected void onUpdate(){
+		updatedAt = LocalDateTime.now();
+	}
 	
 	
 	public Long getId() {
@@ -97,6 +139,37 @@ public class Tarefas{
 		this.categoria = categoria;
 	}
 	
+	public void setDueDate(LocalDateTime dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public LocalDateTime getDueDate() {
+		return dueDate;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
 	
-	
+}
+
+enum TaskStatus {
+	PENDING, IN_PROGRESS, COMPLETED, CANCELLED
+}
+
+enum TaskPriority {
+	LOW, MEDIUM, HIGH
 }
