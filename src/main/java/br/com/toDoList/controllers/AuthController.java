@@ -15,7 +15,6 @@ import jakarta.ws.rs.core.Response;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired

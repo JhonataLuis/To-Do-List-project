@@ -1,7 +1,5 @@
 import React, { useState, useEffect, Children } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-//import Login from './pages/Login';
-//import Register from './pages/Register';
 //import Dashboard from './pages/Dashboard';
 //import Profile from './pages/Profile';
 import './App.css';
@@ -10,14 +8,57 @@ import TarefaTable from './components/TarefaTable';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import api from './services/api';
-import { AuthProvider } from './services/AuthContext';
+import { AuthProvider, useAuth } from './services/AuthContext';
+import Login from './components/Login';
+import Register from './components/Register';
+import LandingPage from './components/LandingPage';
 
 const PrivateRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) return <div className="text-center mt-5">Carregando autenticação...</div>;
+
   return isAuthenticated ? children : <Navigate to="/login" />
 }
 
-function App() {
+// Componente Painel de Tarefas
+const Dashboard = ({
+  tarefas, handleEditar, handleTarefaExcluida, pageCount, handlePageChange,
+  tarefaEditando, handleTarefaSalva, error, setError
+}) => {
+  return (
+    <div className="container-fluid main-container mt-4">
+      {error && (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+          <i className="fas fa-exclamation-circle me-2"></i>
+          {error}
+          <button type="button" className="btn-close" onClick={() => setError(null)}></button>
+        </div>
+      )}
+      <div className="row">
+        <div className="col-lg-5 col-xl-4">
+          <TarefaForm 
+          tarefaParaEditar={tarefaEditando} 
+          onTarefaSalva={handleTarefaSalva} />
+        </div>
+        <div className="col-lg-7 col-xl-8">
+          <TarefaTable 
+            tarefas={tarefas} 
+            onEditar={handleEditar} 
+            onTarefaExcluida={handleTarefaExcluida} 
+            pageCount={pageCount} 
+            onPageChange={handlePageChange} 
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AppContent() {
+
+  const { isAuthenticated } = useAuth();
+
   const [tarefas, setTarefas] = useState([]);
   const [tarefaEditando, setTarefaEditando] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,8 +69,10 @@ function App() {
 
   // Carregar tarefas ao iniciar
   useEffect(() => {
-    carregarTarefas(page);
-  }, [page]);
+    if (isAuthenticated){
+      carregarTarefas(page);
+    }
+  }, [page, isAuthenticated]);
 
   const carregarTarefas = async (pageAtual = 0) => {
     try {
@@ -80,42 +123,60 @@ function App() {
     }
   };
 
-  if (loading) {
-    return (
-      <>
-      <Header/>
-      <div className="container-fluid main-container">
-        <div className="text-center py-5">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Carregando...</span>
-          </div>
-          <p className="mt-3">Carregando tarefas...</p>
-        </div>
-      </div>
-      <Footer/>
-      </>
-    );
-  }
 
   return (
     <div className="App d-flex flex-column min-vh-100">
       {/* Navigation */}
-      <Header />
+      <AuthProvider> {/* O Provider deve envolver Tudo */}
+      <div className="App d-flex flex-column min-vh-100">
+         <Header /> {/* O Header deve estar aqui dentro */}
 
-      <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={
-            <PrivateRoute><Dashboard /></PrivateRoute>
-          } />
-          <Route path="/profile" element={
-            <PrivateRoute><Profile /></PrivateRoute>
-          } />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
-        </Routes>
-      </BrowserRouter>
+         <main className="flex-grow-1">
+          <Routes>
+            {/* Primeira página que o usuário vê (Home) */}
+            <Route path='/' element={<LandingPage />}/>
+
+            {/* Paginas de Autenticação */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Pagina Principal de Tarefas (Protegida) */}
+            <Route path="/dashboard" element={
+              <PrivateRoute>
+                 {loading ? (
+                        <div className="container-fluid main-container">
+                          <div className="text-center py-5">
+                            <div className="spinner-border text-primary" role="status">
+                              <span className="visually-hidden">Carregando...</span>
+                            </div>
+                            <p className="mt-3">Carregando tarefas...</p>
+                          </div>
+                        </div>
+                  ) : (
+                <Dashboard 
+                tarefas={tarefas}
+                      handleEditar={handleEditar}
+                      handleTarefaExcluida={handleTarefaExcluida}
+                      pageCount={pageCount}
+                      handlePageChange={handlePageChange}
+                      tarefaEditando={tarefaEditando}
+                      handleTarefaSalva={handleTarefaSalva}
+                      error={error}
+                      setError={setError}
+                      />
+                  )}
+                </PrivateRoute>
+            } />
+            {/* Redireciona quaquer erro para a Home */}
+            <Route path='*' element={<Navigate to="/" />} />
+            {/*<Route path="/profile" element={
+              <PrivateRoute><Profile /></PrivateRoute>
+            } />
+            <Route path="/" element={<Navigate to="/dashboard" />} />*/}
+          </Routes>
+        </main>
+        <Footer />
+        </div>
     </AuthProvider>
 
       <div className="container-fluid main-container">
@@ -126,30 +187,19 @@ function App() {
             <button type="button" className="btn-close" onClick={() => setError(null)}></button>
           </div>
         )}
-        
-        <div className="row">
-          {/* Form Column */}
-          <div className="col-lg-5 col-xl-4">
-            <TarefaForm 
-              tarefaParaEditar={tarefaEditando}
-              onTarefaSalva={handleTarefaSalva}
-            />
-          </div>
-          
-          {/* Table Column */}
-          <div className="col-lg-7 col-xl-8">
-            <TarefaTable 
-              tarefas={tarefas}
-              onEditar={handleEditar}
-              onTarefaExcluida={handleTarefaExcluida}
-              pageCount={pageCount}
-              onPageChange={handlePageChange}
-            />
-          </div>
-        </div>
       </div>
-      <Footer/>
     </div>
+  );
+}
+
+// O AppContent principal provicencia o Contexto e o Router
+function App() {
+return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

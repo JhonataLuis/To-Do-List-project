@@ -1,30 +1,53 @@
 import React from 'react';
 import '../App.css';
+import { useAuth } from '../services/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const { isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
     return (
         <>
         {/* Navbar */}
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container">
-                    <a class="navbar-brand fw-bold" href="index.html">
-                        <i class="bi bi-check2-square me-2"></i>KeePace
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div className="container">
+                    <a className="navbar-brand fw-bold" href="/">
+                        <i className="bi bi-check2-square me-2"></i>KeePace
                     </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href=".html">Home</a>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href=".html">Home</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/listartodos">Minhas Tarefas</a>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/listartodos">Minhas Tarefas</a>
                             </li>
                         </ul>
                         <div className="d-flex">
-                            <button className="btn btn-outline-light btn-sm me-2" type="button" title="Login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
-                            <button className="btn btn-primary btn-sm" type="button" title="Registrar"><i class="bi bi-person-check"></i> Registrar</button>
+                            {!isAuthenticated ? (
+                                <>
+                                {/* Botões para usuários não logados */}
+                            <button className="btn btn-outline-light btn-sm me-2" type="button" title="Login" onClick={() => navigate('/login')}><i className="bi bi-box-arrow-in-right"></i> Login</button>
+                            <button className="btn btn-primary btn-sm" type="button" title="Registrar" onClick={() => navigate('/register')}><i className="bi bi-person-check"></i> Registrar</button>
+                        </>
+                            ) : (
+                                /* Botão para usuários LOGADOS */
+                                <button 
+                                className="btn btn-danger btn-sm" 
+                                onClick={handleLogout}
+                            >
+                                <i className="bi bi-box-arrow-left"></i> Sair
+                            </button>
+                            )}
                         </div>
                     </div>
                 </div>
