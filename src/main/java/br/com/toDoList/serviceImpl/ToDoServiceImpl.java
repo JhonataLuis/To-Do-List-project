@@ -11,15 +11,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
+import br.com.toDoList.repository.UserRepository;
 import br.com.toDoList.service.ToDoService;
 
 @Service
-public class ToDoServiceImpl implements ToDoService {
+public class ToDoServiceImpl {
 
     @Autowired
     private TarefaRepository repository;
 
-    public Tarefas create(Tarefas tarefas){
+    @Autowired
+    private UserRepository userRepo;
+
+    /**
+     * Método para criar uma nova tarefa para o usuário
+     */
+    public Tarefas create(Tarefas tarefas, Long userId){
+        tarefas.setUser(userRepo.findById(userId).get());
         Tarefas taskSaved = repository.save(tarefas);
 
         if(taskSaved == null){
@@ -29,27 +37,26 @@ public class ToDoServiceImpl implements ToDoService {
         return taskSaved;
     }
 
-    public List<Tarefas> list() {
-        // ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
-        Sort sort = Sort.by("prioridade").descending().and(
-            Sort.by("titulo").ascending());
-        return repository.findAll(sort);
-    }
-
-    public Page<Tarefas> findAllPagelist(Pageable pageable){
+    public Page<Tarefas> findAllPagelist(Long userId, Pageable pageable){
         //ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
         Sort sort = Sort.by("prioridade").descending().and(
             Sort.by("titulo").ascending());
-        //repository.findAll();
 
         // Aplica a ordenação na paginação
         Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        return repository.findAll(page);
+        // Chamando o repositorio filtrando pelo usuário 
+        return repository.findByUserId(userId, page);
     }
 
-    public Tarefas findById(Long id){
-        return repository.findById(id).orElse(null);
+    // Vê somente as tarefas do usuário
+    public Tarefas getTarefas(Long id, Long userId){
+        Tarefas task = repository.findById(id).orElseThrow();
+        if (!task.getUser().getId().equals(userId)){
+            throw new RuntimeException("Access denied");
+        }
+
+        return task;
     }
 
     /**
@@ -58,15 +65,23 @@ public class ToDoServiceImpl implements ToDoService {
      * @return A tarefa atualizada.
      */
 
-    public Tarefas update(Tarefas tarefas){
-        repository.save(tarefas);
-
-        return tarefas;
+    public Tarefas update(Long id, Tarefas taskDetails, Long userId){
+        Tarefas task = getTarefas(id, userId);
+        task.setTitulo(taskDetails.getTitulo());
+        task.setDescricao(taskDetails.getDescricao());
+        task.setPrioridade(taskDetails.getPrioridade());
+        task.setDueDate(taskDetails.getDueDate());
+        
+        return repository.save(task);
     }
 
-    public void delete(Long id){
-        repository.deleteById(id);
+    // Método para deletar uma tarefa do usuário
+    public void deleteTask(Long id, Long userId){
+        repository.delete(getTarefas(id, userId));
     }
 
+    public void sharedTask(){
+
+    }
 
 }

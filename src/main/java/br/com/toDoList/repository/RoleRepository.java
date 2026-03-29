@@ -8,5 +8,5 @@ import br.com.toDoList.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{
 
-    Optional<Role> findByEmail(String name);
+    Optional<Role> findByName(String name);
 }

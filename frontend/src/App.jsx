@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Children } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+//import Login from './pages/Login';
+//import Register from './pages/Register';
+//import Dashboard from './pages/Dashboard';
+//import Profile from './pages/Profile';
 import './App.css';
 import TarefaForm from './components/TarefaForm';
 import TarefaTable from './components/TarefaTable';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import api from './services/api';
+import { AuthProvider } from './services/AuthContext';
+
+const PrivateRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" />
+}
 
 function App() {
   const [tarefas, setTarefas] = useState([]);
@@ -90,6 +101,22 @@ function App() {
     <div className="App d-flex flex-column min-vh-100">
       {/* Navigation */}
       <Header />
+
+      <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={
+            <PrivateRoute><Dashboard /></PrivateRoute>
+          } />
+          <Route path="/profile" element={
+            <PrivateRoute><Profile /></PrivateRoute>
+          } />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
 
       <div className="container-fluid main-container">
         {error && (

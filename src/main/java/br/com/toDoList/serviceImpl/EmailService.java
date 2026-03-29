@@ -3,8 +3,11 @@ package br.com.toDoList.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
+@EnableAsync
 @Service
 public class EmailService {
 
@@ -18,6 +21,7 @@ public class EmailService {
      * @param email Envia e-mail de boas-vindas após o registro.
      * @param name
      */
+    @Async
     public void sendWelcome(String email, String name) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(FROM);
@@ -32,6 +36,7 @@ public class EmailService {
     /**
      * Envia o link/token de recuperação de senha.
      */
+    @Async
     public void sendResetPassword(String email, String token) {
         // Exemplo de link que o usuário clicaria no front-end
         String resetLink = "http://localhost:3000/reset-password?token=" + token;

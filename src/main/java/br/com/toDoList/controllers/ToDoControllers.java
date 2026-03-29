@@ -1,14 +1,12 @@
 package br.com.toDoList.controllers;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
+import br.com.toDoList.serviceImpl.UserService;
 
 
 
@@ -33,28 +30,16 @@ import br.com.toDoList.serviceImpl.ToDoServiceImpl;
  */
 
 @RestController
+@RequestMapping("/api/tasks")
+@CrossOrigin(origins = "*")
 public class ToDoControllers {
 	
     @Autowired
-    private ToDoServiceImpl service;
+    private ToDoServiceImpl taskService;
+
+    @Autowired
+    private UserService userService;
 	
-    
-    @RequestMapping(value = "/mostrarnome/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Spring Boot REST API" + name + "!";
-    }
-    
-    
-    /*MÉTODO DA API PARA CONSULTAR TODOS AS TAREFAS CADASTRADAS*/
-    @GetMapping(value = "/listartodos")/*ESSE É UM METODO DE API*/
-    @ResponseBody/*RETORNA OS DADOS PARA O CORPO DA RESPONSTA JSON*/
-    public ResponseEntity<List<Tarefas>> listarTarefas(){
-    	
-        List<Tarefas>  tarefas = service.list();
-    	
-    	return new ResponseEntity<List<Tarefas>>(tarefas, HttpStatus.OK);/*RETORNAR A LISTA EM JSON*/
-    }
 
     /*ENDPOINT COM PAGINAÇÃO*/
     @GetMapping(value = "/tarefas/paginadas")
@@ -67,8 +52,10 @@ public class ToDoControllers {
                 // Cria objeto Pageable com página e tamanho
                 Pageable pageable = PageRequest.of(page, size);
 
+                Long userId = userService.getCurrentUser().getId();
+
                 /*BUSCA TAREFAS COM PAGINAÇÃO (JÁ APLICA ORDENAÇÃO) */
-                Page<Tarefas> taskPage = service.findAllPagelist(pageable);
+                Page<Tarefas> taskPage = taskService.findAllPagelist(userId, pageable);
 
                 return new ResponseEntity<>(taskPage, HttpStatus.OK);
                 
@@ -77,41 +64,58 @@ public class ToDoControllers {
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTarefas(@PathVariable Long id){
+        Long userId = userService.getCurrentUser().getId();
+
+        return ResponseEntity.ok(taskService.getTarefas(id, userId));
+    }
     
     /*MÉTODO DA API PARA SALVAR UMA TAREFA NO BANCO DE DADOS*/
     @PostMapping(value = "/tarefas")
     @ResponseBody
-    public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas tarefas){
+    public ResponseEntity<Tarefas> salvar(@RequestBody Tarefas task){
+    	Long userId = userService.getCurrentUser().getId();
+        Tarefas tarefas = taskService.create(task, userId);
     	
-        Tarefas taref = service.create(tarefas);
-    	
-    	return new ResponseEntity<Tarefas>(taref, HttpStatus.CREATED);
+    	return new ResponseEntity<Tarefas>(tarefas, HttpStatus.CREATED);
     }
     
    
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
     @PutMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<Tarefas> update(@PathVariable Long id, @RequestBody Tarefas tarefas){
-    	tarefas.setId(id);
-        Tarefas taref = service.update(tarefas);
+    public ResponseEntity<Tarefas> update(@PathVariable Long id, @RequestBody Tarefas task){
+        Long userId = userService.getCurrentUser().getId();
+    	task.setId(id);
+        Tarefas tarefas = taskService.update(id, task, userId);
     	
-    	return new ResponseEntity<Tarefas>(taref, HttpStatus.OK);
+    	return new ResponseEntity<Tarefas>(tarefas, HttpStatus.OK);
     }
     
 
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
     @DeleteMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-    	
-        Tarefas tasks = service.findById(id);
-        if (tasks == null){
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
+        // Pega o ID do usuário logado
+    	Long userId = userService.getCurrentUser().getId();
+
+        try {
+            // Tenta buscar a tarefa. Se não existir ou não for do usuário,
+            //o getTarefas já lança a exceção que interrompe o fluxo.
+            taskService.getTarefas(id, userId);
+
+            // Deleta a tarefa (método void, não retorna nada)
+            taskService.deleteTask(id, userId);
+
+            // Retorna sucesso sem conteúdo
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (RuntimeException e) {
+            // Se o getTarefas lançar "Access denied" ou "Not found"
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        service.delete(id);
-    	
-    	return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     
 }
