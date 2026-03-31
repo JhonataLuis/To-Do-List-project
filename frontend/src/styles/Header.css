@@ -1,0 +1,243 @@
+.navbar {
+    padding: 0.75rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* LOGO */
+
+.navbar-brand {
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+}
+
+.navbar-brand i {
+    font-size: 1.4rem;
+}
+
+/* LINKS DE NAVEGAÇÃO */
+
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    color: #4cc9f0 !important;
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    color: #4cc9f0 !important;
+}
+
+.nav-link.nav-link.active::after {
+    content: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, #4cc9f0, #4361ee);
+    border-radius: 2px;
+    animation: fadeInWidth 0.3s ease-out;
+}
+
+@keyframes fadeInWidth {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 70%;
+        opacity: 1;
+    }
+}
+
+/* Botões de Ação */
+
+.btn-outline-light {
+    border-width: 2px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-outline-light:hover {
+    background-color: #4cc9f0;
+    border-color: #4cc9f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 201, 240, 0.3);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    border: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(67, 97, 238, 0.4);
+}
+
+/* Menu do usuário */
+
+.user-menu {
+    position: relative;
+}
+
+.user-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 50px;
+}
+
+.user-dropdown:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.user-dropdown::after {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.user-dropdown[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+/* Avatar com foto */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4cc9f0;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+}
+
+/* Avatar com iniciais */
+.avatar-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: 2px solid #4cc9f0;
+    transition: all 0.3s ease;
+}
+
+.avatar-initials:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+}
+
+/* Nome do usuário */
+.user-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: white;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Dropdown Menu */
+
+.dropdown-menu {
+    z-index: 1050 !important;
+    display: none;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    margin-top: 0.75rem;
+    padding: 0.5rem 0;
+    min-width: 220px;
+    animation: fadeInUp 0.3s ease-out;
+    background: white;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.dropdown-item {
+    padding: 0.6rem 1rem;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    color: #212529;
+}
+
+.dropdown-item i {
+    width: 20px;
+    font-size: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.dropdown-item:hover i {
+    transform: scale(1.1);
+    color: #4361ee;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #fee2e2;
+    color: #dc3545;
+}
+
+.dropdown-divider {
+    margin: 0.25rem 0;
+    background-color: #e9ecef;
+}
