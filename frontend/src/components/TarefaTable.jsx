@@ -21,7 +21,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
   const handleExcluir = async (id) => {
     if (window.confirm('Tem certeza que deseja excluir esta tarefa?')) {
       try {
-        await api.delete(`/tarefas/${id}`);
+        await api.delete(`/tasks/tarefas/${id}`);
         onTarefaExcluida(id);
       } catch (error) {
         console.error('Erro ao excluir tarefa:', error);

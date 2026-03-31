@@ -96,7 +96,7 @@ public class ToDoControllers {
      /*MÉTODO DA API PARA DELETAR UMA TAREFA CADASTRADA DO BANCO DE DADOS*/
     @DeleteMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTask(@PathVariable(name = "id") Long id){
         // Pega o ID do usuário logado
     	Long userId = userService.getCurrentUser().getId();
 

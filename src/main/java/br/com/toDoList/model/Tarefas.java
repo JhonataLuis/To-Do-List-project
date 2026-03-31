@@ -62,7 +62,7 @@ public class Tarefas{
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
 	@Column(name = "due_date")
-	private LocalDateTime dueDate;
+	private LocalDateTime dueDate; // Data de Vencimento
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
