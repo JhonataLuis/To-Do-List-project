@@ -36,7 +36,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
         ...tarefa,
         concluido: !tarefa.concluido
       };
-      const response = await api.put(`/tarefas/${tarefa.id}`, tarefaAtualizada);
+      const response = await api.put(`/tasks/tarefas/${tarefa.id}`, tarefaAtualizada);
       onTarefaExcluida(tarefa.id, response.data); // Atualiza na lista
     } catch (error) {
       console.error('Erro ao atualizar status:', error);

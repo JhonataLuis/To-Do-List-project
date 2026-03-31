@@ -2,6 +2,7 @@ package br.com.toDoList.serviceImpl;
 
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +17,8 @@ import br.com.toDoList.service.ToDoService;
 
 @Service
 public class ToDoServiceImpl {
+
+    private static final Logger logger = Logger.getLogger(ToDoServiceImpl.class);
 
     @Autowired
     private TarefaRepository repository;
@@ -38,6 +41,7 @@ public class ToDoServiceImpl {
     }
 
     public Page<Tarefas> findAllPagelist(Long userId, Pageable pageable){
+        logger.info("Tentando listar Tarefas do usuario...");
         //ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
         Sort sort = Sort.by("prioridade").descending().and(
             Sort.by("titulo").ascending());
@@ -66,6 +70,7 @@ public class ToDoServiceImpl {
      */
 
     public Tarefas update(Long id, Tarefas taskDetails, Long userId){
+        logger.info("Tentando atualizar tarefa " + id + " para o usuário " + userId);
         Tarefas task = getTarefas(id, userId);
         task.setTitulo(taskDetails.getTitulo());
         task.setDescricao(taskDetails.getDescricao());

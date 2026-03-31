@@ -84,7 +84,7 @@ public class ToDoControllers {
     /*MÉTODO DA API PARA ATUALIZAR TAREFA NO BANCO DE DADOS*/
     @PutMapping(value = "/tarefas/{id}")
     @ResponseBody
-    public ResponseEntity<Tarefas> update(@PathVariable Long id, @RequestBody Tarefas task){
+    public ResponseEntity<Tarefas> update(@PathVariable(name = "id") Long id, @RequestBody Tarefas task){
         Long userId = userService.getCurrentUser().getId();
     	task.setId(id);
         Tarefas tarefas = taskService.update(id, task, userId);

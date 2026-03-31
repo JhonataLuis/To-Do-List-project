@@ -33,7 +33,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Clicou");
+        console.log("Iniciando Submissão...");
 
         // Validação
         if (!formData.titulo || !formData.descricao || !formData.prioridade ||
@@ -47,21 +47,28 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 let response;
 
                 // Remove datacriação antes de enviar
-                const { dataCriacao, ...dadosSemData } = formData;
+                const { dataCriacao, id, ...dadosSemData } = formData;
 
                 if (formData.id) {
                     // Atualizar tarefa existente
                     response = await api.put(`/tasks/tarefas/${formData.id}`, dadosSemData);
+                    alert("Tarefa atualizada com sucesso!")
                 } else {
                     // Criar nova tarefa
                     response = await api.post('/tasks/tarefas', dadosSemData);
+                    alert("Nova Tarefa cadastrada com sucesso!")
                 }
 
+                // Atualiza o estado global e limpa o form
                 onTarefaSalva(response.data);
                 resetForm();
-                alert('Tarefa salva com sucesso!');
+               
             }  catch (error) {
                 console.error('Erro ao salvar a tarefa:', error.response?.data || error.message);
+                const mensagemErro = error.response?.status === 403
+                ? 'Erro de permissão: verifique se vocé é o dono desta tarefa.'
+                : 'Erro ao salvar tarefa no servidor';
+                alert(mensagemErro);
                 alert('Erro ao salvar tarefa');
             }
     };
