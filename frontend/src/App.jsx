@@ -1,7 +1,5 @@
 import React, { useState, useEffect, Children } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-//import Dashboard from './pages/Dashboard';
-//import Profile from './pages/Profile';
 import './App.css';
 import TarefaForm from './components/TarefaForm';
 import TarefaTable from './components/TarefaTable';
@@ -11,6 +9,7 @@ import api from './services/api';
 import { AuthProvider, useAuth } from './services/AuthContext';
 import Login from './components/Login';
 import Register from './components/Register';
+import Profile from './components/Profile';
 import LandingPage from './components/LandingPage';
 
 const PrivateRoute = ({ children }) => {
@@ -200,10 +199,10 @@ function AppContent() {
             } />
             {/* Redireciona quaquer erro para a Home */}
             <Route path='*' element={<Navigate to="/" />} />
-            {/*<Route path="/profile" element={
+            <Route path="/profile" element={
               <PrivateRoute><Profile /></PrivateRoute>
             } />
-            <Route path="/" element={<Navigate to="/dashboard" />} />*/}
+            <Route path="/" element={<Navigate to="/dashboard" />} />
           </Routes>
         </main>
         <Footer />

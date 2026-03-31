@@ -43,6 +43,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 return;
             }
 
+            
             console.log(formData);
             try {
                 let response;

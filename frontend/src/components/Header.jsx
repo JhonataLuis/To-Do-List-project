@@ -23,6 +23,10 @@ const Header = () => {
 
     const getInitials = (name) => {
         if(!name) return 'U';
+        const names = name.split('');
+        if(names.lenght > 1) {
+            return (names[0].charAt(0) + names[1].charAt(0)).toUpperCase();
+        }
         return name.charAt(0).toUpperCase();
     };
 

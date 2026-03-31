@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from './api';
+import '../styles/Header.css'
 
 const AuthContext = createContext();
 
