@@ -51,16 +51,17 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
 
                 if (formData.id) {
                     // Atualizar tarefa existente
-                    response = await api.put(`/tarefas/${formData.id}`, dadosSemData);
+                    response = await api.put(`/tasks/tarefas/${formData.id}`, dadosSemData);
                 } else {
                     // Criar nova tarefa
-                    response = await api.post('/tarefas', dadosSemData);
+                    response = await api.post('/tasks/tarefas', dadosSemData);
                 }
 
                 onTarefaSalva(response.data);
                 resetForm();
+                alert('Tarefa salva com sucesso!');
             }  catch (error) {
-                console.error('Erro ao salvar a tarefa:', error);
+                console.error('Erro ao salvar a tarefa:', error.response?.data || error.message);
                 alert('Erro ao salvar tarefa');
             }
     };
@@ -99,6 +100,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 type="text" 
                 className="form-control" 
                 id="id" 
+                name="id"
                 value={formData.id}
                 readOnly
               />
@@ -109,6 +111,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 type="text" 
                 className="form-control" 
                 id="titulo" 
+                name="titulo"
                 placeholder="Digite o título da tarefa" 
                 value={formData.titulo}
                 onChange={handleChange}
@@ -121,6 +124,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 className="form-control" 
                 id="descricao" 
                 rows="3" 
+                name="descricao"
                 placeholder="Descreva a tarefa"
                 value={formData.descricao}
                 onChange={handleChange}
@@ -133,6 +137,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                   className="form-check-input" 
                   type="checkbox" 
                   id="concluido"
+                  name="concluido"
                   checked={formData.concluido}
                   onChange={handleChange}
                 />
@@ -146,6 +151,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
               <select 
                 className="form-select" 
                 id="prioridade"
+                name="prioridade"
                 value={formData.prioridade}
                 onChange={handleChange}
                 required
@@ -162,6 +168,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                 type="text" 
                 className="form-control" 
                 id="categoria" 
+                name="categoria"
                 placeholder="Ex: Trabalho, Pessoal, Estudos"
                 value={formData.categoria}
                 onChange={handleChange}

@@ -151,7 +151,7 @@ function AppContent() {
                       <div className="col-md-4">
                         <TarefaForm 
                           tarefaParaEditar={tarefaEditando}
-                          onTarefaSalva={carregarTarefas} 
+                          onTarefaSalva={() => carregarTarefas(page)} 
                         />
                       </div>
                       <div className="col-md-8">

@@ -66,6 +66,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
               <th scope="col">Prioridade</th>
               <th scope="col">Categoria</th>
               <th scope="col">Data Criação</th>
+              <th scope='col'>Update At</th>
               <th scope="col" className="text-center">Ações</th>
             </tr>
           </thead>
@@ -104,6 +105,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                   </td>
                   <td>{tarefa.categoria}</td>
                   <td>{formatarData(tarefa.dataCriacao)}</td>
+                  <td>{new Date(tarefa.updateAt).toLocaleDateString('pt-BR')}</td>
                   <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                         <button 
