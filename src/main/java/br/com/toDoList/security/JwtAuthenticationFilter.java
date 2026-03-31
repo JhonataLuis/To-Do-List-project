@@ -34,13 +34,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String jwt = recoveryToken(request);
                 if(jwt != null && jwtUtils.validateToken(jwt)){
                     String email = jwtUtils.getEmailFromToken(jwt);
+
                     UserDetails user = userDetailsService.loadUserByUsername(email);
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(email, null, user.getAuthorities());
+
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+
+                    // Adicionado essa linha
+                    auth.setDetails(new org.springframework.security.web.authentication.WebAuthenticationDetailsSource().buildDetails(request));
+                    
                     SecurityContextHolder.getContext().setAuthentication(auth);
                  
                 }
             } catch (Exception ex){
-                logger.error("Auth error: {}", ex.getMessage());
+                logger.error("Cannot set user auth error: {}", ex.getMessage());
                 SecurityContextHolder.clearContext(); // Limpa contexto se houver erro
             }
            filterChain.doFilter(request, response);

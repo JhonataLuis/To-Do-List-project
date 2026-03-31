@@ -77,9 +77,10 @@ function AppContent() {
   const carregarTarefas = async (pageAtual = 0) => {
     try {
       setLoading(true);
-      const response = await api.get(`/tarefas/paginadas?page=${pageAtual}&size=${size}`);
-      setTarefas(response.data.content); // Lista
-      setPageCount(response.data.totalPages); // Total de páginas
+      const response = await api.get(`/tasks/tarefas/paginadas?page=${pageAtual}&size=${size}`);
+      setTarefas(response.data.content || []); // Lista
+      const totalPages = response.data.page?.totalPages || 0; // O total de paginas agora vem dentro do objeto 'page'
+      setPageCount(totalPages); // Total de páginas
       setError(null);
     } catch (err) {
       console.error('Erro ao carregar tarefas:', err);
@@ -128,7 +129,7 @@ function AppContent() {
     <div className="App d-flex flex-column min-vh-100">
       {/* Navigation */}
       <AuthProvider> {/* O Provider deve envolver Tudo */}
-      <div className="App d-flex flex-column min-vh-100">
+     
          <Header /> {/* O Header deve estar aqui dentro */}
 
          <main className="flex-grow-1">
@@ -139,6 +140,36 @@ function AppContent() {
             {/* Paginas de Autenticação */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
+            {/* Rota que exibe o formulário e a lista tasks */}
+            <Route
+              path='/listartodos'
+              element={
+                isAuthenticated ? (
+                  <div className="container-fluid mt-4">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <TarefaForm 
+                          tarefaParaEditar={tarefaEditando}
+                          onTarefaSalva={carregarTarefas} 
+                        />
+                      </div>
+                      <div className="col-md-8">
+                        <TarefaTable 
+                          tarefas={tarefas} 
+                          onEditar={handleEditar}
+                          onTarefaExcluida={handleTarefaExcluida}
+                          pageCount={pageCount}
+                          onPageChange={handlePageChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Navigate to="/login" />
+                )
+              } 
+            />
 
             {/* Pagina Principal de Tarefas (Protegida) */}
             <Route path="/dashboard" element={
@@ -176,7 +207,7 @@ function AppContent() {
           </Routes>
         </main>
         <Footer />
-        </div>
+        
     </AuthProvider>
 
       <div className="container-fluid main-container">

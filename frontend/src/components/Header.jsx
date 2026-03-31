@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import { useAuth } from '../services/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const { isAuthenticated, logout } = useAuth();
@@ -29,7 +29,7 @@ const Header = () => {
                                 <a className="nav-link active" aria-current="page" href=".html">Home</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/listartodos">Minhas Tarefas</a>
+                                <Link className="nav-link" to="/listartodos">Minhas Tarefas</Link>
                             </li>
                         </ul>
                         <div className="d-flex">

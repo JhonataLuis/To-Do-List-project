@@ -68,6 +68,7 @@ public class AuthService {
         user.setRoles(Set.of(roleRepo.findByName("USER")
         .orElseThrow(() -> new RuntimeException("Role USER not found"))));
         userRepo.save(user);
+        System.out.println("ROLE SALVO NO BANCO");
 
         emailService.sendWelcome(user.getEmail(), user.getUsername());
     }

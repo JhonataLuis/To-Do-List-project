@@ -130,6 +130,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
       </div>
 
       <div className="d-flex justify-content-center mt-4">
+        {pageCount > 0 && (
         <ReactPaginate
             previousLabel={<span><i className="bi bi-arrow-left-circle"> Anterior</i></span>}
             nextLabel={<span>Próximo <i className='bi bi-arrow-right-circle'></i></span>}
@@ -143,6 +144,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
             nextClassName={'page-link'}
             activeClassName={'active'}
         />
+        )}
         </div>
     </div>
 

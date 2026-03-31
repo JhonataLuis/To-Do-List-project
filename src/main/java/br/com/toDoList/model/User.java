@@ -61,7 +61,7 @@ public class User {
 	@Column(nullable = false)
 	private boolean ativo = true;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "user_roles",
 		joinColumns = @JoinColumn(name = "user_id"),
@@ -197,5 +197,5 @@ public class User {
 	public void setSharedTasks(Set<Tarefas> sharedTasks) {
 		this.sharedTasks = sharedTasks;
 	}
-	
+
 }

@@ -43,6 +43,8 @@ public class SecurityConfig{
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/uploads/**").permitAll()
+            .requestMatchers("/api/tasks/**").authenticated() // protege as tarefas
+            //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/uploads/**").authenticated()
         .anyRequest().authenticated()
         )
         .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);

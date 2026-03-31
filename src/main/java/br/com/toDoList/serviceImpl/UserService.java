@@ -23,7 +23,8 @@ public class UserService {
 
     public User getCurrentUser(){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepo.findByEmail(email).get();
+        return userRepo.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado no contexto de segurançã!"));
     }
 
     public User updateProfile(Long id, String name, String preferences){
