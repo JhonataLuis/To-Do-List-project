@@ -6,10 +6,11 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
     const [formData, setFormData] = useState({
         id: '',
         titulo: '',
+        dataCriacao: '',
         descricao: '',
         concluido: false,
         prioridade: '',
-        dataCriacao: '',
+        dueDate: '',
         categoria: ''
     });
 
@@ -77,10 +78,11 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
         setFormData({
             id: '',
             titulo: '',
+            dataCriacao: '',
             descricao: '',
             concluido: false,
             prioridade: '',
-            dataCriacao: '',
+            dueDate: '',
             categoria: ''
         });
     };
@@ -123,6 +125,18 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                               value={formData.titulo}
                               onChange={handleChange}
                               required
+                            />
+                          </div>
+                          <div className='mb-3'>
+                            <label className='form-label'>Data CreateAt</label>
+                            <input 
+                              type='date'
+                              className='form-control'
+                              id="dataCriacao"
+                              name="dataCriacao"
+                              value={formData.dataCriacao}
+                              onChange={handleChange}
+                              readOnly
                             />
                           </div>
                           <div className="mb-3">
@@ -168,6 +182,17 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                               <option value="Media">Média</option>
                               <option value="Baixa">Baixa</option>
                             </select>
+                          </div>
+                          <div className='mb-3'>
+                            <label htmlFor="dueDate" className='form-label'>Data de Entrega</label>
+                            <input 
+                            type='date'
+                            className='form-control'
+                            id="dueDate"
+                            name='dueDate'
+                            value={formData.dueDate || ''}
+                            onChange={handleChange}
+                            />
                           </div>
                           <div className="mb-3">
                             <label htmlFor="categoria" className="form-label">Categoria</label>

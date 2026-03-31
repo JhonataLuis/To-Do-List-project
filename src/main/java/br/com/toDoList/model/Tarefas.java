@@ -5,13 +5,14 @@ package br.com.toDoList.model;
  * @since 18/02/2025
  */
 
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -62,7 +63,7 @@ public class Tarefas{
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
 	@Column(name = "due_date")
-	private LocalDateTime dueDate; // Data de Vencimento
+	private LocalDate dueDate; // Data de Vencimento da Tarefa
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -139,11 +140,11 @@ public class Tarefas{
 		this.categoria = categoria;
 	}
 	
-	public void setDueDate(LocalDateTime dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public LocalDateTime getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 

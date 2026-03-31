@@ -30,6 +30,29 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
     }
   };
 
+  // Função para informar se a task está em dia ou atrasada
+  const getStatusData = (dueDate) => {
+    if (!dueDate) return {classe: '', texto: ''};
+
+    const hoje = new Date();
+    hoje.setHours(0,0,0,0); // Zera as horas para comparar apenas os dias
+
+    // Converte o prazo que veio do banco para Data e zeramos a hora
+    const dataPrazo = new Date(dueDate);
+    dataPrazo.setHours(0,0,0,0);
+
+    // Adiciona um dia para compensar o fuso horário se necessário (Opcional depende do banco)
+    dataPrazo.setDate(dataPrazo.getDate() +1);
+
+    if(dataPrazo < hoje){
+      return { classe: 'badge bg-danger', texto: 'Atrasada' };
+    } else if (dataPrazo.getTime() === hoje.getTime()){
+      return { classe: 'badge bg-warning text-dark', texto: 'Para Hoje' };
+    } else {
+      return { classe: 'badge bg-info', texto: 'No Prazo' };
+    }
+  };
+
   const handleToggleStatus = async (tarefa) => {
     try {
       const tarefaAtualizada = {
@@ -44,7 +67,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
   };
 
   const formatarData = (data) => {
-    if (!data) return '';
+    if (!data) return '-';
     return new Date(data).toLocaleDateString('pt-BR');
   };
 
@@ -64,6 +87,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
               <th scope="col">Título</th>
               <th scope="col">Descrição</th>
               <th scope="col">Prioridade</th>
+              <th scope='col'>Data Entrega</th>
               <th scope="col">Categoria</th>
               <th scope="col">Data Criação</th>
               <th scope='col'>Update At</th>
@@ -79,7 +103,9 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                 </td>
               </tr>
             ) : (
-              tarefas.map(tarefa => (
+              tarefas.map((tarefa) => {
+                const statusDueDate = getStatusData(tarefa.dueDate);
+                return (
                 <tr key={tarefa.id} style={{ 
                   textDecoration: tarefa.concluido ? 'line-through' : 'none',
                   opacity: tarefa.concluido ? 0.7 : 1
@@ -103,9 +129,16 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                       {tarefa.prioridade}
                     </span>
                   </td>
+                  <td>
+                    {formatarData(tarefa.dueDate)}
+                    <br/>
+                      <span className={statusDueDate.classe} style={{fontSize: '0.7rem'}}>
+                        {statusDueDate.texto}
+                      </span>
+                  </td>
                   <td>{tarefa.categoria}</td>
                   <td>{formatarData(tarefa.dataCriacao)}</td>
-                  <td>{new Date(tarefa.updateAt).toLocaleDateString('pt-BR')}</td>
+                  <td>{formatarData(tarefa.updatedAt)}</td>
                   <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                         <button 
@@ -125,7 +158,8 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                     </div>
                   </td>
                 </tr>
-              ))
+              );
+              })
             )}
           </tbody>
         </table>
@@ -149,8 +183,6 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
         )}
         </div>
     </div>
-
-   
   );
 }
 
