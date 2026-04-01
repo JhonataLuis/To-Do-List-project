@@ -7,6 +7,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import br.com.toDoList.repository.UserRepository;
 
 @Service
 public class UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private UserRepository userRepo;
@@ -36,6 +41,7 @@ public class UserService {
     }
 
     public String uploadPhoto(Long id, MultipartFile file) throws Exception{
+        logger.info("Tentando cadastrar foto do usuário...");
         Path uploadDir = Paths.get("uploads/profiles").toAbsolutePath().normalize();
 
         // Cria diretório se não existir
@@ -63,6 +69,7 @@ public class UserService {
             String photoUrl = "/uploads/profiles/" + fileName;
             user.setProfilePhoto(photoUrl);
             userRepo.save(user);
+            logger.info("Cadastro da Foto do usuário: " + user.getEmail() + "e a foto: " + photoUrl);
 
             return photoUrl;
     }

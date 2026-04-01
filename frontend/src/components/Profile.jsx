@@ -73,16 +73,16 @@ const Profile = () => {
 
         setLoading(true);
         try {
-            const response = await api.post('/api/users/profile/photo', formData, {
+            const response = await api.post('/users/profile/photo', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             
             setProfilePhoto(response.data);
-            updateUser({ profilePhoto: response.data });
+            updateUser({ ...user, profilePhoto: response.data });
             setMessage({ type: 'success', text: 'Foto atualizada com sucesso!' });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao atualizar foto' });
+            setMessage({ type: 'danger', text: 'Erro ao atualizar foto' });
         } finally {
             setLoading(false);
         }
@@ -93,7 +93,7 @@ const Profile = () => {
         setLoading(true);
         
         try {
-            const response = await api.put('/api/users/profile', {
+            const response = await api.put('/users/profile', {
                 name: formData.name,
                 preferences: JSON.stringify(preferences)
             });
@@ -103,7 +103,7 @@ const Profile = () => {
             setMessage({ type: 'success', text: 'Perfil atualizado com sucesso!' });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (error) {
-            setMessage({ type: 'error', text: 'Erro ao atualizar perfil' });
+            setMessage({ type: 'danger', text: 'Erro ao atualizar perfil' });
         } finally {
             setLoading(false);
         }
@@ -113,12 +113,12 @@ const Profile = () => {
         e.preventDefault();
         
         if (formData.newPassword !== formData.confirmPassword) {
-            setMessage({ type: 'error', text: 'As senhas não coincidem' });
+            setMessage({ type: 'danger', text: 'As senhas não coincidem' });
             return;
         }
         
         if (formData.newPassword.length < 6) {
-            setMessage({ type: 'error', text: 'A senha deve ter no mínimo 6 caracteres' });
+            setMessage({ type: 'danger', text: 'A senha deve ter no mínimo 6 caracteres' });
             return;
         }
         
@@ -140,7 +140,7 @@ const Profile = () => {
             setMessage({ type: 'success', text: 'Senha alterada com sucesso!' });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (error) {
-            setMessage({ type: 'error', text: error.response?.data?.message || 'Erro ao alterar senha' });
+            setMessage({ type: 'danger', text: error.response?.data?.message || 'Erro ao alterar senha' });
         } finally {
             setLoading(false);
         }

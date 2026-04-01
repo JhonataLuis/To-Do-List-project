@@ -80,6 +80,9 @@ build/
 # Arquivos temporários
 *.tmp
 *.swp
+uploads/profiles/
+uploads/
+uploads/*
 
 # ======================
 # IDEs e Editores

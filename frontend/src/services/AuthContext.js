@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    if(token) api.defaults.headers.Authorization = `Bearer ${token}`;
     if (token) loadUser();
     else setLoading(false);
   }, []);
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', data.token);
+      api.defaults.headers.Authorization = `Bearer ${data.token}`;
       setUser(data);
       return { success: true };
     } catch (error) {

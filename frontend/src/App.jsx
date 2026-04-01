@@ -77,12 +77,14 @@ function AppContent() {
     try {
       setLoading(true);
       const response = await api.get(`/tasks/tarefas/paginadas?page=${pageAtual}&size=${size}`);
+      console.log("Tarefas recebidas:", response.data);
       setTarefas(response.data.content || []); // Lista
       const totalPages = response.data.page?.totalPages || 0; // O total de paginas agora vem dentro do objeto 'page'
       setPageCount(totalPages); // Total de páginas
       setError(null);
     } catch (err) {
       console.error('Erro ao carregar tarefas:', err);
+      console.error("Erro na requisição:", err.response);
       setError('Erro ao carregar tarefas. Verifique se o backend está rodando.');
     } finally {
       setLoading(false);
@@ -127,35 +129,30 @@ function AppContent() {
   return (
     <div className="App d-flex flex-column min-vh-100">
       {/* Navigation */}
-      <AuthProvider> {/* O Provider deve envolver Tudo */}
-     
          <Header /> {/* O Header deve estar aqui dentro */}
-
          <main className="flex-grow-1">
           <Routes>
             {/* Primeira página que o usuário vê (Home) */}
             <Route path='/' element={<LandingPage />}/>
-
             {/* Paginas de Autenticação */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-
             {/* Rota que exibe o formulário e a lista tasks */}
             <Route
               path='/listartodos'
               element={
-                isAuthenticated ? (
-                  <div className="container-fluid mt-4">
-                    <div className="row">
-                      <div className="col-md-4">
+                <PrivateRoute>
+                  <div className='container-fluid mt-4'>
+                    <div className='row'>
+                      <div className='col-md-4'>
                         <TarefaForm 
                           tarefaParaEditar={tarefaEditando}
-                          onTarefaSalva={() => carregarTarefas(page)} 
+                          onTarefaSalva={() => carregarTarefas(page)}
                         />
                       </div>
-                      <div className="col-md-8">
+                      <div className='col-md-8'>
                         <TarefaTable 
-                          tarefas={tarefas} 
+                          tarefas={tarefas}
                           onEditar={handleEditar}
                           onTarefaExcluida={handleTarefaExcluida}
                           pageCount={pageCount}
@@ -164,10 +161,8 @@ function AppContent() {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  <Navigate to="/login" />
-                )
-              } 
+                </PrivateRoute>
+              }
             />
 
             {/* Pagina Principal de Tarefas (Protegida) */}
@@ -207,8 +202,6 @@ function AppContent() {
         </main>
         <Footer />
         
-    </AuthProvider>
-
       <div className="container-fluid main-container">
         {error && (
           <div className="alert alert-danger alert-dismissible fade show" role="alert">
