@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     auth.setDetails(new org.springframework.security.web.authentication.WebAuthenticationDetailsSource().buildDetails(request));
                     
                     SecurityContextHolder.getContext().setAuthentication(auth);
-                    logger.info("Token validade com sucesso para o email: {}", email);
+                    logger.info("Token validado com sucesso para o email: {}", email);
                  
                 }
             } catch (Exception ex){

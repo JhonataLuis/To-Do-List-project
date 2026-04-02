@@ -7,6 +7,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
         id: '',
         titulo: '',
         dataCriacao: '',
+        status: '',
         descricao: '',
         concluido: false,
         prioridade: '',
@@ -80,6 +81,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
             id: '',
             titulo: '',
             dataCriacao: '',
+            status: '',
             descricao: '',
             concluido: false,
             prioridade: '',
@@ -130,7 +132,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                           </div>
                           <div className='mb-3'>
                             <label className='form-label'>Data CreateAt</label>
-                            <input 
+                            {/*<input 
                               type='date'
                               className='form-control'
                               id="dataCriacao"
@@ -138,7 +140,20 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                               value={formData.dataCriacao}
                               onChange={handleChange}
                               readOnly
-                            />
+                            />*/}
+                          </div>
+                          <div className="mb-3">
+                            <label htmlFor="status" className="form-label">Status</label>
+                            {/*<input 
+                              type="text" 
+                              className="form-control" 
+                              id="status" 
+                              name="status"
+                              placeholder="Status da Tarefa" 
+                              value={formData.status}
+                              onChange={handleChange}
+                              required
+                            />*/}
                           </div>
                           <div className="mb-3">
                             <label htmlFor="descricao" className="form-label">Descrição da Tarefa</label>

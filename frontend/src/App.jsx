@@ -192,7 +192,7 @@ function AppContent() {
                   )}
                 </PrivateRoute>
             } />
-            {/* Redireciona quaquer erro para a Home */}
+            {/* Redireciona qualquer erro para a Home */}
             <Route path='*' element={<Navigate to="/" />} />
             <Route path="/profile" element={
               <PrivateRoute><Profile /></PrivateRoute>

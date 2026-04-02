@@ -48,7 +48,7 @@ body {
     font-weight: 600;
 }
 
-.priority-hight {
+.priority-high {
     background-color: #ffebee;
     color: #d32f2f;
 }
@@ -142,4 +142,15 @@ body {
 .alert {
     border-radius: 10px;
     margin-bottom: 20px;
+}
+
+/* Card Landpage */
+
+.hover-shadow {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateX(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
 }

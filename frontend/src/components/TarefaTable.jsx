@@ -53,17 +53,11 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
     }
   };
 
-  const handleToggleStatus = async (tarefa) => {
-    try {
-      const tarefaAtualizada = {
-        ...tarefa,
-        concluido: !tarefa.concluido
-      };
-      const response = await api.put(`/tasks/tarefas/${tarefa.id}`, tarefaAtualizada);
-      onTarefaExcluida(tarefa.id, response.data); // Atualiza na lista
-    } catch (error) {
-      console.error('Erro ao atualizar status:', error);
-    }
+  // Status da tarefa
+  const statusLabels = {
+    TODO: { text: 'A Fazer', color: '#6c757d' },
+    DOING: { text: 'Em Progresso', color: '#007bff' },
+    DONE: { text: 'Finalizado', color: '#28a745' }
   };
 
   const formatarData = (data) => {
@@ -105,6 +99,7 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
             ) : (
               tarefas.map((tarefa) => {
                 const statusDueDate = getStatusData(tarefa.dueDate);
+                const status = statusLabels[tarefa.status] || { text: tarefa.status, color: 'gray' };
                 return (
                 <tr key={tarefa.id} style={{ 
                   textDecoration: tarefa.concluido ? 'line-through' : 'none',
@@ -112,15 +107,17 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                 }}>
                   <td>{tarefa.id}</td>
                   <td>
-                    <div className="form-check">
-                      <input 
-                        className="form-check-input" 
-                        type="checkbox"
-                        checked={tarefa.concluido}
-                        onChange={() => handleToggleStatus(tarefa)}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    </div>
+                    <span style={{
+                      backgroundColor: status.color,
+                      color: 'white',
+                      padding: '2px 10px',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      display: 'inline-block'
+                    }}>
+                      {status.text}
+                    </span>
                   </td>
                   <td>{tarefa.titulo}</td>
                   <td>{tarefa.descricao}</td>
