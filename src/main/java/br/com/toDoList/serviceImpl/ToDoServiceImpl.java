@@ -57,7 +57,7 @@ public class ToDoServiceImpl {
     public Tarefas getTarefas(Long id, Long userId){
         Tarefas task = repository.findById(id).orElseThrow();
         if (!task.getUser().getId().equals(userId)){
-            throw new RuntimeException("Access denied");
+            throw new RuntimeException("Acesso Negado");
         }
 
         return task;
@@ -74,6 +74,7 @@ public class ToDoServiceImpl {
         Tarefas task = getTarefas(id, userId);
         task.setTitulo(taskDetails.getTitulo());
         task.setDescricao(taskDetails.getDescricao());
+        task.setStatus(taskDetails.getStatus());
         task.setPrioridade(taskDetails.getPrioridade());
         task.setDueDate(taskDetails.getDueDate());
         

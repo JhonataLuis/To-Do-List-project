@@ -20,6 +20,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
         if (tarefaParaEditar) {
             setFormData({
                 ...tarefaParaEditar,
+                status: tarefaParaEditar.status || 'TODO', // Status padrão inicial 'A fazer'
                 dataCriacao: tarefaParaEditar.dataCriacao ? tarefaParaEditar.dataCriacao.split('T')[0] : ''
             });
         }
@@ -39,7 +40,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
 
         // Validação
         if (!formData.titulo || !formData.descricao || !formData.prioridade ||
-            !formData.categoria) {
+            !formData.categoria || !formData.status) {
                 alert('Por favor, preencha todos os campos obrigatórios');
                 return;
             }
@@ -81,7 +82,7 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
             id: '',
             titulo: '',
             dataCriacao: '',
-            status: '',
+            status: 'TODO', // Reset para o valor padrão do Enum: 'A fazer'
             descricao: '',
             concluido: false,
             prioridade: '',
@@ -144,16 +145,16 @@ function TarefaForm({ tarefaParaEditar, onTarefaSalva }) {
                           </div>
                           <div className="mb-3">
                             <label htmlFor="status" className="form-label">Status</label>
-                            {/*<input 
-                              type="text" 
-                              className="form-control" 
-                              id="status" 
-                              name="status"
-                              placeholder="Status da Tarefa" 
+                            <select
+                              id="status"
                               value={formData.status}
                               onChange={handleChange}
-                              required
-                            />*/}
+                              className="form-select"
+                            >
+                              <option value="TODO">A fazer</option>
+                              <option value="DOING">Em andamento</option>
+                              <option value="DONE">Concluído</option>
+                            </select>
                           </div>
                           <div className="mb-3">
                             <label htmlFor="descricao" className="form-label">Descrição da Tarefa</label>

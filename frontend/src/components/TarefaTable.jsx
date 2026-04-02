@@ -54,10 +54,17 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
   };
 
   // Status da tarefa
-  const statusLabels = {
-    TODO: { text: 'A Fazer', color: '#6c757d' },
-    DOING: { text: 'Em Progresso', color: '#007bff' },
-    DONE: { text: 'Finalizado', color: '#28a745' }
+  const getStatusDetails = (status) => {
+    switch (status?.toUpperCase()) {
+      case 'TODO':
+        return { className: 'badge bg-secondary', text: 'A Fazer' };
+      case 'DOING':
+        return { className: 'badge bg-primary', text: 'Em Progresso' };
+      case 'DONE':
+        return { className: 'badge bg-success', text: 'Finalizado' };
+      default:
+        return { className: 'badge bg-info text-dark', text: status || 'Pendente'};
+    }
   };
 
   const formatarData = (data) => {
@@ -99,7 +106,8 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
             ) : (
               tarefas.map((tarefa) => {
                 const statusDueDate = getStatusData(tarefa.dueDate);
-                const status = statusLabels[tarefa.status] || { text: tarefa.status, color: 'gray' };
+                // Chama a função para pegar a classe e o texto do status
+                const statusInfo = getStatusDetails(tarefa.status);
                 return (
                 <tr key={tarefa.id} style={{ 
                   textDecoration: tarefa.concluido ? 'line-through' : 'none',
@@ -107,16 +115,8 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                 }}>
                   <td>{tarefa.id}</td>
                   <td>
-                    <span style={{
-                      backgroundColor: status.color,
-                      color: 'white',
-                      padding: '2px 10px',
-                      borderRadius: '12px',
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                      display: 'inline-block'
-                    }}>
-                      {status.text}
+                      <span className={statusInfo.className}>
+                      {statusInfo.text}
                     </span>
                   </td>
                   <td>{tarefa.titulo}</td>
