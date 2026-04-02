@@ -67,6 +67,24 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
     }
   };
 
+  const handlerConcluir = async (tarefa) => {
+    if (tarefa.concluido) return; // Evita re-processar o que já está pronto
+
+    try {
+      // Faz a chamada para o endpoint do backend
+      const response = await api.patch(`/tasks/tarefas/${tarefa.id}/concluir`);
+
+      if (onEditar) {
+        // Aqui usamos a lógica para atualizar a lista global
+        onPageChange({ selected: 0});
+      }
+      alert('Tarefa concluída com sucesso!');
+    } catch (error) {
+      console.error("Erro ao concluir tarefa: ", error);
+      alert("Erro ao concluir tarefa");
+    }
+  };
+
   const formatarData = (data) => {
     if (!data) return '-';
     return new Date(data).toLocaleDateString('pt-BR');
@@ -138,19 +156,27 @@ function TarefaTable({ tarefas, onEditar, onTarefaExcluida, pageCount, onPageCha
                   <td>{formatarData(tarefa.updatedAt)}</td>
                   <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
+                    <button 
+                        className={`btn btn-sm ${tarefa.concluido ? 'btn-success' : 'btn-online-success'}`}
+                        onClick={() => handlerConcluir(tarefa)}
+                        title={tarefa.concluido ? "Tarefa Concluída" : "Marcar como Concluída"}
+                        disabled={tarefa.concluido}
+                    >
+                      <i className={`bi ${tarefa.concluido ? 'bi-check-all' : 'bi-check-lg'}`}></i>
+                    </button>
                         <button 
-                        className="btn btn-warning btn-sm"
-                        onClick={() => onEditar(tarefa)}
-                        title="Editar"
+                          className="btn btn-warning btn-sm"
+                          onClick={() => onEditar(tarefa)}
+                          title="Editar"
                         >
-                        <i className="bi bi-pencil"></i>
+                          <i className="bi bi-pencil"></i>
                         </button>
                         <button 
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleExcluir(tarefa.id)}
-                        title="Excluir"
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleExcluir(tarefa.id)}
+                          title="Excluir"
                         >
-                        <i className="bi bi-trash"></i>
+                          <i className="bi bi-trash"></i>
                         </button>
                     </div>
                   </td>

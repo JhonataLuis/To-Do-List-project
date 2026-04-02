@@ -1,23 +1,32 @@
 package br.com.toDoList.controllers;
 
+import java.time.LocalDateTime;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.toDoList.enums.TaskStatus;
 import br.com.toDoList.model.Tarefas;
+import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 import br.com.toDoList.serviceImpl.UserService;
 
@@ -31,12 +40,17 @@ import br.com.toDoList.serviceImpl.UserService;
 @RestController
 @RequestMapping("/api/tasks")
 public class ToDoControllers {
+
+    private static final Logger logger = LoggerFactory.getLogger(ToDoControllers.class);
 	
     @Autowired
     private ToDoServiceImpl taskService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TarefaRepository taskRepo;
 	
 
     /*ENDPOINT COM PAGINAÇÃO*/
@@ -114,6 +128,28 @@ public class ToDoControllers {
             // Se o getTarefas lançar "Access denied" ou "Not found"
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Endpoint do método para concluir uma tarefa
+    @PatchMapping("/tarefas/{id}/concluir")
+    public ResponseEntity<?> concluirTask(@PathVariable(name = "id") Long id){
+        
+        Long userId = userService.getCurrentUser().getId();
+
+        return taskRepo.findById(id).map(task -> {
+
+            logger.info("User logado: " +userId);
+            logger.info("Dono da tarefa: " +task.getUser().getId());
+            // validação de segurança: o usuário logado é dono da tarefa?
+            if(!task.getUser().getId().equals(userId)){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para acessar essa tarefa");
+            }
+
+            task.setStatus(TaskStatus.DONE);
+            task.setConcluido(true);
+            task.setUpdatedAt(LocalDateTime.now());
+            return ResponseEntity.ok(taskRepo.save(task));
+        }).orElse(ResponseEntity.notFound().build());
     }
     
 }
