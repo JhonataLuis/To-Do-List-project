@@ -154,3 +154,12 @@ body {
     transform: translateX(-10px);
     box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
 }
+
+tr {
+    transition: all 0.3s ease-in-out;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #e8f5e9; /* Verde bem clarindo quando aberto */
+    color: #2e7d32;
+}

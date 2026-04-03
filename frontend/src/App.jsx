@@ -22,7 +22,7 @@ const PrivateRoute = ({ children }) => {
 
 // Componente Painel de Tarefas
 const Dashboard = ({
-  tarefas, handleEditar, handleTarefaExcluida, pageCount, handlePageChange,
+  tarefas, tarefasConcluidas, handleEditar, handleTarefaExcluida, pageCount, handlePageChange,
   tarefaEditando, handleTarefaSalva, error, setError
 }) => {
   return (
@@ -43,6 +43,7 @@ const Dashboard = ({
         <div className="col-lg-7 col-xl-8">
           <TarefaTable 
             tarefas={tarefas} 
+            tarefasConcluidas={tarefasConcluidas}
             onEditar={handleEditar} 
             onTarefaExcluida={handleTarefaExcluida} 
             pageCount={pageCount} 
@@ -66,6 +67,10 @@ function AppContent() {
   const [size] = useState(5);
   const [pageCount, setPageCount] = useState(0);
 
+  const taskList = tarefas.filter(t => t && !t.concluido);
+  const taskConcluido = tarefas.filter(t => t && t.concluido);
+
+
   // Carregar tarefas ao iniciar
   useEffect(() => {
     if (isAuthenticated){
@@ -74,6 +79,7 @@ function AppContent() {
   }, [page, isAuthenticated]);
 
   const carregarTarefas = async (pageAtual = 0) => {
+
     try {
       setLoading(true);
       const response = await api.get(`/tasks/tarefas/paginadas?page=${pageAtual}&size=${size}`);
@@ -152,7 +158,8 @@ function AppContent() {
                       </div>
                       <div className='col-md-8'>
                         <TarefaTable 
-                          tarefas={tarefas}
+                          tarefas={taskList}
+                          tarefasConcluidas={taskConcluido}
                           onEditar={handleEditar}
                           onTarefaExcluida={handleTarefaExcluida}
                           pageCount={pageCount}
@@ -179,7 +186,8 @@ function AppContent() {
                         </div>
                   ) : (
                 <Dashboard 
-                tarefas={tarefas}
+                      tarefas={taskList}
+                      tarefasConcluidas={taskConcluido}
                       handleEditar={handleEditar}
                       handleTarefaExcluida={handleTarefaExcluida}
                       pageCount={pageCount}
