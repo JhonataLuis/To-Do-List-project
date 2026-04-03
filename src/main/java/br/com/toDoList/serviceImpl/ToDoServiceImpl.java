@@ -1,7 +1,5 @@
 package br.com.toDoList.serviceImpl;
 
-import java.util.List;
-
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.repository.UserRepository;
-import br.com.toDoList.service.ToDoService;
 
 @Service
 public class ToDoServiceImpl {
