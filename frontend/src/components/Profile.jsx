@@ -4,7 +4,7 @@ import api from '../services/api';
 import '../styles/Profile.css'
 
 const Profile = () => {
-    const { user, updateUser } = useAuth();
+    const { user, updateProfile } = useAuth();
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -14,11 +14,7 @@ const Profile = () => {
         newPassword: '',
         confirmPassword: ''
     });
-    const [preferences, setPreferences] = useState({
-        theme: 'light',
-        notifications: true,
-        language: 'pt-BR'
-    });
+
     const [profilePhoto, setProfilePhoto] = useState(null);
     const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -26,18 +22,10 @@ const Profile = () => {
         if (user) {
             setFormData({
                 ...formData,
+                id: user.id,
                 name: user.name || '',
                 email: user.email || ''
             });
-            
-            if (user.preferences) {
-                try {
-                    const prefs = JSON.parse(user.preferences);
-                    setPreferences(prefs);
-                } catch (e) {
-                    console.error('Error parsing preferences', e);
-                }
-            }
             
             if (user.profilePhoto) {
                 setProfilePhoto(user.profilePhoto);
@@ -49,13 +37,6 @@ const Profile = () => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
-        });
-    };
-
-    const handlePreferenceChange = (key, value) => {
-        setPreferences({
-            ...preferences,
-            [key]: value
         });
     };
 
@@ -78,7 +59,7 @@ const Profile = () => {
             });
             
             setProfilePhoto(response.data);
-            updateUser({ ...user, profilePhoto: response.data });
+            updateProfile({ ...user, profilePhoto: response.data });
             setMessage({ type: 'success', text: 'Foto atualizada com sucesso!' });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (error) {
@@ -93,17 +74,21 @@ const Profile = () => {
         setLoading(true);
         
         try {
-            const response = await api.put('/users/profile', {
-                name: formData.name,
-                preferences: JSON.stringify(preferences)
-            });
+            //Aqui já faz o api.put e o setUser(update) vindo do AuthContext
+            const response = await updateProfile({ name: formData.name });
             
-            updateUser(response.data);
-            setEditing(false);
-            setMessage({ type: 'success', text: 'Perfil atualizado com sucesso!' });
-            setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+            if(response.success){
+                //updateProfile(response.data);
+                setEditing(false);
+                setMessage({ type: 'success', text: 'Perfil atualizado com sucesso!' });
+                setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+            } else {
+                setMessage({ type: 'danger', text: 'Erro ao atualizar o perfil' });
+            }
+            
         } catch (error) {
-            setMessage({ type: 'danger', text: 'Erro ao atualizar perfil' });
+            console.error("Erro detalhado:", error.response?.data || error.message); //teste
+            setMessage({ type: 'danger', text: 'Erro inesperado ao atualizar perfil' });
         } finally {
             setLoading(false);
         }
@@ -326,65 +311,6 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 )}
-                            </div>
-                        </div>
-
-                        {/* Card de preferências */}
-                        <div className="card profile-card mb-4">
-                            <div className="card-header">
-                                <h4 className="mb-0">
-                                    <i className="bi bi-sliders2 me-2"></i>
-                                    Preferências
-                                </h4>
-                            </div>
-                            
-                            <div className="card-body">
-                                <div className="mb-3">
-                                    <label className="form-label">Tema</label>
-                                    <select 
-                                        className="form-select"
-                                        value={preferences.theme}
-                                        onChange={(e) => handlePreferenceChange('theme', e.target.value)}
-                                    >
-                                        <option value="light">Claro</option>
-                                        <option value="dark">Escuro</option>
-                                        <option value="auto">Automático</option>
-                                    </select>
-                                </div>
-                                
-                                <div className="mb-3">
-                                    <label className="form-label">Idioma</label>
-                                    <select 
-                                        className="form-select"
-                                        value={preferences.language}
-                                        onChange={(e) => handlePreferenceChange('language', e.target.value)}
-                                    >
-                                        <option value="pt-BR">Português (Brasil)</option>
-                                        <option value="en-US">English (US)</option>
-                                        <option value="es-ES">Español</option>
-                                    </select>
-                                </div>
-                                
-                                <div className="form-check mb-3">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        id="notifications"
-                                        checked={preferences.notifications}
-                                        onChange={(e) => handlePreferenceChange('notifications', e.target.checked)}
-                                    />
-                                    <label className="form-check-label" htmlFor="notifications">
-                                        Receber notificações por e-mail
-                                    </label>
-                                </div>
-                                
-                                <button 
-                                    className="btn btn-primary"
-                                    onClick={handleUpdateProfile}
-                                    disabled={loading}
-                                >
-                                    {loading ? 'Salvando...' : 'Salvar preferências'}
-                                </button>
                             </div>
                         </div>
 

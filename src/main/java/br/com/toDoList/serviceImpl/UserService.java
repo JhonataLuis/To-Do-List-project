@@ -29,17 +29,17 @@ public class UserService {
     public User getCurrentUser(){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepo.findByEmail(email)
-        .orElseThrow(() -> new RuntimeException("Usuário não encontrado no contexto de segurançã!"));
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado no contexto de segurança!"));
     }
 
-    public User updateProfile(Long id, String name, String preferences){
+    public User updateProfile(Long id, String name){
         User user = userRepo.findById(id).get();
         if (name != null) user.setUsername(name);
-        if (preferences != null) user.setPreferences(preferences);
         return userRepo.save(user);
 
     }
 
+    // Método para cadastrar a foto do perfil do usuário
     public String uploadPhoto(Long id, MultipartFile file) throws Exception{
         logger.info("Tentando cadastrar foto do usuário...");
         Path uploadDir = Paths.get("uploads/profiles").toAbsolutePath().normalize();

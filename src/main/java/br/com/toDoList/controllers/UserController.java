@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,10 +31,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getCurrentUser());
     }
 
-    @GetMapping("/profile/{id}") // Update perfil usuário
+    @PutMapping("/profile") // Update perfil usuário
     public ResponseEntity<?> updateProfile(@RequestBody Map<String, String> data){
         Long id = userService.getCurrentUser().getId();
-        return ResponseEntity.ok(userService.updateProfile(id, data.get("name"), data.get("preferneces")));
+        return ResponseEntity.ok(userService.updateProfile(id, data.get("name")));
     }
 
     @PostMapping("/profile/photo")

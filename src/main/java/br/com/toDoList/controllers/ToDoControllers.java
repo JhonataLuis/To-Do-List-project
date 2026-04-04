@@ -56,7 +56,7 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<Page<Tarefas>> listarTaskPaginated(
         @RequestParam(name = "page", defaultValue = "0") int page,
-        @RequestParam(name = "size", defaultValue = "10") int size ){
+        @RequestParam(name = "size", defaultValue = "12") int size ){
         
             try{
                 // Cria objeto Pageable com página e tamanho

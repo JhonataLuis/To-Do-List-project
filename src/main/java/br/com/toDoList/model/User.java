@@ -43,9 +43,6 @@ public class User {
 	@Column(name = "profile_photo")
 	private String profilePhoto;
 
-	@Column(name = "preferences", columnDefinition = "TEXT")
-	private String preferences;
-
 	@Column(name = "reset_token")
 	private String resetToken;
 
@@ -79,10 +76,6 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "task_id")
 	)
 	private Set<Tarefas> sharedTasks = new HashSet<>();
-
-	public User(){
-		this.preferences = "{\"theme\":\"light\",\"notifications\":true,\"language\":\"pt-BR\"}";
-	}
 	
 	@PrePersist
 	protected void onCreate(){
@@ -132,14 +125,6 @@ public class User {
 
 	public String getProfilePhoto() {
 		return profilePhoto;
-	}
-
-	public void setPreferences(String preferences) {
-		this.preferences = preferences;
-	}
-
-	public String getPreferences() {
-		return preferences;
 	}
 
 	public String getResetToken() {
