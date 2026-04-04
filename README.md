@@ -13,7 +13,7 @@
 
 > Substitua os links abaixo pelos screenshots ou GIFs do seu app:
 
-![Dashboard](https://via.placeholder.com/800x400.png?text=Dashboard+do+Sistema)  
+![Dashboard](C:\Projects\Java Spring\To-Do-List-project\frontend\public\assets\dashboard.png)  
 ![Criar Tarefa](https://via.placeholder.com/800x400.png?text=Criar+Tarefa)  
 ![Lista de Tarefas](https://via.placeholder.com/800x400.png?text=Lista+de+Tarefas)
 
