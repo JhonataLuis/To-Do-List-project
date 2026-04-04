@@ -13,9 +13,9 @@
 
 > Substitua os links abaixo pelos screenshots ou GIFs do seu app:
 
-![Dashboard](C:\Projects\Java Spring\To-Do-List-project\frontend\public\assets\dashboard.png)  
-![Criar Tarefa](https://via.placeholder.com/800x400.png?text=Criar+Tarefa)  
-![Lista de Tarefas](https://via.placeholder.com/800x400.png?text=Lista+de+Tarefas)
+![Dashboard](To-Do-List-project/frontend/public/assets/dashboard.png)  
+![Criar Tarefa](To-Do-List-project/frontend/public/assets/form.png)  
+![Lista de Tarefas](To-Do-List-project/frontend/public/assets/dashboard.png)
 
 ---
 
@@ -44,10 +44,10 @@
 - 📦 Maven  
 
 **Frontend**
+- ⚛️ React 
 - 🌐 HTML5  
 - 🎨 CSS3  
-- ⚡ JavaScript
-- ⚛️ React  
+- ⚡ JavaScript 
 - 💎 Bootstrap 5.3  
 - 🎭 Bootstrap Icons  
 
