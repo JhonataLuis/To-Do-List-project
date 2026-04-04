@@ -41,11 +41,13 @@ public class SecurityConfig{
             .cors(cors -> cors.configurationSource(corsSource()))
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/uploads/**").permitAll()
-            .requestMatchers("/api/tasks/**").authenticated()
-            .requestMatchers("/api/tarefas/**").authenticated()  // protege as tarefas
-            //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/uploads/**").authenticated()
-        .anyRequest().authenticated()
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**", "/uploads/**").permitAll()
+            
+                // Garante que os endpoints de User também precisem de token
+                .requestMatchers("/api/users/**").authenticated()
+                .requestMatchers("/api/tasks/**", "/api/tarefas/**").authenticated() // Protege as tarefas
+                .anyRequest().authenticated()
         )
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -55,12 +57,20 @@ public class SecurityConfig{
     @Bean
     public CorsConfigurationSource corsSource(){
         CorsConfiguration config = new CorsConfiguration();
+        // Permite as origens do Front-end
         config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080", "http://localhost:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setExposedHeaders(List.of("Authorization")); // Importante para o React ler o Token
+       
+        // Headers
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
+        //config.setAllowedHeaders(List.of("*"));
+
+        // Headers que o Axios/Brownsers podem "enxergar" na resposta
+        config.setExposedHeaders(List.of("Authorization", "Content-Type")); // Importante para o React ler o Token
         config.setAllowCredentials(true);
+
+        // Tempo que o navegador guarda a permissão do OPTIONS (evita requisições extras)
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

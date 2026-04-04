@@ -94,6 +94,7 @@ const Profile = () => {
         }
     };
 
+    // função para cadastrar um novo password
     const handleChangePassword = async (e) => {
         e.preventDefault();
         
@@ -114,6 +115,12 @@ const Profile = () => {
                 currentPassword: formData.currentPassword,
                 newPassword: formData.newPassword
             });
+
+            console.log("Resposta do servidor:", response);
+
+            // Captura a mensagem de succes que vem do backend por JSON
+            const successMsg = response.data.message || 'Senha alterada com sucesso!';
+            console.log(successMsg);
             
             setFormData({
                 ...formData,
@@ -122,10 +129,13 @@ const Profile = () => {
                 confirmPassword: ''
             });
             
-            setMessage({ type: 'success', text: 'Senha alterada com sucesso!' });
+            console.log("Resposta do servidor:", response);
+            setMessage({ type: 'success', text: successMsg });
             setTimeout(() => setMessage({ type: '', text: '' }), 3000);
         } catch (error) {
-            setMessage({ type: 'danger', text: error.response?.data?.message || 'Erro ao alterar senha' });
+            // Captura mensagem de error que vem do backend por JSON
+            const errroMsg = error.response?.data?.message || 'Erro ao alterar senha';
+            setMessage({ type: 'danger', text: errroMsg });
         } finally {
             setLoading(false);
         }

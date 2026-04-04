@@ -11,11 +11,10 @@
 
 ## 🖼️ Demonstração
 
-> Substitua os links abaixo pelos screenshots ou GIFs do seu app:
 
 ![Dashboard](./frontend/public/assets/dashboard.png)  
-![Criar Tarefa](To-Do-List-project/frontend/public/assets/form.png)  
-![Lista de Tarefas](To-Do-List-project/frontend/public/assets/dashboard.png)
+![Criar Tarefa](./frontend/public/assets/form.png)  
+![Lista de Tarefas](./frontend/public/assets/dashboard.png)
 
 ---
 

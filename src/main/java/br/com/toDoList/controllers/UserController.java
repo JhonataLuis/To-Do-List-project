@@ -1,5 +1,6 @@
 package br.com.toDoList.controllers;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.toDoList.dto.ChangePasswordRequest;
 import br.com.toDoList.model.User;
 import br.com.toDoList.serviceImpl.UserService;
 
@@ -47,5 +49,18 @@ public class UserController {
 
         return ResponseEntity.ok(photoUrl);
        
+    }
+
+    @PutMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordRequest request){
+        try {
+            userService.changePassword(request);
+            // Retorna um objeto Map para o Axios no frontend identificar como JSON
+            return ResponseEntity.ok().body(Collections.singletonMap("message", "Senha alterada com sucesso!"));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 }

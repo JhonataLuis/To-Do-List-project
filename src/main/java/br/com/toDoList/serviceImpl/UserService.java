@@ -12,9 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.toDoList.dto.ChangePasswordRequest;
 import br.com.toDoList.model.User;
 import br.com.toDoList.repository.UserRepository;
 
@@ -22,6 +24,9 @@ import br.com.toDoList.repository.UserRepository;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private UserRepository userRepo;
@@ -72,5 +77,22 @@ public class UserService {
             logger.info("Cadastro da Foto do usuário: " + user.getEmail() + "e a foto: " + photoUrl);
 
             return photoUrl;
+    }
+
+    // Método para alterar senha do usuário
+    public void changePassword(ChangePasswordRequest request){
+
+        User user = getCurrentUser(); // pega o usuário logado
+
+        // Se a senha atual e a adicionado como atual não for igual
+        if(!encoder.matches(request.getCurrentPassword(), user.getSenha())){
+            throw new RuntimeException("Senha atual incorreta! Favor informar a senha correta.");
+        }
+
+        // Aqui criptografa a nova senha e salva
+        user.setSenha(encoder.encode(request.getNewPassword()));
+        userRepo.save(user);
+
+        logger.info("Senha alterada com sucesso para o usuário: {}", user.getEmail());
     }
 }

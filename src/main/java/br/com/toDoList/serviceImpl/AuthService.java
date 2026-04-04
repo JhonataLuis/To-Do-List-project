@@ -73,6 +73,7 @@ public class AuthService {
         emailService.sendWelcome(user.getEmail(), user.getUsername());
     }
 
+    // Método para recuperar a senha do usuário
     public void forgotPassword(String email){
         User user = userRepo.findByEmail(email)
             .orElseThrow(() -> new RuntimeException("User not found"));
@@ -85,6 +86,7 @@ public class AuthService {
             emailService.sendResetPassword(email, token);
     }
 
+    // Método para definir a nova senha usuando o token
     public void resetPassword(String token, String newPassword){
         User user = userRepo.findByResetToken(token)
             .orElseThrow(() -> new RuntimeException("Invalid token"));
