@@ -41,6 +41,13 @@ body {
     font-weight: 600;
 }
 
+.coluna-descricao {
+    max-width: 200px;   
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .priority-badge {
     padding: 0.25em 0.6em;
     border-radius: 10px;

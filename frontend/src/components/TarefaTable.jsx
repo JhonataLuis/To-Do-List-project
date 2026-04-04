@@ -141,7 +141,9 @@ function TarefaTable({ tarefas, tarefasConcluidas = [], onEditar, onTarefaExclui
                     </span>
                   </td>
                   <td>{tarefa.titulo}</td>
-                  <td>{tarefa.descricao}</td>
+                  <td className='coluna-descricao' title={tarefa.descricao}>
+                    {tarefa.descricao}
+                  </td>
                   <td>
                     <span className={`priority-badge ${getPriorityClass(tarefa.prioridade)}`}>
                       {tarefa.prioridade}
@@ -166,7 +168,7 @@ function TarefaTable({ tarefas, tarefasConcluidas = [], onEditar, onTarefaExclui
                   <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                     <button 
-                        className={`btn btn-sm ${tarefa.concluido ? 'btn-success' : 'btn-online-success'}`}
+                        className={`btn btn-sm ${tarefa.concluido ? 'btn-success' : 'btn-outline-success'}`}
                         onClick={() => handlerConcluir(tarefa)}
                         title={tarefa.concluido ? "Tarefa Concluída" : "Marcar como Concluída"}
                         disabled={tarefa.concluido}
