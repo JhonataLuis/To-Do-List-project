@@ -108,7 +108,7 @@ function TarefaTable({ tarefas, tarefasConcluidas = [], onEditar, onTarefaExclui
               <th scope="col">Prioridade</th>
               <th scope='col'>Data Entrega</th>
               <th scope="col">Categoria</th>
-              <th scope='col'>Responsável</th>
+              {/*<th scope='col'>Responsável</th>*/}
               <th scope="col">Data Criação</th>
               <th scope='col'>Update At</th>
               <th scope="col" className="text-center">Ações</th>
@@ -157,12 +157,12 @@ function TarefaTable({ tarefas, tarefasConcluidas = [], onEditar, onTarefaExclui
                       </span>
                   </td>
                   <td>{tarefa.categoria}</td>
-                  <td>
+                  {/*<td>
                     <div className='d-flex align-items-center'>
                         <i className='bi bi-person-circle me-2 text-secondary'></i>
                         <span>{tarefa.user?.name || 'Não atribuído'}</span>
                     </div>
-                  </td>
+                  </td>*/}
                   <td>{formatarData(tarefa.dataCriacao)}</td>
                   <td>{formatarData(tarefa.updatedAt)}</td>
                   <td className="text-center">

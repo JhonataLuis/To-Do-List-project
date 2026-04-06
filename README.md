@@ -126,46 +126,10 @@ export DB_URL=jdbc:postgresql://localhost:5432/todolist
 export DB_USERNAME=usuario
 export DB_PASSWORD=senha
 
-🤝 Contribuindo
+## ✨ Security
 
-Faça um fork do projeto
+The project includes built-in security configurations:
 
-Crie uma branch: git checkout -b feature/AmazingFeature
-
-Commit suas alterações: git commit -m 'Add some AmazingFeature'
-
-Push: git push origin feature/AmazingFeature
-
-Abra um Pull Request 🚀
-
-Guidelines
-
-Siga o padrão de código existente
-
-Adicione testes para novas funcionalidades
-
-Atualize a documentação quando necessário
-
-Use mensagens de commit claras
-
-📄 Licença
-
-MIT License © 2024 Jhonata Luis
-
-👨‍💻 Autor
-
-Jhonata Luis
-
-GitHub:[https://github.com/JhonataLuis]
-
-LinkedIn: linkedin
-
-Email: email@example.com
-
-🔄 Status do Projeto
-
-
-Versão: 1.0.0 | Última atualização: Outubro 2025
-
-
-⭐️ Se este projeto foi útil, deixe uma estrela no repositório!
+CORS Policies: Controlled in CorsConfig.cs.
+Security Headers: Applied globally via HeadersConfig.cs.
+Role-based Authorization: Implemented with RolesAuthorizeAttribute and PermissionConfig.
