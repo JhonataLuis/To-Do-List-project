@@ -1,6 +1,8 @@
 package br.com.toDoList.controllers;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,16 +59,22 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<Page<Tarefas>> listarTaskPaginated(
         @RequestParam(name = "page", defaultValue = "0") int page,
-        @RequestParam(name = "size", defaultValue = "12") int size ){
+        @RequestParam(name = "size", defaultValue = "12") int size,
+        @RequestParam(name = "concluido", required = false) Boolean concluido){
         
             try{
                 // Cria objeto Pageable com página e tamanho
-                Pageable pageable = PageRequest.of(page, size);
+                Pageable pageable = PageRequest.of(page, size, Sort.by("dataCriacao").descending());
 
                 Long userId = userService.getCurrentUser().getId();
 
                 /*BUSCA TAREFAS COM PAGINAÇÃO (JÁ APLICA ORDENAÇÃO) */
-                Page<Tarefas> taskPage = taskService.findAllPagelist(userId, pageable);
+                Page<Tarefas> taskPage;
+                if(concluido != null) {
+                    taskPage = taskRepo.findByUserIdAndConcluido(userId, concluido, pageable);
+                } else {
+                    taskPage = taskRepo.findByUserId(userId, pageable);
+                }
 
                 return new ResponseEntity<>(taskPage, HttpStatus.OK);
                 
@@ -128,7 +137,7 @@ public class ToDoControllers {
         }
     }
 
-    // Endpoint do método para concluir uma tarefa
+    // Endpoint do método para concluir uma tarefa // Implementado para Mobile
     @SuppressWarnings("null")
     @PatchMapping("/tarefas/{id}/concluir")
     public ResponseEntity<?> concluirTask(@PathVariable(name = "id") Long id){
@@ -147,9 +156,27 @@ public class ToDoControllers {
             task.setStatus(TaskStatus.DONE);
             task.setConcluido(true);
             task.setUpdatedAt(LocalDateTime.now());
+            task.setDataConclusao(LocalDateTime.now());
             return ResponseEntity.ok(taskRepo.save(task));
         }).orElse(ResponseEntity.notFound().build());
     }
     
     // Endpoint/Método para mostrar statisticas de tarefas {Total, Concluídas, Pendentes}
+    @GetMapping("/stats")
+    public ResponseEntity<Map<String, Long>> getStats(){
+
+        try{
+        Long userId = userService.getCurrentUser().getId();
+
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("total", taskRepo.countByUserId(userId));
+        stats.put("completed", taskRepo.countByUserIdAndConcluido(userId, true));
+        stats.put("pending", taskRepo.countByUserIdAndConcluido(userId, false));
+
+        return ResponseEntity.ok(stats); // Retorna o a situação da tarefa
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 }

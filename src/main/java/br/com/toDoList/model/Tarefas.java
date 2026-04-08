@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.toDoList.enums.TaskStatus;
 import jakarta.persistence.Column;
@@ -43,7 +44,6 @@ public class Tarefas{
 	 * @param prioridade
 	 */
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tarefa")
 	private Long id;
@@ -67,7 +67,7 @@ public class Tarefas{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	@JsonIgnore
+	@JsonIgnoreProperties({"tasks", "password", "hibernateLazyInitializer", "handler"})
 	private User user;
 	
 	@Column(name = "data_criacao")
@@ -77,7 +77,7 @@ public class Tarefas{
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 	
-	//private LocalDateTime dataConclusao;
+	private LocalDateTime dataConclusao;
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 
 	@PrePersist
@@ -171,8 +171,17 @@ public class Tarefas{
 	public TaskStatus getStatus() {
 		return status;
 	}
+
+	public LocalDateTime getDataConclusao() {
+		return dataConclusao;
+	}
+
+	public void setDataConclusao(LocalDateTime dataConclusao) {
+		this.dataConclusao = dataConclusao;
+	}
 	
 }
+
 
 enum TaskPriority {
 	LOW, MEDIUM, HIGH

@@ -62,18 +62,21 @@ public class ToDoServiceImpl {
 
     /**
      * Atualiza uma tarefa existente.
-     * @param tarefas A tarefa com os dados atualizados.
+     * @param tarefas A tarefa com os dados atualizados/ Atualiza a tarefa referente ao usuário dela.
      * @return A tarefa atualizada.
      */
-
     public Tarefas update(Long id, Tarefas taskDetails, Long userId){
         logger.info("Tentando atualizar tarefa " + id + " para o usuário " + userId);
         Tarefas task = getTarefas(id, userId);
         task.setTitulo(taskDetails.getTitulo());
         task.setDescricao(taskDetails.getDescricao());
         task.setStatus(taskDetails.getStatus());
+        task.setConcluido(false);
         task.setPrioridade(taskDetails.getPrioridade());
         task.setDueDate(taskDetails.getDueDate());
+        task.setUpdatedAt(taskDetails.getUpdatedAt());
+        task.setCategoria(taskDetails.getCategoria());
+        task.setDataConclusao(taskDetails.getDataConclusao());
         
         return repository.save(task);
     }
@@ -85,6 +88,11 @@ public class ToDoServiceImpl {
 
     public void sharedTask(){
 
+    }
+
+    public Tarefas concluirTask(Long id){
+
+        return null;
     }
 
 }

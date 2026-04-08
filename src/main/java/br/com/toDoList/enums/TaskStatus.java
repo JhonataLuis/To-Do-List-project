@@ -3,7 +3,7 @@ package br.com.toDoList.enums;
 // Enum para status das tarefas
 public enum TaskStatus {
     TODO("A fazer"),
-    DOING("EM andamento"),
+    DOING("Em andamento"),
     DONE("Concluído");
 
     private final String displayValue;
