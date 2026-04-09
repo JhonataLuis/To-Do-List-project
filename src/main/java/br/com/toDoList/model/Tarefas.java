@@ -67,7 +67,8 @@ public class Tarefas{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
-	@JsonIgnoreProperties({"tasks", "password", "hibernateLazyInitializer", "handler"})
+	@JsonIgnore
+	//@JsonIgnoreProperties({"tasks", "password", "hibernateLazyInitializer", "handler"})
 	private User user;
 	
 	@Column(name = "data_criacao")

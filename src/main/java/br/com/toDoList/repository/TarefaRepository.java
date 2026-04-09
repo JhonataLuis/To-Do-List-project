@@ -20,11 +20,8 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
      */
     Page<Tarefas> findByUserId(Long userId, Pageable pageable);
 
-    //@Query("SELECT t FROM tarefas t WHERE t.user = :user OR :user MEMBER OF t.sharedTasks")
-    //Page<Tarefas> findAccessibleTasks(@Param("user") User user, Pageable pageable);
-
-    //long countByUserAndStatus(User user, TaskStatus status);
-
+    Page<Tarefas> findByUserIdAndConcluido(Long userId, Pageable pageable, boolean concluido);
+    
     // Contal total de tarefas do usuário
     long countByUserId(Long userId);
 

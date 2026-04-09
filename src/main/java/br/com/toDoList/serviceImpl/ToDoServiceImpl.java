@@ -1,5 +1,7 @@
 package br.com.toDoList.serviceImpl;
 
+import java.time.LocalDateTime;
+
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -71,10 +73,10 @@ public class ToDoServiceImpl {
         task.setTitulo(taskDetails.getTitulo());
         task.setDescricao(taskDetails.getDescricao());
         task.setStatus(taskDetails.getStatus());
-        task.setConcluido(false);
+        task.setConcluido(taskDetails.isConcluido());
         task.setPrioridade(taskDetails.getPrioridade());
         task.setDueDate(taskDetails.getDueDate());
-        task.setUpdatedAt(taskDetails.getUpdatedAt());
+        task.setUpdatedAt(LocalDateTime.now());
         task.setCategoria(taskDetails.getCategoria());
         task.setDataConclusao(taskDetails.getDataConclusao());
         

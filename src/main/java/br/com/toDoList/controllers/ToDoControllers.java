@@ -71,7 +71,7 @@ public class ToDoControllers {
                 /*BUSCA TAREFAS COM PAGINAÇÃO (JÁ APLICA ORDENAÇÃO) */
                 Page<Tarefas> taskPage;
                 if(concluido != null) {
-                    taskPage = taskRepo.findByUserIdAndConcluido(userId, concluido, pageable);
+                    taskPage = taskRepo.findByUserIdAndConcluido(userId, pageable, concluido);
                 } else {
                     taskPage = taskRepo.findByUserId(userId, pageable);
                 }
