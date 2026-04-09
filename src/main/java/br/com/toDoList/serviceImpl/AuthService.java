@@ -42,6 +42,7 @@ public class AuthService {
     @Autowired
     private EmailService emailService;
 
+    // Método para Realizar Login
     public AuthResponse login(LoginRequest request) {
         Authentication auth = authManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
@@ -56,6 +57,7 @@ public class AuthService {
                                user.getUsername(), roles, user.getProfilePhoto());
     }
 
+    // Método para Registrar um novo usuário
     public void register(RegisterRequest request){
         if (userRepo.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");

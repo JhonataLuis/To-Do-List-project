@@ -58,13 +58,6 @@ public class SecurityConfig{
     public CorsConfigurationSource corsSource(){
         CorsConfiguration config = new CorsConfiguration();
 
-        //config.setAllowedOriginPatterns(List.of("*")); // Permite qualquer origem
-
-        // Configuração para liberar acesso ao backend pelo celular (App React Native)
-        /*config.setAllowedOrigins(List.of(
-            "http://192.168.5.111", // Ip do celular (My)
-            "http://192.168.5.111:8081" // Porta padrão do Metro Bundler
-        ));*/
         // Permite as origens do Front-end
         config.setAllowedOriginPatterns(List.of(
             "http://localhost:3000", 
@@ -79,13 +72,10 @@ public class SecurityConfig{
            
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-
         config.setExposedHeaders(List.of("*"));
-        
         // Headers
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
 
-        
         // Headers que o Axios/Brownsers podem "enxergar" na resposta
         config.setExposedHeaders(List.of("Authorization", "Content-Type")); // Importante para o React ler o Token
         config.setAllowCredentials(false);
