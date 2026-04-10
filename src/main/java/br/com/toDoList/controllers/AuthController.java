@@ -1,5 +1,7 @@
 package br.com.toDoList.controllers;
 
+import java.util.Collections;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +29,12 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request){
-        authService.register(request);
-        return ResponseEntity.ok("User registered");
+        try{
+             authService.register(request);
+             // Retornar um JSON fixo ajuda o Axios no Mobile a entender o sucess
+             return ResponseEntity.ok(Collections.singletonMap("message", "Usuário registraco com sucesso!"));
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 }

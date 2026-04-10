@@ -19,6 +19,10 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 
 
@@ -31,12 +35,16 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_user")
 	private Long id;
 
+	@NotBlank
 	@Column(nullable = false)
 	private String username;
 	
+	@Email
 	@Column(nullable = false, unique = true)
 	private String email;
 
+	@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres") // Camada de segurança para senha
+	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d]{8,}$", message = "A senha deve conter letras e números")
 	@Column(nullable = false)
 	private String senha;
 
