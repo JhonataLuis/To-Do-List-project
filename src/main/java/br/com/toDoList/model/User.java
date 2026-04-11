@@ -43,8 +43,6 @@ public class User {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres") // Camada de segurança para senha
-	@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)[A-Za-z\\\\d]{8,}$", message = "A senha deve conter letras e números")
 	@Column(nullable = false)
 	private String senha;
 

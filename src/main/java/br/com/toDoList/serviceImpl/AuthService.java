@@ -72,7 +72,7 @@ public class AuthService {
         userRepo.save(user);
         System.out.println("ROLE SALVO NO BANCO");
 
-        emailService.sendWelcome(user.getEmail(), user.getUsername());
+        //emailService.sendWelcome(user.getEmail(), user.getUsername());
     }
 
     // Método para recuperar a senha do usuário
