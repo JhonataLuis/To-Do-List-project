@@ -88,13 +88,4 @@ public class ToDoServiceImpl {
         repository.delete(getTarefas(id, userId));
     }
 
-    public void sharedTask(){
-
-    }
-
-    public Tarefas concluirTask(Long id){
-
-        return null;
-    }
-
 }

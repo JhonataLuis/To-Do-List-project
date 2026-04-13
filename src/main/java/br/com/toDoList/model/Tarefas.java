@@ -63,7 +63,7 @@ public class Tarefas{
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 	
 	@Column(name = "due_date")
-	private LocalDate dueDate; // Data de Vencimento da Tarefa
+	private LocalDateTime dueDate; // Data de Vencimento da Tarefa
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -141,11 +141,11 @@ public class Tarefas{
 		this.categoria = categoria;
 	}
 	
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(LocalDateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public LocalDate getDueDate() {
+	public LocalDateTime getDueDate() {
 		return dueDate;
 	}
 
