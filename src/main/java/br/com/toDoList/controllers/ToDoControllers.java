@@ -143,7 +143,7 @@ public class ToDoControllers {
     @PatchMapping("/tarefas/{id}/concluir")
     @Transactional // Anotação para garantir a integridade dos dados
     public ResponseEntity<?> concluirTask(@PathVariable(name = "id") Long id){
-        logger.info("Concluíndo tarefa ... Ok");
+        logger.info("Mudando o status da tarefa ... Ok");
         Long userId = userService.getCurrentUser().getId();
 
         return taskRepo.findById(id).map(task -> {
@@ -162,8 +162,31 @@ public class ToDoControllers {
             return ResponseEntity.ok(taskRepo.save(task));
         }).orElse(ResponseEntity.notFound().build());
     }
+
+    @PatchMapping("/tarefas/{id}/restaurar") // Endpoint para restaurar uma tarefa finalizada React Native Mobile
+    @Transactional // Anotação para garantir a integridade dos dados
+    public ResponseEntity<?> restauraTask(@PathVariable(name = "id") Long id){
+        logger.info("Restaurando tarefa para a lista de pendentes....Ok");
+
+        Long userId = userService.getCurrentUser().getId();
+
+        return taskRepo.findById(id).map(task -> {
+
+            // Validação de segurança: valida se o usuário é o dono da tarefa
+            if(!task.getUser().getId().equals(userId)){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para acessar essa tarefa");
+            }
+
+            task.setStatus(TaskStatus.TODO);
+            task.setConcluido(false);
+            task.setDataConclusao(null);
+            return ResponseEntity.ok(taskRepo.save(task));
+
+        }).orElse(ResponseEntity.notFound().build());
+
+    }
     
-    // Endpoint/Método para mostrar statisticas de tarefas {Total, Concluídas, Pendentes}
+    // Endpoint/Método para mostrar statisticas de tarefas {Total, Concluídas, Pendentes} React Native Mobile
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Long>> getStats(){
 
