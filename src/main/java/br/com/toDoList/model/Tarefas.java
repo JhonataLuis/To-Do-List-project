@@ -4,8 +4,6 @@ package br.com.toDoList.model;
  * @version 1.0
  * @since 18/02/2025
  */
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -13,7 +11,6 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.toDoList.enums.TaskStatus;
 import jakarta.persistence.Column;
@@ -56,6 +53,8 @@ public class Tarefas{
 
 	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
+
+	private Double posicao;
 
 	//private TaskPriority priority;
 
@@ -171,6 +170,14 @@ public class Tarefas{
 
 	public TaskStatus getStatus() {
 		return status;
+	}
+
+	public Double getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(Double posicao) {
+		this.posicao = posicao;
 	}
 
 	public LocalDateTime getDataConclusao() {

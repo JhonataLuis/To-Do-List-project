@@ -20,7 +20,7 @@ public class ToDoServiceImpl {
     private static final Logger logger = Logger.getLogger(ToDoServiceImpl.class);
 
     @Autowired
-    private TarefaRepository repository;
+    private TarefaRepository taskRepo;
 
     @Autowired
     private UserRepository userRepo;
@@ -30,7 +30,7 @@ public class ToDoServiceImpl {
      */
     public Tarefas create(Tarefas tarefas, Long userId){
         tarefas.setUser(userRepo.findById(userId).get());
-        Tarefas taskSaved = repository.save(tarefas);
+        Tarefas taskSaved = taskRepo.save(tarefas);
 
         if(taskSaved == null){
             throw new RuntimeException("Erro ao salvar tarefa");
@@ -49,12 +49,12 @@ public class ToDoServiceImpl {
         Pageable page = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
         // Chamando o repositorio filtrando pelo usuário 
-        return repository.findByUserId(userId, page);
+        return taskRepo.findByUserId(userId, page);
     }
 
     // Vê somente as tarefas do usuário
     public Tarefas getTarefas(Long id, Long userId){
-        Tarefas task = repository.findById(id).orElseThrow();
+        Tarefas task = taskRepo.findById(id).orElseThrow();
         if (!task.getUser().getId().equals(userId)){
             throw new RuntimeException("Acesso Negado");
         }
@@ -80,12 +80,24 @@ public class ToDoServiceImpl {
         task.setCategoria(taskDetails.getCategoria());
         task.setDataConclusao(taskDetails.getDataConclusao());
         
-        return repository.save(task);
+        return taskRepo.save(task);
     }
 
     // Método para deletar uma tarefa do usuário
     public void deleteTask(Long id, Long userId){
-        repository.delete(getTarefas(id, userId));
+        taskRepo.delete(getTarefas(id, userId));
+    }
+
+    // Método para reordenar tarefas no Mobile React Native
+    public void mover(Long tarefaId, Double novaPosicao, Long userId) {
+        Tarefas task = taskRepo.findById(tarefaId).orElseThrow();
+
+        if (!task.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Acesso negado");
+        }
+
+        task.setPosicao(novaPosicao);
+        taskRepo.save(task);
     }
 
 }

@@ -3,6 +3,7 @@ package br.com.toDoList.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+// Método para usuário criar nova senha após marcar como esqueceu
 public class PasswordResetConfirm {
 
     @NotBlank(message = "O token é obrigatório")

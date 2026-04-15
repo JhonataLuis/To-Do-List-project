@@ -2,6 +2,7 @@ package br.com.toDoList.controllers;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.toDoList.dto.ReorderRequest;
 import br.com.toDoList.enums.TaskStatus;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
@@ -163,8 +165,8 @@ public class ToDoControllers {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @PatchMapping("/tarefas/{id}/restaurar") // Endpoint para restaurar uma tarefa finalizada React Native Mobile
     @Transactional // Anotação para garantir a integridade dos dados
+    @PatchMapping("/tarefas/{id}/restaurar") // Endpoint para restaurar uma tarefa finalizada React Native Mobile
     public ResponseEntity<?> restauraTask(@PathVariable(name = "id") Long id){
         logger.info("Restaurando tarefa para a lista de pendentes....Ok");
 
@@ -204,4 +206,25 @@ public class ToDoControllers {
         }
 
     }
+
+    // Endpoint para reordenar lista de tarefas com o toque na tela mobile arranstando
+    @Transactional
+    @PostMapping("/reordenar")
+    public ResponseEntity<Void> reordenar(@RequestBody ReorderRequest request){
+
+        Double novaPosicao;
+
+        if(request.posAnterior() == null){
+            novaPosicao = request.posProxima() - 1000;
+        } else if (request.posProxima() == null) {
+            novaPosicao = request.posAnterior() + 1000;
+        } else {
+            novaPosicao = (request.posAnterior() + request.posProxima()) / 2;
+        }
+
+        Long userId = userService.getCurrentUser().getId();
+        taskService.mover(request.tarefaId(), novaPosicao, userId);
+       
+        return ResponseEntity.ok().build();
+    } 
 }
