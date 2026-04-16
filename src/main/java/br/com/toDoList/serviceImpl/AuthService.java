@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +26,8 @@ import br.com.toDoList.security.UserDetailsImpl;
 
 @Service
 public class AuthService {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
     private AuthenticationManager authManager;
@@ -61,7 +65,7 @@ public class AuthService {
     // Método para Registrar um novo usuário
     public void register(RegisterRequest request){
         if (userRepo.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new RuntimeException("Este e-mail já está cadastrado.");
         }
 
         User user = new User();
@@ -70,10 +74,13 @@ public class AuthService {
         user.setSenha(encoder.encode(request.getPassword()));
         user.setRoles(Set.of(roleRepo.findByName("USER")
         .orElseThrow(() -> new RuntimeException("Role USER not found"))));
+        // Salva usuário no banco primeiro
         userRepo.save(user);
-        System.out.println("ROLE SALVO NO BANCO");
+        logger.info("ROLE SALVO NO BANCO");
 
-        //emailService.sendWelcome(user.getEmail(), user.getUsername());
+        // Envia o e-mail de boas vindas
+        emailService.sendWelcome(user.getEmail(), user.getUsername());
+        logger.info("Usuário registrado e e-mail de boas-vindas enviado para fila.");
     }
 
     // Método para recuperar a senha do usuário
@@ -93,8 +100,11 @@ public class AuthService {
 
     // Método para definir a nova senha usuando o token
     public void resetPassword(String token, String newPassword){
+        
+        String cleanToken = token.trim();
+
         // Busca o usuário que possui aquele código específico
-        User user = userRepo.findByResetToken(token)
+        User user = userRepo.findByResetToken(cleanToken)
             .orElseThrow(() -> new RuntimeException("Token inválido ou não encontrado."));
 
             // Verifica se o tempo de expiração já passou

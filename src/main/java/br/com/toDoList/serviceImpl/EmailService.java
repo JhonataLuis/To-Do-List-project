@@ -1,5 +1,7 @@
 package br.com.toDoList.serviceImpl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 @Service
 public class EmailService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -23,12 +27,22 @@ public class EmailService {
      */
     @Async
     public void sendWelcome(String email, String name) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(FROM);
-        message.setTo(email);
-        message.setSubject("Bem vindo ao KeePeace Manager!");
-        message.setText("Olá " + name + ", \n\nSua conta foi criada com sucesso!");
-        mailSender.send(message);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(FROM); // Remetente definido
+            message.setTo(email);
+            message.setSubject("Bem vindo ao KeePeace!");
+            message.setText("Olá " + name + ", \n\n" +
+            "Sua conta foi criada com sucesso!\n" +
+            "Estamos felizes em ter você conosco, para ajudar na sua organização pessoal.\n\n" +
+            "Atenciosamente, \nEquipe KeePace.");
+            mailSender.send(message);
+            logger.info("E-mail de boas-vindas enviado com sucesso para: " + email);
+
+        } catch (Exception e) {
+            // Como é Async, o erro não trava o registro, então logamos o erro
+            logger.info("Falha ao enviar e-mail de boas-vindas: " + e.getMessage());
+        }
     }
 
     /**
@@ -37,12 +51,11 @@ public class EmailService {
     @Async
     public void sendResetPassword(String email, String token) {
         // Exemplo de link que o usuário clicaria no front-end
-        //String resetLink = "http://localhost:3000/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(FROM);
+        message.setFrom(FROM); // Remetente definido
         message.setTo(email);
-        message.setSubject("Recuperação de Senha - KeePeace Manager");
+        message.setSubject("Recuperação de Senha - KeePeace");
 
         // Texto focado no uso dentro do aplicativo
         message.setText(

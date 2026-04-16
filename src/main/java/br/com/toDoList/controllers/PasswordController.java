@@ -1,5 +1,11 @@
 package br.com.toDoList.controllers;
 
+
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,8 +38,15 @@ public class PasswordController {
     @PostMapping("/reset-password") // Endp
     public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetConfirm request){
 
-        authService.resetPassword(request.getToken(), request.getNewPassword());
-        return ResponseEntity.ok("Senha alterada com sucesso");
+        try {
+            authService.resetPassword(request.getToken(), request.getNewPassword());
+            return ResponseEntity.ok("Senha alterada com sucesso");
+        
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
+        
+        
     }
 
 }
