@@ -46,7 +46,6 @@ public class PasswordController {
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
         }
         
-        
     }
 
 }

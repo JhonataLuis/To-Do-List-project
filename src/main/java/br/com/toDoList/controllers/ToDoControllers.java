@@ -62,13 +62,13 @@ public class ToDoControllers {
     @ResponseBody
     public ResponseEntity<Page<Tarefas>> listarTaskPaginated(
         @RequestParam(name = "page", defaultValue = "0") int page,
-        @RequestParam(name = "size", defaultValue = "12") int size,
+        @RequestParam(name = "size", defaultValue = "25") int size,
         @RequestParam(name = "concluido", required = false) Boolean concluido){
         
             try{
                 // Cria objeto Pageable com página e tamanho
-                Pageable pageable = PageRequest.of(page, size, Sort.by("dataCriacao").descending());
-
+                Pageable pageable = PageRequest.of(page, size, Sort.by("posicao").ascending()
+                    .and(Sort.by("dataCriacao").descending()));
                 Long userId = userService.getCurrentUser().getId();
 
                 /*BUSCA TAREFAS COM PAGINAÇÃO (JÁ APLICA ORDENAÇÃO) */
@@ -209,22 +209,13 @@ public class ToDoControllers {
 
     // Endpoint para reordenar lista de tarefas com o toque na tela mobile arranstando
     @Transactional
-    @PostMapping("/reordenar")
-    public ResponseEntity<Void> reordenar(@RequestBody ReorderRequest request){
-
-        Double novaPosicao;
-
-        if(request.posAnterior() == null){
-            novaPosicao = request.posProxima() - 1000;
-        } else if (request.posProxima() == null) {
-            novaPosicao = request.posAnterior() + 1000;
-        } else {
-            novaPosicao = (request.posAnterior() + request.posProxima()) / 2;
-        }
-
+    @PatchMapping("/tarefas/reordenar")
+    public ResponseEntity<Void> reordenar(@RequestBody List<ReorderRequest> request){
+        logger.info("REORDENANDO FOR BACKEND...");
         Long userId = userService.getCurrentUser().getId();
-        taskService.mover(request.tarefaId(), novaPosicao, userId);
-       
+        for(ReorderRequest dto : request){
+            taskRepo.updatePosicao(dto.tarefaId(), dto.posicao(), userId);
+        }
         return ResponseEntity.ok().build();
     } 
 }

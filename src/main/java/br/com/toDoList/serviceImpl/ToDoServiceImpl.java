@@ -88,16 +88,4 @@ public class ToDoServiceImpl {
         taskRepo.delete(getTarefas(id, userId));
     }
 
-    // Método para reordenar tarefas no Mobile React Native
-    public void mover(Long tarefaId, Double novaPosicao, Long userId) {
-        Tarefas task = taskRepo.findById(tarefaId).orElseThrow();
-
-        if (!task.getUser().getId().equals(userId)) {
-            throw new RuntimeException("Acesso negado");
-        }
-
-        task.setPosicao(novaPosicao);
-        taskRepo.save(task);
-    }
-
 }

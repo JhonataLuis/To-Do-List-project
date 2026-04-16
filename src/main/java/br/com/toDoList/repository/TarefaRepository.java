@@ -34,5 +34,15 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
     // Conta tarefas por status de conclusão
     long countByUserIdAndConcluido(Long userId, boolean concluido);
 
+    // ######## Para reordenar tarefa ##########
+
+    // Busca as tarefas ordenadas pela posição
+    List<Tarefas> findByConcluidoFalseOrderByPosicaoAsc();
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Tarefas t SET t.posicao = :posicao WHERE t.id = :id AND t.user.id = :userId")
+    void updatePosicao(@Param("id") Long id, @Param("posicao") Integer posicao, @Param("userId") Long userId);
+
    
 }

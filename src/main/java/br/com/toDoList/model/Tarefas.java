@@ -54,7 +54,7 @@ public class Tarefas{
 	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
 
-	private Double posicao;
+	private Integer posicao;
 
 	//private TaskPriority priority;
 
@@ -172,11 +172,11 @@ public class Tarefas{
 		return status;
 	}
 
-	public Double getPosicao() {
+	public Integer getPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(Double posicao) {
+	public void setPosicao(Integer posicao) {
 		this.posicao = posicao;
 	}
 
