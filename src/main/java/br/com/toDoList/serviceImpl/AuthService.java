@@ -2,6 +2,7 @@ package br.com.toDoList.serviceImpl;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -78,9 +79,11 @@ public class AuthService {
     // Método para recuperar a senha do usuário
     public void forgotPassword(String email){
         User user = userRepo.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-            String token = UUID.randomUUID().toString();
+            // Gera um código de 6 digitos aleátórios
+            String token = String.valueOf(new Random().nextInt(899999) + 100000);
+
             user.setResetToken(token);
             user.setResetTokenExpiry(LocalDateTime.now().plusHours(1));
             userRepo.save(user);
@@ -90,16 +93,22 @@ public class AuthService {
 
     // Método para definir a nova senha usuando o token
     public void resetPassword(String token, String newPassword){
+        // Busca o usuário que possui aquele código específico
         User user = userRepo.findByResetToken(token)
-            .orElseThrow(() -> new RuntimeException("Invalid token"));
+            .orElseThrow(() -> new RuntimeException("Token inválido ou não encontrado."));
 
+            // Verifica se o tempo de expiração já passou
             if (user.getResetTokenExpiry().isBefore(LocalDateTime.now())){
-                throw new RuntimeException("Token expired");
+                throw new RuntimeException("Este código expirou. Solicite um novo e-mail.");
             }
 
+            // Criptografa a nova senha antes de salvar no banco
+            // IMPORTANTE: Nunca salve a senha em texto puro!
             user.setSenha(encoder.encode(newPassword));
-            user.setResetToken(null);
+            // Limpa o token e a expiração (Segurança: o código só funciona uma vez)
+            user.setResetToken(null);// Limpa o token para não ser usado novamente
             user.setResetTokenExpiry(null);
+
             userRepo.save(user);
     }
 

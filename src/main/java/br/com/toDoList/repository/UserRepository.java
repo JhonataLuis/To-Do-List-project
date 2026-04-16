@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 
     boolean existsByEmail(String email);
 
+    // Método de busca pelo token
     Optional<User> findByResetToken(String resetToken);
 
     @Query("SELECT u FROM User u WHERE u.email LIKE %:email%")

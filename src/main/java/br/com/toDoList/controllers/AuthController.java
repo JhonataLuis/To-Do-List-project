@@ -37,9 +37,4 @@ public class AuthController {
         }
     }
 
-    // Método para recuperar a senha do usuário
-    @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(){
-        return ResponseEntity.ok("E-mail de recuperação enviado com sucesso.");
-    }
 }
