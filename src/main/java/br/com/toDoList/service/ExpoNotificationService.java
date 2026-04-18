@@ -1,0 +1,32 @@
+package br.com.toDoList.service;
+
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Service
+public class ExpoNotificationService {
+    private final WebClient webClient;
+
+    public ExpoNotificationService(){
+        this.webClient = WebClient.builder()
+            .baseUrl("")
+            .build();
+    }
+
+    public void sendNotifications(String token, String title, String body) {
+        Map<String, Object> payload = Map.of(
+            "to", token,
+            "title", title,
+            "body", body,
+            "sound", "default"
+        );
+
+        webClient.post()
+            .bodyValue(payload)
+            .retrieve()
+            .bodyToMono(String.class)
+            .subscribe(response -> System.out.println("Notificação enviada: " + response));
+    }
+}
