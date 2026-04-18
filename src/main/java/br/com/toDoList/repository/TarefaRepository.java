@@ -1,5 +1,6 @@
 package br.com.toDoList.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -44,5 +45,10 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
     @Query("UPDATE Tarefas t SET t.posicao = :posicao WHERE t.id = :id AND t.user.id = :userId")
     void updatePosicao(@Param("id") Long id, @Param("posicao") Integer posicao, @Param("userId") Long userId);
 
-   
+   // ############
+
+   // Busca tarefas entre agora e o tempo de alerta, que não estão concluídas e não foram notificadas
+   List<Tarefas> findByDeadlineBetweenAndCompletedFalseAndNotificationSentFalse(
+    LocalDateTime start, LocalDateTime end
+   );
 }

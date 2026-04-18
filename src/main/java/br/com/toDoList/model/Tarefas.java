@@ -60,6 +60,8 @@ public class Tarefas{
 
 	private boolean concluido;//SIM OU NÃO
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
+
+	private boolean notificationSent = false; // Importante para não repetir alertas
 	
 	@Column(name = "due_date")
 	private LocalDateTime dueDate; // Data de Vencimento da Tarefa
@@ -67,7 +69,6 @@ public class Tarefas{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnore
-	//@JsonIgnoreProperties({"tasks", "password", "hibernateLazyInitializer", "handler"})
 	private User user;
 	
 	@Column(name = "data_criacao")
@@ -187,10 +188,8 @@ public class Tarefas{
 	public void setDataConclusao(LocalDateTime dataConclusao) {
 		this.dataConclusao = dataConclusao;
 	}
-	
-}
 
-
-enum TaskPriority {
-	LOW, MEDIUM, HIGH
+	public void setNotificationSent(boolean notificationSent) {
+		this.notificationSent = notificationSent;
+	}
 }

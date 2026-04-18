@@ -21,8 +21,6 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 
 
@@ -82,6 +80,9 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "task_id")
 	)
 	private Set<Tarefas> sharedTasks = new HashSet<>();
+
+	@Column(name = "expo_push_token")
+	private String expoPushToken;
 	
 	@PrePersist
 	protected void onCreate(){
@@ -187,6 +188,14 @@ public class User {
 
 	public void setSharedTasks(Set<Tarefas> sharedTasks) {
 		this.sharedTasks = sharedTasks;
+	}
+
+	public void setExpoPushToken(String expoPushToken) {
+		this.expoPushToken = expoPushToken;
+	}
+
+	public String getExpoPushToken() {
+		return expoPushToken;
 	}
 
 }

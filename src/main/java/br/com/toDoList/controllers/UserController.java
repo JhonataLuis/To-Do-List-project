@@ -1,5 +1,6 @@
 package br.com.toDoList.controllers;
 
+import br.com.toDoList.repository.UserRepository;
 import java.util.Collections;
 import java.util.Map;
 
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +26,13 @@ import br.com.toDoList.serviceImpl.UserService;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final UserRepository userRepository;
     @Autowired
     private UserService userService;
+
+    UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
@@ -51,7 +59,7 @@ public class UserController {
     }
 
     @PutMapping("/change-password")
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()") // Endpoint para atualizar senha do usuário
     public ResponseEntity<?> updatePassword(@RequestBody ChangePasswordRequest request){
         try {
             userService.changePassword(request);
@@ -61,5 +69,15 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
         }
+    }
+
+    @PatchMapping("/{id}/push-token") // Endpoint para salvar/atualizar o token de push do usuário - notification
+    public ResponseEntity<?> updatePushToken(@PathVariable Long id, @RequestBody Map<String, String> body){
+        String token = body.get("expoPushToken");
+        return userRepository.findById(id).map(user -> {
+            user.setExpoPushToken(token);
+            userRepository.save(user);
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
     }
 }
