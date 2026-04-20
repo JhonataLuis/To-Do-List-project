@@ -65,6 +65,8 @@ public class SecurityConfig{
             "http://localhost:5173",
             "http://192.168.5.111:8081",
             "http://192.168.5.111",
+            "http://192.168.5.115:8081",  
+            "http://192.168.5.115",        
             "http://localhost:[*]",
             "https://*.expo.proxy.io",
             "https://*.ngrok-free.app",

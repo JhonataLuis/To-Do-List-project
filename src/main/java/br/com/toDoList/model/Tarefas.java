@@ -59,6 +59,7 @@ public class Tarefas{
 	//private TaskPriority priority;
 
 	private boolean concluido;//SIM OU NÃO
+	
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 
 	private boolean notificationSent = false; // Importante para não repetir alertas
@@ -79,6 +80,7 @@ public class Tarefas{
 	private LocalDateTime updatedAt;
 	
 	private LocalDateTime dataConclusao;
+	
 	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 
 	@PrePersist
@@ -90,6 +92,7 @@ public class Tarefas{
 	@PreUpdate
 	protected void onUpdate(){
 		updatedAt = LocalDateTime.now();
+		notificationSent = false; // Reseta automaticamente
 	}
 	
 	
@@ -191,5 +194,9 @@ public class Tarefas{
 
 	public void setNotificationSent(boolean notificationSent) {
 		this.notificationSent = notificationSent;
+	}
+
+	public boolean isNotificationSent() {
+		return notificationSent;
 	}
 }

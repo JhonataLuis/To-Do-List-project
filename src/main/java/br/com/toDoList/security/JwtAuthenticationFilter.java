@@ -30,6 +30,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws ServletException, IOException {
+
+            // Log para testar token
+            String requestURI = request.getRequestURI();
+            String authHeader = request.getHeader("Authorization");
+            
+            System.out.println("=== JWT Filter Debug ===");
+            System.out.println("URI: " + requestURI);
+            System.out.println("Method: " + request.getMethod());
+            System.out.println("Auth Header: " + (authHeader != null ? authHeader.substring(0, Math.min(30, authHeader.length())) + "..." : "NULL"));
+
             try {
                 String jwt = recoveryToken(request);
                 if(jwt != null && jwtUtils.validateToken(jwt)){

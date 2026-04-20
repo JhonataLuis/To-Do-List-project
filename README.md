@@ -7,6 +7,8 @@
 
 > Uma aplicação web moderna e responsiva para **gerenciamento de tarefas**, perfeita para organização pessoal ou em equipe.
 
+Firebase/React Native
+
 ---
 
 ## 🖼️ Demonstração

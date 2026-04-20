@@ -11,11 +11,13 @@ public class ExpoNotificationService {
 
     public ExpoNotificationService(){
         this.webClient = WebClient.builder()
-            .baseUrl("")
+            .baseUrl("https://exp.host/--/api/v2/push/send")
+            .defaultHeader("Content-Type", "application/json")
             .build();
     }
 
     public void sendNotifications(String token, String title, String body) {
+        
         Map<String, Object> payload = Map.of(
             "to", token,
             "title", title,
@@ -27,6 +29,7 @@ public class ExpoNotificationService {
             .bodyValue(payload)
             .retrieve()
             .bodyToMono(String.class)
-            .subscribe(response -> System.out.println("Notificação enviada: " + response));
+            .subscribe(response -> System.out.println("Notificação enviada: " + response),
+            error -> System.out.println("Erro ao enviar notificação: " + error.getMessage()));
     }
 }

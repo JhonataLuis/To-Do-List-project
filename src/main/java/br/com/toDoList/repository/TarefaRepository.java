@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -48,7 +49,8 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
    // ############
 
    // Busca tarefas entre agora e o tempo de alerta, que não estão concluídas e não foram notificadas
-   List<Tarefas> findByDeadlineBetweenAndCompletedFalseAndNotificationSentFalse(
+   @EntityGraph(attributePaths = {"user"}) // Traz o usuário junto
+   List<Tarefas> findByDueDateBetweenAndConcluidoFalseAndNotificationSentFalse(
     LocalDateTime start, LocalDateTime end
    );
 }
