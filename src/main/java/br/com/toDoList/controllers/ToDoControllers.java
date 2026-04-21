@@ -88,7 +88,7 @@ public class ToDoControllers {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getTarefas(@PathVariable Long id){
+    public ResponseEntity<?> getTarefas(@PathVariable(name = "id") Long id){
         Long userId = userService.getCurrentUser().getId();
 
         return ResponseEntity.ok(taskService.getTarefas(id, userId));

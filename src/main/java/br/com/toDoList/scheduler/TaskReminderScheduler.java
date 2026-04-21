@@ -42,10 +42,12 @@ public class TaskReminderScheduler {
 
         // Busca tarefas não concluídas com prazo nos próximos 15 min
         List<Tarefas> tasks = taskRepo.findByDueDateBetweenAndConcluidoFalseAndNotificationSentFalse(oneMinuteAgo, now);
-        //List<Tarefas> tasks = taskRepo.findAll();
+       
+        logger.info("Tarefas encontradas para notificar: {}", tasks.size());
+
         // Log
         tasks.forEach(t ->
-            logger.info("Task encontrada: {} - dueDate: {} - concluido: {} - notificationSent: {}",
+            logger.info("Task encontrada: {} - dueDate: {} - concluido: {} - notificação enviada: {}",
                 t.getTitulo(),
                 t.getDueDate(),
                 t.isConcluido(),
@@ -55,8 +57,11 @@ public class TaskReminderScheduler {
 
         for (Tarefas task : tasks) {
 
+            // Verificação de segurança
              if (task.isConcluido() || task.isNotificationSent()) {
-                    continue; // Segurança extra
+                    logger.info("Tarefa '{}' ignorada - concluída: {}, notificação enviada: {}", 
+                    task.getTitulo(), task.isConcluido(), task.isNotificationSent());
+                    continue;
                 }
 
             String token = task.getUser().getExpoPushToken();
@@ -66,12 +71,13 @@ public class TaskReminderScheduler {
                 notifiService.sendNotifications(
                     token,
                     task.getTitulo(),
-                    "Você tem uma tarefa agora"
+                    "Você tem uma tarefa agora",
+                    task.getId()
                 );
 
                 // Marca como enviado para não repetir no próximo minuto
                 task.setNotificationSent(true);
-                logger.info("Enviando push notification task: {}", task.getId());
+                logger.info("Enviando push notification task: {}", task.getId(), task.getTitulo());
             }
         }
         taskRepo.saveAll(tasks);

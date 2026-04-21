@@ -16,13 +16,16 @@ public class ExpoNotificationService {
             .build();
     }
 
-    public void sendNotifications(String token, String title, String body) {
+    public void sendNotifications(String token, String title, String body, Long taskId) {
         
         Map<String, Object> payload = Map.of(
             "to", token,
             "title", title,
             "body", body,
-            "sound", "default"
+            "sound", "default",
+            "data", Map.of(
+                "taskId", taskId
+            )
         );
 
         webClient.post()
