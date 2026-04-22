@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.enums.TaskStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -63,6 +64,9 @@ public class Tarefas{
 	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 
 	private boolean notificationSent = false; // Importante para não repetir alertas
+
+	@Enumerated(EnumType.STRING)
+	private RecorrenciaTipo recorrencia = RecorrenciaTipo.NENHUMA;
 	
 	@Column(name = "due_date")
 	private LocalDateTime dueDate; // Data de Vencimento da Tarefa
@@ -198,5 +202,13 @@ public class Tarefas{
 
 	public boolean isNotificationSent() {
 		return notificationSent;
+	}
+
+	public RecorrenciaTipo getRecorrencia() {
+		return recorrencia;
+	}
+
+	public void setRecorrencia(RecorrenciaTipo recorrencia) {
+		this.recorrencia = recorrencia;
 	}
 }

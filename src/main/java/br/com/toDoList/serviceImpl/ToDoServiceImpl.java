@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.repository.UserRepository;
@@ -75,6 +76,7 @@ public class ToDoServiceImpl {
         task.setStatus(taskDetails.getStatus());
         task.setConcluido(taskDetails.isConcluido());
         task.setPrioridade(taskDetails.getPrioridade());
+        task.setRecorrencia(taskDetails.getRecorrencia());
         task.setDueDate(taskDetails.getDueDate());
         task.setUpdatedAt(LocalDateTime.now());
         task.setCategoria(taskDetails.getCategoria());
@@ -86,6 +88,19 @@ public class ToDoServiceImpl {
     // Método para deletar uma tarefa do usuário
     public void deleteTask(Long id, Long userId){
         taskRepo.delete(getTarefas(id, userId));
+    }
+
+    // Recorrência de tarefas
+    public LocalDateTime calcularProximaData(LocalDateTime dataAtual, RecorrenciaTipo tipo) {
+
+        if (dataAtual == null) dataAtual = LocalDateTime.now();
+
+        switch (tipo) {
+            case DIARIA: return dataAtual.plusDays(1);
+            case SEMANAL: return dataAtual.plusWeeks(1);
+            case MENSAL: return dataAtual.plusMonths(1);
+            default: return dataAtual;
+        }
     }
 
 }

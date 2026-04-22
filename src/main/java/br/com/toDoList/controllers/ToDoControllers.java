@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.dto.ReorderRequest;
+import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.enums.TaskStatus;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
@@ -154,13 +155,30 @@ public class ToDoControllers {
             logger.info("Dono da tarefa: " +task.getUser().getId());
             // validação de segurança: o usuário logado é dono da tarefa?
             if(!task.getUser().getId().equals(userId)){
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Você não tem permissão para acessar essa tarefa");
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado, você não tem permissão para acessar essa tarefa");
             }
 
-            task.setStatus(TaskStatus.DONE);
-            task.setConcluido(true);
+            // Se for recorrente, "empurramos" a data e não finalizamos
+            if(task.getRecorrencia() != null && task.getRecorrencia() != RecorrenciaTipo.NENHUMA) {
+                logger.info("Task Recorrente: {}", task.getRecorrencia());
+                task.setDueDate(taskService.calcularProximaData(task.getDueDate(), task.getRecorrencia()));
+
+                task.setConcluido(false); // Mantém aberta
+                 task.setStatus(TaskStatus.TODO);
+                //task.setUpdatedAt(LocalDateTime.now());
+                //task.setDataConclusao(LocalDateTime.now());
+                //return ResponseEntity.ok(taskRepo.save(task));
+
+            } else {
+                logger.info("Task NÃO Recorrênte: {}", task.getRecorrencia());
+                // Se não for, finaliza normal a tarefa
+                task.setStatus(TaskStatus.DONE);
+                task.setConcluido(true);
+                task.setDataConclusao(LocalDateTime.now());
+
+            }
+
             task.setUpdatedAt(LocalDateTime.now());
-            task.setDataConclusao(LocalDateTime.now());
             return ResponseEntity.ok(taskRepo.save(task));
         }).orElse(ResponseEntity.notFound().build());
     }
