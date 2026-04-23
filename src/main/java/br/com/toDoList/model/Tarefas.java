@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.toDoList.enums.RecorrenciaTipo;
+import br.com.toDoList.enums.TaskCategory;
 import br.com.toDoList.enums.TaskStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -85,7 +86,8 @@ public class Tarefas{
 	
 	private LocalDateTime dataConclusao;
 	
-	private String categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
+	@Enumerated(EnumType.STRING)
+	private TaskCategory categoria;/*TRABALHO, PESSOAL, ESTUDOS*/
 
 	@PrePersist
 	protected void onCreate(){
@@ -141,10 +143,12 @@ public class Tarefas{
 		this.dataCriacao = dataCriacao;
 	}
 	
-	public String getCategoria() {
+	
+	public TaskCategory getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
+
+	public void setCategoria(TaskCategory categoria) {
 		this.categoria = categoria;
 	}
 	

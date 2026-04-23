@@ -218,7 +218,7 @@ public class ToDoControllers {
         stats.put("completed", taskRepo.countByUserIdAndConcluido(userId, true));
         stats.put("pending", taskRepo.countByUserIdAndConcluido(userId, false));
 
-        return ResponseEntity.ok(stats); // Retorna o a situação da tarefa
+        return ResponseEntity.ok(stats); // Retorna a situação da tarefa
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
