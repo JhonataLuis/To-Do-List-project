@@ -1,5 +1,6 @@
 package br.com.toDoList.repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -53,4 +54,33 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
    List<Tarefas> findByDueDateBetweenAndConcluidoFalseAndNotificationSentFalse(
     LocalDateTime start, LocalDateTime end
    );
+
+
+   // Método para contar as streks do usuário logado
+   @Query("""
+           SELECT COUNT(t) > 0
+           FROM Tarefas t
+           WHERE t.user.id =:userId
+           AND t.concluido = true
+           AND t.dataConclusao BETWEEN :inicio AND :fim
+           """)
+    boolean existsByUserAndDataConclusao(@Param("userId") Long userId, @Param("inicio") LocalDateTime data, @Param("fim") LocalDateTime fim);
+
+    long countByUserIdAndConcluidoTrueAndDataConclusaoBetween(
+        Long userId,
+        LocalDateTime start,
+        LocalDateTime end
+    );
+
+    long countByUserIdAndConcluidoTrue(Long userId);
+
+    @Query("""
+        SELECT FUNCTION('DATE', t.dataConclusao), COUNT(t)
+        FROM Tarefas t
+        WHERE t.user.id = :userId
+        AND t.concluido = true
+        GROUP BY FUNCTION('DATE', t.dataConclusao)
+        ORDER BY FUNCTION('DATE', t.dataConclusao) DESC
+    """)
+    List<Object[]> countTasksGroupedByDay(@Param("userId") Long userId);
 }

@@ -1,10 +1,10 @@
 package br.com.toDoList.enums;
 
 public enum TaskPriority {
-    BAIXA("BAIXA"),
-    MEDIA("MEDIA"),
-    ALTA("ALTA"),
-    URGENTE("URGENTE");
+    BAIXA("Baixa"),
+    MEDIA("Media"),
+    ALTA("Alta"),
+    URGENTE("Urgente");
 
     private String descriptionPriority;
 
@@ -14,6 +14,11 @@ public enum TaskPriority {
 
     public String getDescriptionPriority() {
         return descriptionPriority;
+    }
+
+    // Método para valores em letras minúsculas e maiúsculas
+    public static TaskPriority fromString(String value) {
+        return TaskPriority.valueOf(value.trim().toUpperCase());
     }
 
 }

@@ -31,6 +31,7 @@ import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.enums.TaskStatus;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
+import br.com.toDoList.service.StreakService;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 import br.com.toDoList.serviceImpl.UserService;
 import jakarta.transaction.Transactional;
@@ -56,6 +57,9 @@ public class ToDoControllers {
 
     @Autowired
     private TarefaRepository taskRepo;
+
+    @Autowired
+    private StreakService streakService;
 	
 
     /*ENDPOINT COM PAGINAÇÃO*/
@@ -175,6 +179,8 @@ public class ToDoControllers {
                 task.setStatus(TaskStatus.DONE);
                 task.setConcluido(true);
                 task.setDataConclusao(LocalDateTime.now());
+                streakService.atualizarStreak(task.getUser());
+                logger.info("STREAK EXECUTANDO: {}", task.getUser().getUsername());
 
             }
 

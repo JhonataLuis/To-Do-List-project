@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.enums.TaskCategory;
+import br.com.toDoList.enums.TaskPriority;
 import br.com.toDoList.enums.TaskStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -62,7 +63,9 @@ public class Tarefas{
 
 	private boolean concluido;//SIM OU NÃO
 	
-	private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
+	@Enumerated(EnumType.STRING)
+	private TaskPriority prioridade;
+	//private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 
 	private boolean notificationSent = false; // Importante para não repetir alertas
 
@@ -121,10 +124,11 @@ public class Tarefas{
 		this.descricao = descricao;
 	}
 	
-	public String getPrioridade() {
+	public TaskPriority getPrioridade() {
 		return prioridade;
 	}
-	public void setPrioridade(String prioridade) {
+	
+	public void setPrioridade(TaskPriority prioridade) {
 		this.prioridade = prioridade;
 	}
 

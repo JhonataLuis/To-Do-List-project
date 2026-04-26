@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.toDoList.enums.RecorrenciaTipo;
+import br.com.toDoList.enums.TaskCategory;
+import br.com.toDoList.enums.TaskPriority;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.repository.UserRepository;
@@ -75,13 +77,14 @@ public class ToDoServiceImpl {
         task.setDescricao(taskDetails.getDescricao());
         task.setStatus(taskDetails.getStatus());
         task.setConcluido(taskDetails.isConcluido());
-        task.setPrioridade(taskDetails.getPrioridade());
+        task.setPrioridade(TaskPriority.fromString(taskDetails.getPrioridade().toString()));
+        task.setCategoria(TaskCategory.fromString(taskDetails.getCategoria().toString()));
         task.setRecorrencia(taskDetails.getRecorrencia());
         task.setDueDate(taskDetails.getDueDate());
         task.setUpdatedAt(LocalDateTime.now());
-        task.setCategoria(taskDetails.getCategoria());
-        task.setDataConclusao(taskDetails.getDataConclusao());
-        
+
+      
+
         return taskRepo.save(task);
     }
 

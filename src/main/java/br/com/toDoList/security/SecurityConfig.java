@@ -47,6 +47,7 @@ public class SecurityConfig{
                 // Garante que os endpoints de User também precisem de token
                 .requestMatchers("/api/users/**").authenticated()
                 .requestMatchers("/api/tasks/**", "/api/tarefas/**").authenticated() // Protege as tarefas
+                .requestMatchers("/api/streaks/**", "api/streak/**").authenticated()
                 .anyRequest().authenticated()
         )
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

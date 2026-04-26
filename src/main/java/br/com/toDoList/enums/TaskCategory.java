@@ -2,9 +2,9 @@ package br.com.toDoList.enums;
 
 // Enum para categoria das tarefas
 public enum TaskCategory {
-    ESTUDOS("ESTUDOS"),
-    PESSOAL("PESSOAL"),
-    TRABALHO("TRABALHO");
+    ESTUDOS("Estudos"),
+    PESSOAL("Pessoal"),
+    TRABALHO("Trabalho");
 
     private String description;
 
@@ -15,4 +15,10 @@ public enum TaskCategory {
     public String getDescription() {
         return description;
     }
+
+    // Método para valores em letras minúsculas e maiúsculas
+    public static TaskCategory fromString(String value) {
+        return TaskCategory.valueOf(value.trim().toUpperCase());
+    }
 }
+
