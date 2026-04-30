@@ -83,4 +83,7 @@ public interface TarefaRepository extends JpaRepository<Tarefas, Long>{
         ORDER BY FUNCTION('DATE', t.dataConclusao) DESC
     """)
     List<Object[]> countTasksGroupedByDay(@Param("userId") Long userId);
+
+    // Método para listar tarefas por data(Painga Agenda)
+    List<Tarefas> findByUserIdAndDueDateBetweenOrderByPosicaoAscDataCriacaoDesc(Long userId, LocalDateTime inicio, LocalDateTime fim);
 }

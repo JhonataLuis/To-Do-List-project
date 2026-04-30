@@ -139,6 +139,7 @@ public class StreakService {
             LocalDate dia = LocalDate.now().minusDays(i);
 
             Map<String, Object> item = new HashMap<>();
+            item.put("date", dia.toString());
             item.put("label", dia.getDayOfWeek().getDisplayName(java.time.format.TextStyle.SHORT, new java.util.Locale("pt", "BR")));
             item.put("completed", map.getOrDefault(dia, 0L));
 

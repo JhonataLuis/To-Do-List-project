@@ -1,6 +1,8 @@
 package br.com.toDoList.serviceImpl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,7 @@ public class ToDoServiceImpl {
         return taskSaved;
     }
 
+    // Método para listar as tarefas paginadas do usuário logado
     public Page<Tarefas> findAllPagelist(Long userId, Pageable pageable){
         logger.info("Tentando listar Tarefas do usuario...");
         //ORDENANDO POR PRIORIDADES NA LISTA DE TAREFAS E ORDENAR POR NOME
@@ -53,6 +56,15 @@ public class ToDoServiceImpl {
 
         // Chamando o repositorio filtrando pelo usuário 
         return taskRepo.findByUserId(userId, page);
+    }
+
+    // Método para listar tarefas por data (PAGINA AGENDA)
+    public List<Tarefas> buscarPorData(Long userId, LocalDate data){
+        logger.info("Iniciando Agenda ....");
+
+        LocalDateTime inicio = data.atStartOfDay(); // 00:00
+        LocalDateTime fim = data.plusDays(1).atStartOfDay();
+        return taskRepo.findByUserIdAndDueDateBetweenOrderByPosicaoAscDataCriacaoDesc(userId, inicio, fim);
     }
 
     // Vê somente as tarefas do usuário

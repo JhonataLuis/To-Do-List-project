@@ -1,5 +1,6 @@
 package br.com.toDoList.controllers;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +37,6 @@ import br.com.toDoList.service.StreakService;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 import br.com.toDoList.serviceImpl.UserService;
 import jakarta.transaction.Transactional;
-
 
 
 /**
@@ -242,4 +243,20 @@ public class ToDoControllers {
         }
         return ResponseEntity.ok().build();
     } 
+
+    @GetMapping("/tarefas/por-data")
+    public ResponseEntity<List<Tarefas>> getCurrentByData(@RequestParam("data") String data){
+
+        try {
+            Long userId = userService.getCurrentUser().getId();
+            LocalDate dataFiltro = LocalDate.parse(data);
+
+            List<Tarefas> tarefas = taskService.buscarPorData(userId, dataFiltro);
+            return ResponseEntity.ok(tarefas);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
 }
