@@ -33,7 +33,7 @@ public class UserService {
 
     private final UserRepository userRepo;
 
-    // Injeção
+    // Injeção por construtor (padrão recomendado)
     public UserService(PasswordEncoder encoder, UserRepository userRepo) {
         this.encoder = encoder;
         this.userRepo = userRepo;

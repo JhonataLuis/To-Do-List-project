@@ -42,7 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 return new UsernameNotFoundException("Credenciais inválidas");
             });
     }
-
     
 }
  

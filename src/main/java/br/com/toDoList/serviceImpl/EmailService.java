@@ -2,7 +2,6 @@ package br.com.toDoList.serviceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -15,16 +14,21 @@ public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     private final String FROM = "jhonatafonte23@gmail.com"; // Endereço de email que aparecerá como remetente
+
+    // Injeção por construtor (padrão recomendado)
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     /**
      * 
      * @param email Envia e-mail de boas-vindas após o registro.
      * @param name
      */
+
     @Async
     public void sendWelcome(String email, String name) {
         try {
