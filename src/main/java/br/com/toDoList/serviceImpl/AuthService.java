@@ -2,10 +2,7 @@ package br.com.toDoList.serviceImpl;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;

@@ -137,7 +137,7 @@ public class ToDoServiceImpl {
 
     // Método para Recorrência de tarefas
     public LocalDateTime calcularProximaData(LocalDateTime dataAtual, RecorrenciaTipo tipo) {
-        logger.infof("Canculando próxima data: %d para tarefa recorrência Tipo: %d", dataAtual, tipo);
+        logger.infof("Canculando próxima data: %s para tarefa recorrência Tipo: %s", dataAtual, tipo);
         
         LocalDateTime base = Objects.requireNonNullElse(dataAtual, LocalDateTime.now());
 

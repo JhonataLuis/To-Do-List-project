@@ -47,7 +47,7 @@ public class SecurityConfig{
                 // Garante que os endpoints de User também precisem de token
                 .requestMatchers("/api/users/**").authenticated()
                 .requestMatchers("/api/tasks/**", "/api/tarefas/**").authenticated() // Protege as tarefas
-                .requestMatchers("/api/streaks/**", "api/streak/**").authenticated()
+                .requestMatchers("/api/streaks/**", "/api/streak/**").authenticated()
                 .anyRequest().authenticated()
         )
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -71,7 +71,8 @@ public class SecurityConfig{
             "http://localhost:[*]",
             "https://*.expo.proxy.io",
             "https://*.ngrok-free.app",
-            "exp://[*]"
+            "exp://[*]",
+            "*"
            
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
