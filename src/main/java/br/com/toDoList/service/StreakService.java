@@ -2,6 +2,7 @@ package br.com.toDoList.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,6 +31,8 @@ public class StreakService {
     @Autowired
     private TarefaRepository taskRepo;
 
+    private ZoneId brasil = ZoneId.of("America/Sao_Paulo");
+
     public void atualizarStreak(User user) {
         
         Streak streak = streakRepo.findByUser(user)
@@ -39,7 +42,8 @@ public class StreakService {
                 return novo;
             });
 
-            LocalDate hoje = LocalDate.now();
+            // Configurado brasil para pegar o fuso horário correto 
+            LocalDate hoje = LocalDate.now(brasil);
 
             // Verifica se já concluiu tarefa hoje
             boolean fezHoje = taskRepo.existsByUserAndDataConclusao(
@@ -83,7 +87,8 @@ public class StreakService {
         }
 
         int streak = 0;
-        LocalDate hoje = LocalDate.now();
+        // Configurado brasil para pegar o fuso horário correto
+        LocalDate hoje = LocalDate.now(brasil);
 
         while (diasCompletos.contains(hoje)) {
             streak++;
@@ -96,8 +101,11 @@ public class StreakService {
 
     // 📊 STATS
     public Map<String, Object> getStats(Long userId) {
-        LocalDateTime inicioHoje = LocalDate.now().atStartOfDay();
-        LocalDateTime agora = LocalDateTime.now();
+        // Adicionado configuração ZoneId para pegar o fuso horário correto
+        LocalDateTime inicioHoje = LocalDate.now(brasil).atStartOfDay();
+
+        // Adicionado configuração ZoneId para pegar o fuso horário correto
+        LocalDateTime agora = LocalDateTime.now(brasil);
 
         LocalDateTime inicioSemana = LocalDate.now().minusDays(6).atStartOfDay();
 
@@ -136,7 +144,8 @@ public class StreakService {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (int i = 6; i >= 0; i--) {
-            LocalDate dia = LocalDate.now().minusDays(i);
+            // Adicionado configuração ZoneId para pegar o fuso horário correto
+            LocalDate dia = LocalDate.now(brasil).minusDays(i);
 
             Map<String, Object> item = new HashMap<>();
             item.put("date", dia.toString());
