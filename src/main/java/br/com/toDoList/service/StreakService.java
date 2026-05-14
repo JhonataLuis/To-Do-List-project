@@ -31,7 +31,7 @@ public class StreakService {
     @Autowired
     private TarefaRepository taskRepo;
 
-    private ZoneId brasil = ZoneId.of("America/Sao_Paulo");
+    private static final ZoneId brasil = ZoneId.of("America/Sao_Paulo");
 
     public void atualizarStreak(User user) {
         
@@ -72,7 +72,7 @@ public class StreakService {
             }
 
             streak.setLastCompletedDate(hoje);
-
+            logger.info("STREAK SALVA: {}", streak.getCurrentStreak());
             streakRepo.save(streak);
     }
 

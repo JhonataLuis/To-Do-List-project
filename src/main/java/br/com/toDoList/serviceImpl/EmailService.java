@@ -64,7 +64,7 @@ public class EmailService {
         // Texto focado no uso dentro do aplicativo
         message.setText(
             "Você solicitou a redefinição de sua senha.\n\n" +
-            "Use o código abaixo dentro do aplicativo para cadastrar um nova senha:\n" + 
+            "Use o código abaixo dentro do aplicativo para cadastrar uma nova senha:\n" + 
             "CÓDIGO: " + token + "\n\n" +
             "Este código é valido por 1 hora.\n"
         );

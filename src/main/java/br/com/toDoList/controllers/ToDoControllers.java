@@ -164,14 +164,16 @@ public class ToDoControllers {
 
             // Se for recorrente, "empurramos" a data e não finalizamos
             if(task.getRecorrencia() != null && task.getRecorrencia() != RecorrenciaTipo.NENHUMA) {
-                logger.info("Task Recorrente: {}", task.getRecorrencia());
+                logger.info("TASK RECORRENTE: {}", task.getRecorrencia());
                 task.setDueDate(taskService.calcularProximaData(task.getDueDate(), task.getRecorrencia()));
 
                 task.setConcluido(false); // Mantém aberta
-                 task.setStatus(TaskStatus.TODO);
+                task.setStatus(TaskStatus.TODO);
+                streakService.atualizarStreak(task.getUser()); 
                 //task.setUpdatedAt(LocalDateTime.now());
                 //task.setDataConclusao(LocalDateTime.now());
                 //return ResponseEntity.ok(taskRepo.save(task));
+                logger.info("STREAK EXECUTANDO: {}", task.getUser().getUsername());
 
             } else {
                 logger.info("Task NÃO Recorrênte: {}", task.getRecorrencia());

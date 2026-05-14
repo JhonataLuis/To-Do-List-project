@@ -104,11 +104,8 @@ public class ToDoServiceImpl {
      */
     public Tarefas update(Long id, Tarefas taskDetails, Long userId){
         logger.infof("Atualizando tarefa ID: %d para usuário ID: %d", id, userId);
-
         Tarefas task = getTarefas(id, userId);
-        
         updateFields(task, taskDetails); // Método abaixo com os setTarefas
-
         return taskRepo.save(task);
     }
 
@@ -128,8 +125,16 @@ public class ToDoServiceImpl {
         task.setDescricao(details.getDescricao());
         task.setStatus(details.getStatus());
         task.setConcluido(details.isConcluido());
-        task.setPrioridade(TaskPriority.fromString(details.getPrioridade().toString()));
-        task.setCategoria(TaskCategory.fromString(details.getCategoria().toString()));
+        if(details.getPrioridade() != null) {
+            task.setPrioridade(TaskPriority.fromString(details.getPrioridade().toString()));
+        } else {
+            task.setPrioridade(null);
+        }
+        if(details.getCategoria() != null) {
+            task.setCategoria(TaskCategory.fromString(details.getCategoria().toString()));
+        } else {
+            task.setCategoria(null);
+        }
         task.setRecorrencia(details.getRecorrencia());
         task.setDueDate(details.getDueDate());
         task.setUpdatedAt(LocalDateTime.now());

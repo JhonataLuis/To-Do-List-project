@@ -59,13 +59,10 @@ public class Tarefas{
 
 	private Integer posicao;
 
-	//private TaskPriority priority;
-
 	private boolean concluido;//SIM OU NÃO
 	
 	@Enumerated(EnumType.STRING)
-	private TaskPriority prioridade;
-	//private String prioridade;//ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
+	private TaskPriority prioridade; //ALTA, MÉDIA, BAIXA - SEPARAR POR COR CADA PRIORIDADE
 
 	private boolean notificationSent = false; // Importante para não repetir alertas
 
