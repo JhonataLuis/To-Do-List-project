@@ -22,10 +22,11 @@ import br.com.toDoList.repository.RoleRepository;
 import br.com.toDoList.repository.UserRepository;
 import br.com.toDoList.security.JwtUtils;
 import br.com.toDoList.security.UserDetailsImpl;
+import br.com.toDoList.service.IAuth;
 
 @Service
 @Transactional
-public class AuthService {
+public class AuthService implements IAuth{
 
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
@@ -62,6 +63,7 @@ public class AuthService {
     /**
      *  Método para Realizar Login
      */
+    @Override
     public AuthResponse login(LoginRequest request) {
         logger.debug("Tentando autenticação para email: {}", request.getEmail());
 
@@ -96,6 +98,7 @@ public class AuthService {
      * Método para Registrar um novo usuário no sistema Tasks
      */
     // Método para Registrar um novo usuário
+    @Override
     public void register(RegisterRequest request){
         logger.info("Registrando novo usuário: {}",request.getEmail());
 
@@ -127,6 +130,7 @@ public class AuthService {
      * ESQUECI MINHA SENHA
      */
     // Método para recuperar a senha do usuário
+    @Override
     public void forgotPassword(String email){
 
         logger.info("Solicitação de recuperação de senha para: {}", email);
@@ -151,6 +155,7 @@ public class AuthService {
      *  RESET DE SENHA
      */
     // Método para definir a nova senha usuando o token
+    @Override
     public void resetPassword(String token, String newPassword){
         
         String cleanToken = token.trim();

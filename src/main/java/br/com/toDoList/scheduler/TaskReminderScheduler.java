@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
-import br.com.toDoList.service.ExpoNotificationService;
+import br.com.toDoList.serviceImpl.ExpoNotificationService;
 
 @Component
 @EnableScheduling

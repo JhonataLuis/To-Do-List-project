@@ -20,10 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.toDoList.dto.ChangePasswordRequest;
 import br.com.toDoList.model.User;
 import br.com.toDoList.repository.UserRepository;
+import br.com.toDoList.service.IUser;
 
 @Service
 @Transactional
-public class UserService {
+public class UserService implements IUser{
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -42,6 +43,7 @@ public class UserService {
     /**
      *  Usuário logado (contexto de segurança)
      */
+    @Override
     public User getCurrentUser(){
         String email = SecurityContextHolder.getContext()
             .getAuthentication()
@@ -54,6 +56,7 @@ public class UserService {
     /**
      *  Atualizar perfil do usuário logado
     */
+   @Override
     public User updateProfile(Long id, String name){
         logger.info("Atualizando perfil: %d do usuário ID: %d", name, id);
 
@@ -69,6 +72,7 @@ public class UserService {
     }
 
     // Método para upload de foto (seguro) do perfil do usuário
+    @Override
     public String uploadPhoto(Long id, MultipartFile file) {
         logger.info("Iniciando upload de foto para usuário ID: %d", id);
 
@@ -112,6 +116,7 @@ public class UserService {
     /**
      *  Método para alterar senha do usuário
      */
+    @Override
     public void changePassword(ChangePasswordRequest request){
 
         User user = getCurrentUser(); // pega o usuário logado
@@ -132,8 +137,7 @@ public class UserService {
 
     /**
      *  MÉTODOS PRIVADOS (Clean Code)
-     */
-
+    */
     private void validateFile(MultipartFile file) {
         if(file == null || file.isEmpty()) {
             throw new RuntimeException("Arquivo inválido");

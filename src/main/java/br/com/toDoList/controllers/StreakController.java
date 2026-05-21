@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.toDoList.model.User;
-import br.com.toDoList.service.StreakService;
+import br.com.toDoList.serviceImpl.StreakService;
 import br.com.toDoList.serviceImpl.UserService;
 
 @RestController

@@ -1,12 +1,15 @@
-package br.com.toDoList.service;
+package br.com.toDoList.serviceImpl;
 
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import br.com.toDoList.service.INotification;
+
 @Service
-public class ExpoNotificationService { // Serviço de Notificações
+public class ExpoNotificationService implements INotification{ // Serviço de Notificações
+    
     private final WebClient webClient;
 
     public ExpoNotificationService(){
@@ -16,6 +19,7 @@ public class ExpoNotificationService { // Serviço de Notificações
             .build();
     }
 
+    @Override
     public void sendNotifications(String token, String title, String body, Long taskId) {
         
         Map<String, Object> payload = Map.of(
@@ -35,4 +39,6 @@ public class ExpoNotificationService { // Serviço de Notificações
             .subscribe(response -> System.out.println("Notificação enviada: " + response),
             error -> System.out.println("Erro ao enviar notificação: " + error.getMessage()));
     }
+
+
 }

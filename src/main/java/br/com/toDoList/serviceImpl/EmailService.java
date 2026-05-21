@@ -8,9 +8,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
+import br.com.toDoList.service.IEmail;
+
 @EnableAsync
 @Service
-public class EmailService {
+public class EmailService implements IEmail{
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
@@ -30,6 +32,7 @@ public class EmailService {
      */
 
     @Async
+    @Override
     public void sendWelcome(String email, String name) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -53,6 +56,7 @@ public class EmailService {
      * Envia o token de 6 dígitos para recuperação de senha no App.
      */
     @Async
+    @Override
     public void sendResetPassword(String email, String token) {
         // Exemplo de link que o usuário clicaria no front-end
 

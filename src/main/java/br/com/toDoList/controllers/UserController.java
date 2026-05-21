@@ -1,6 +1,8 @@
 package br.com.toDoList.controllers;
 
 import br.com.toDoList.repository.UserRepository;
+import br.com.toDoList.serviceImpl.UserService;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -21,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.com.toDoList.dto.ChangePasswordRequest;
 import br.com.toDoList.model.User;
-import br.com.toDoList.serviceImpl.UserService;
 
 @RestController
 @RequestMapping("/api/users")

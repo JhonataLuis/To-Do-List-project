@@ -32,7 +32,7 @@ import br.com.toDoList.enums.RecorrenciaTipo;
 import br.com.toDoList.enums.TaskStatus;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
-import br.com.toDoList.service.StreakService;
+import br.com.toDoList.serviceImpl.StreakService;
 import br.com.toDoList.serviceImpl.ToDoServiceImpl;
 import br.com.toDoList.serviceImpl.UserService;
 import jakarta.transaction.Transactional;

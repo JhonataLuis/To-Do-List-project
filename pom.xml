@@ -61,13 +61,13 @@
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <optional>true</optional>
+      <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
 
     <!-- Source: jakarta.jakartaee-api -->
@@ -97,7 +97,12 @@
       <scope>runtime</scope>
     </dependency>
 
-    <dependency>
+		 <!-- Database PostgreSQL -->
+		<dependency>
+		  <groupId>org.postgresql</groupId>
+		  <artifactId>postgresql</artifactId>
+		</dependency>
+<dependency>
       <groupId>com.google.firebase</groupId>
       <artifactId>firebase-admin</artifactId>
       <version>9.2.0</version>
@@ -113,6 +118,12 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+      <version>2.15.1</version>
+    </dependency>
+    <!-- File Upload -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>1      
       <version>2.15.1</version>
     </dependency>
 

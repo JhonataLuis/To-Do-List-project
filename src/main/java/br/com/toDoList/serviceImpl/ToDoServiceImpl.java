@@ -19,10 +19,11 @@ import br.com.toDoList.enums.TaskPriority;
 import br.com.toDoList.model.Tarefas;
 import br.com.toDoList.repository.TarefaRepository;
 import br.com.toDoList.repository.UserRepository;
+import br.com.toDoList.service.IToDoService;
 
 @Service
 @Transactional // Garente consistência nas operações
-public class ToDoServiceImpl {
+public class ToDoServiceImpl implements IToDoService{
 
     private static final Logger logger = Logger.getLogger(ToDoServiceImpl.class);
 
@@ -40,6 +41,7 @@ public class ToDoServiceImpl {
     /**
      * Criar Tarefa vinculada ao Usuário
      */
+    @Override
     public Tarefas create(Tarefas tarefas, Long userId){
         // Logging profissional
         logger.infof("Criando tarefa parao o usuário ID: %d", userId);
@@ -54,6 +56,7 @@ public class ToDoServiceImpl {
     }
 
     // Método para listar as tarefas paginadas do usuário logado com ordenação
+    @Override
     public Page<Tarefas> findAllPageList(Long userId, Pageable pageable){
         logger.infof("Listando tarefas do usuário ID: d%", userId);
 
@@ -75,6 +78,7 @@ public class ToDoServiceImpl {
     }
 
     // Método para listar tarefas por data (PAGINA AGENDA)
+    @Override
     public List<Tarefas> buscarPorData(Long userId, LocalDate data){
         logger.infof("Buscando tarefas por data: %s para usuário ID: %d", data, userId);
 
@@ -89,6 +93,7 @@ public class ToDoServiceImpl {
     }
 
     // Buscar tarefa garantindo segurança / Vê somente as tarefas do usuário
+    @Override
     public Tarefas getTarefas(Long id, Long userId){
         logger.infof("Busca tarefa ID: %d garantindo segurança do usuário ID: %d",id, userId);
         
@@ -102,6 +107,7 @@ public class ToDoServiceImpl {
      * @param tarefas A tarefa com os dados atualizados/ Atualiza a tarefa referente ao usuário dela.
      * @return A tarefa atualizada.
      */
+    @Override
     public Tarefas update(Long id, Tarefas taskDetails, Long userId){
         logger.infof("Atualizando tarefa ID: %d para usuário ID: %d", id, userId);
         Tarefas task = getTarefas(id, userId);
@@ -110,6 +116,7 @@ public class ToDoServiceImpl {
     }
 
     // Método para deletar uma tarefa do usuário
+    @Override
     public void deleteTask(Long id, Long userId){
         logger.infof("Deletando tarefa ID: %d para usuário ID: %d", id, userId);
 
@@ -141,6 +148,7 @@ public class ToDoServiceImpl {
     }
 
     // Método para Recorrência de tarefas
+    @Override
     public LocalDateTime calcularProximaData(LocalDateTime dataAtual, RecorrenciaTipo tipo) {
         logger.infof("Canculando próxima data: %s para tarefa recorrência Tipo: %s", dataAtual, tipo);
         

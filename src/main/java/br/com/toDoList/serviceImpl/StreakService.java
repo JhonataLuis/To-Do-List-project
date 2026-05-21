@@ -1,4 +1,4 @@
-package br.com.toDoList.service;
+package br.com.toDoList.serviceImpl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,9 +19,10 @@ import br.com.toDoList.model.Streak;
 import br.com.toDoList.model.User;
 import br.com.toDoList.repository.StreakRepository;
 import br.com.toDoList.repository.TarefaRepository;
+import br.com.toDoList.service.IStreak;
 
 @Service
-public class StreakService {
+public class StreakService implements IStreak{
 
     private static final Logger logger = LoggerFactory.getLogger(StreakService.class);
 
@@ -33,6 +34,7 @@ public class StreakService {
 
     private static final ZoneId brasil = ZoneId.of("America/Sao_Paulo");
 
+    @Override
     public void atualizarStreak(User user) {
         
         Streak streak = streakRepo.findByUser(user)
@@ -100,6 +102,7 @@ public class StreakService {
     }
 
     // 📊 STATS
+    @Override
     public Map<String, Object> getStats(Long userId) {
         // Adicionado configuração ZoneId para pegar o fuso horário correto
         LocalDateTime inicioHoje = LocalDate.now(brasil).atStartOfDay();
@@ -129,6 +132,7 @@ public class StreakService {
     }
 
     // 📅 HISTORY (últimos 7 dias) MÉTODO PARA MOSTRAR O HISTÓRICO DOS ÚLTIMOS 7 DIAS (De segunda a domingo) 
+    @Override
     public List<Map<String, Object>> getHistory(Long userId) {
         List<Object[]> raw = taskRepo.countTasksGroupedByDay(userId);
 
