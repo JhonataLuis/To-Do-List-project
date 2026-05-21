@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -153,7 +154,9 @@ public class StreakService implements IStreak{
 
             Map<String, Object> item = new HashMap<>();
             item.put("date", dia.toString());
-            item.put("label", dia.getDayOfWeek().getDisplayName(java.time.format.TextStyle.SHORT, new java.util.Locale("pt", "BR")));
+            item.put("label", dia.getDayOfWeek()
+                .getDisplayName(java.time.format.TextStyle.SHORT, new Locale.Builder()
+                .setLanguage("pt").setRegion("BR").build()));
             item.put("completed", map.getOrDefault(dia, 0L));
 
             result.add(item);

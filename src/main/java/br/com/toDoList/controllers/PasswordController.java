@@ -3,12 +3,7 @@ package br.com.toDoList.controllers;
 
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +15,16 @@ import br.com.toDoList.serviceImpl.AuthService;
 import jakarta.validation.Valid;
 
 @RestController
-//@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class PasswordController {
 
 
-    @Autowired
     private AuthService authService;
+
+    // Injeção de dependências
+    public PasswordController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/forgot-password") // Endpoint para enviar email para recuperar senha
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody PasswordResetRequest request){

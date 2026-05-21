@@ -146,7 +146,6 @@ public class ToDoControllers {
     }
 
     // Endpoint do método para concluir uma tarefa // Implementado para Mobile
-    @SuppressWarnings("null")
     @PatchMapping("/tarefas/{id}/concluir")
     @Transactional // Anotação para garantir a integridade dos dados
     public ResponseEntity<?> concluirTask(@PathVariable(name = "id") Long id){
