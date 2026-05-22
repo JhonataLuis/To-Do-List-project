@@ -5,14 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
-import br.com.toDoList.service.IEmail;
 
-@EnableAsync
 @Service
-public class EmailService implements IEmail{
+public class EmailService{
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
@@ -32,7 +29,6 @@ public class EmailService implements IEmail{
      */
 
     @Async
-    @Override
     public void sendWelcome(String email, String name) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -56,7 +52,6 @@ public class EmailService implements IEmail{
      * Envia o token de 6 dígitos para recuperação de senha no App.
      */
     @Async
-    @Override
     public void sendResetPassword(String email, String token) {
         // Exemplo de link que o usuário clicaria no front-end
 
