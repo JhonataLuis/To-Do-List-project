@@ -6,7 +6,7 @@ public enum TaskPriority {
     ALTA("Alta"),
     URGENTE("Urgente");
 
-    private String descriptionPriority;
+    private final String descriptionPriority;
 
     TaskPriority(String descriptionPriotiry){
         this.descriptionPriority = descriptionPriotiry;

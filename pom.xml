@@ -108,22 +108,10 @@
       <version>9.2.0</version>
     </dependency>
 
-		 <!-- Database PostgreSQL -->
-		<dependency>
-		  <groupId>org.postgresql</groupId>
-		  <artifactId>postgresql</artifactId>
-		</dependency>
-
     <!-- File Upload -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.15.1</version>
-    </dependency>
-    <!-- File Upload -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>1      
       <version>2.15.1</version>
     </dependency>
 
@@ -169,7 +157,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
-          <version>2.1.1.RELEASE</version>
+          <version>3.5.14</version>
         </plugin>
       </plugins>
     </pluginManagement>
