@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,9 @@ import jakarta.transaction.Transactional;
 
 /**
  *
- * A sample greetings controller to return greeting text
+ * @author Jhonata
+ * @version 1.0
+ * Controller para endpoint das Tarefas
  */
 
 @RestController
@@ -49,17 +50,26 @@ public class ToDoControllers {
 
     private static final Logger logger = LoggerFactory.getLogger(ToDoControllers.class);
 	
-    @Autowired
     private ToDoServiceImpl taskService;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private TarefaRepository taskRepo;
 
-    @Autowired
     private StreakService streakService;
+
+    /*Declaração de construtor */
+    public ToDoControllers(
+        ToDoServiceImpl taskService, 
+        UserService userService,
+        TarefaRepository taskRepo,
+        StreakService streakService
+    ) {
+        this.taskService = taskService;
+        this.userService = userService;
+        this.taskRepo = taskRepo;
+        this.streakService = streakService;
+    }
 	
 
     /*ENDPOINT COM PAGINAÇÃO*/
