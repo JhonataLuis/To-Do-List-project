@@ -2,7 +2,6 @@ package br.com.toDoList.controllers;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +17,12 @@ import br.com.toDoList.serviceImpl.AuthService;
 //@CrossOrigin(origins = "*")
 public class AuthController {
 
-    @Autowired
     private AuthService authService;
+
+    // Injeção de dependência com construtor
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request){

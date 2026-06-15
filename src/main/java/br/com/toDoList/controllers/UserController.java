@@ -35,7 +35,10 @@ public class UserController {
     private UserService userService;
 
     // Injeção de dependência (padrão recomendado)
-    UserController(UserRepository userRepository, UserService userService) {
+    UserController(
+        UserRepository userRepository, 
+        UserService userService
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
     }

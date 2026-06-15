@@ -13,7 +13,6 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.toDoList.model.Streak;
@@ -27,13 +26,20 @@ public class StreakService implements IStreak{
 
     private static final Logger logger = LoggerFactory.getLogger(StreakService.class);
 
-    @Autowired
     private StreakRepository streakRepo;
 
-    @Autowired
     private TarefaRepository taskRepo;
 
     private static final ZoneId brasil = ZoneId.of("America/Sao_Paulo");
+
+    // Injeção de dependência pelo construtor(melhor forma)
+    public StreakService(
+        StreakRepository streakRepo,
+        TarefaRepository taskRepo
+    ) {
+        this.streakRepo = streakRepo;
+        this.taskRepo = taskRepo;
+    }
 
     @Override
     public void atualizarStreak(User user) {

@@ -96,8 +96,8 @@ public class ToDoControllers {
 
                 return new ResponseEntity<>(taskPage, HttpStatus.OK);
                 
-            } catch (Exception e){
-                e.printStackTrace();
+            } catch (Exception ex){
+                ex.printStackTrace();
                 return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
             }
     }

@@ -33,14 +33,14 @@ public class PasswordController {
         return ResponseEntity.ok("E-mail de recuperação enviado com sucesso.");
     }
 
-    @PostMapping("/reset-password") // Endp
+    @PostMapping("/reset-password") // Endpoint para alterar a senha do usuário
     public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetConfirm request){
 
         try {
             authService.resetPassword(request.getToken(), request.getNewPassword());
             return ResponseEntity.ok("Senha alterada com sucesso");
         
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
         }
         

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +20,18 @@ public class StreakController {
 
     private static final Logger logger = LoggerFactory.getLogger(StreakController.class);
 
-    @Autowired
     private StreakService streakService;
 
-    @Autowired
     private UserService userService;
+
+    //Injeção de dependências com construtor
+    public StreakController(
+        StreakService streakService,
+        UserService userService
+    ) {
+        this.streakService = streakService;
+        this.userService = userService;
+    }
 
     @GetMapping("/streak")
     public Map<String, Object> getStreak(@AuthenticationPrincipal User user) {
