@@ -7,9 +7,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import br.com.toDoList.service.IEmail;
+
 
 @Service
-public class EmailService{
+public class EmailService implements IEmail{
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 

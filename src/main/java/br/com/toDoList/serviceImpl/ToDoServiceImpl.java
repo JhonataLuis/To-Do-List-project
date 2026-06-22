@@ -33,7 +33,10 @@ public class ToDoServiceImpl implements IToDoService{
     private final UserRepository userRepo;
 
     // Forma mais segura para fazer injeção dos repository
-    public ToDoServiceImpl(TarefaRepository taskRepo, UserRepository userRepo){
+    public ToDoServiceImpl(
+        TarefaRepository taskRepo, 
+        UserRepository userRepo
+    ){
         this.taskRepo = taskRepo;
         this.userRepo = userRepo;
     }
